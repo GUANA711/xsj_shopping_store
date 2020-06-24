@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.demo.dao.CollectionMapper">
+  <resultMap id="BaseResultMap" type="com.shop.demo.pojo.Collection">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="productid" jdbcType="VARCHAR" property="productid" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="collecttime" jdbcType="TIMESTAMP" property="collecttime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, productid, openid, collecttime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from collection
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from collection
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shop.demo.pojo.Collection">
+    insert into collection (id, productid, openid, 
+      collecttime)
+    values (#{id,jdbcType=VARCHAR}, #{productid,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
+      #{collecttime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.demo.pojo.Collection">
+    insert into collection
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productid != null">
+        productid,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="collecttime != null">
+        collecttime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="collecttime != null">
+        #{collecttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.demo.pojo.Collection">
+    update collection
+    <set>
+      <if test="productid != null">
+        productid = #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="collecttime != null">
+        collecttime = #{collecttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.demo.pojo.Collection">
+    update collection
+    set productid = #{productid,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      collecttime = #{collecttime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
