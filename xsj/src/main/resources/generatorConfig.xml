@@ -44,7 +44,7 @@
         </javaClientGenerator>
 
         <!-- 指定数据表 -->
-        <table tableName="buycart_"
+        <table tableName="buycar"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
