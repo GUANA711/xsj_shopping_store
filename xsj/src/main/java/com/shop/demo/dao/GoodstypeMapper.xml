@@ -13,7 +13,7 @@
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
+    id, name, state
     from goodstype
     where id = #{id,jdbcType=VARCHAR}
   </select>

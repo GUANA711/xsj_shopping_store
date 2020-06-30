@@ -24,4 +24,12 @@ public interface ProductMapper {
 
     @Select("select * from product")
     List<Product> show();
+
+    /**
+     * 查询商品的列表
+     * @param product
+     * @return
+     */
+    List<Product> selectProductList(Product product);
+
 }

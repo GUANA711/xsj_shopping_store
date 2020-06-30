@@ -48,11 +48,11 @@ public class WXDataServiceImpl implements WXDataService {
 		//查询所有可用的商品分类列表
 		Goodstype gt = new Goodstype();
 		gt.setState(1);
-		List<Goodstype> gtlist = (List<Goodstype>) gtmapper.selectGoodsTypeList(gt);
+		List<Goodstype> gtlist =  gtmapper.selectGoodsTypeList(gt);
 		//查询每一个分类中的商品,然后再将其保存到goodstypeproduct对象中
 		List<GoodsTypeProduct> list = new ArrayList<>();
 		Product p = new Product();
-		p.setFields1("1");
+//		p.setFields1("1");
 		for(Goodstype type : gtlist){
 			p.setTypeid(type.getId());
 			List<Product> plist = pmapper.selectProductList(p);
@@ -69,12 +69,17 @@ public class WXDataServiceImpl implements WXDataService {
 		//根据id查询商品详情
 		Product p = pmapper.selectByPrimaryKey(pid);
 		//根据商品id查询商品的图片列表
-		List<Productimgs> imgs = imgmapper.selectByPid(pid);
+		List<Productimgs> imgs = (List<Productimgs>) imgmapper.selectByPrimaryKey(pid);
 		//整合返回值
 		ProductDetailDto dto = new ProductDetailDto();
 		dto.setProduct(p);
 		dto.setImgs(imgs);
 		return dto;
+	}
+
+	@Override
+	public Goodstype selectGoodsTypeById(String id) {
+		return null;
 	}
 
 }

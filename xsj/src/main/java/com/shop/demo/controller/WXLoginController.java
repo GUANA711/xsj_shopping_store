@@ -25,6 +25,7 @@ import java.util.Map;
  * @author Alice
  */
 @Controller
+@ResponseBody
 @RequestMapping("/wxlogin")
 public class WXLoginController {
 
@@ -71,7 +72,8 @@ public class WXLoginController {
 	private String getopenid(String code) {
 		String WX_URL = "https://api.weixin.qq.com/sns/jscode2session?appid=wx88825ee564aff4c0&secret=58bd8567113c072482d3530f697bf8f9&js_code="
 				+ code + "&grant_type=authorization_code";
-		String rtnvalue = GET(WX_URL);//获取到的是一个json字符串。
+		//获取到的是一个json字符串。
+		String rtnvalue = GET(WX_URL);
 		//解析json字符串，得到openid
 		ObjectMapper mapper = new ObjectMapper();
 		String openid = "";
@@ -91,7 +93,11 @@ public class WXLoginController {
 		return openid;
 	}
 
-	// 发起get请求的方法。
+	/**
+	 * 发起get请求的方法。
+	 * @param url
+	 * @return
+	 */
 	public String GET(String url) {
 		String result = "";
 		BufferedReader in = null;

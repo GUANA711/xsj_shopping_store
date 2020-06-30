@@ -24,4 +24,12 @@ public interface GoodstypeMapper {
 
     @Select("select * from goodstype")
     List<Goodstype> showAll();
+
+    /**
+     * 查询商品类型的列表
+     * @param product
+     * @return
+     */
+    List<Goodstype> selectGoodsTypeList(Goodstype product);
+
 }

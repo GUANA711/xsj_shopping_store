@@ -21,11 +21,4 @@ public class Customer {
         this.openid = openid == null ? null : openid.trim();
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
-    }
 }

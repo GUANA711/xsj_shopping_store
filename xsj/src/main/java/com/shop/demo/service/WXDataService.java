@@ -44,4 +44,11 @@ public interface WXDataService {
 	 * @return
 	 */
 	ProductDetailDto selectProductDetails(String pid);
+
+	/**
+	 * 根据id查询一条商品类型的详细信息
+	 * @param id
+	 * @return
+	 */
+	Goodstype selectGoodsTypeById(String id);
 }

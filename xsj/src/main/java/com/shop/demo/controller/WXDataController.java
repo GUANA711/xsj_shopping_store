@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Alice
  */
 @Controller
+@ResponseBody
 @RequestMapping("/wx")
 public class WXDataController {
 
@@ -54,7 +55,7 @@ public class WXDataController {
 	 */
 	@RequestMapping("/product")
 	@ResponseBody
-	public List<GoodsTypeProduct> selectGoodsTypeProduct(){
+	public List<GoodsTypeProduct> selectTypeList(){
 		return service.selectGoodsTypeProduct();
 	}
 	
@@ -65,7 +66,7 @@ public class WXDataController {
 	 */
 	@RequestMapping("/detail/{id}")
 	@ResponseBody
-	public ProductDetailDto selectProductDetails(@PathVariable("id")String id){
+	public ProductDetailDto showProductDetails(@PathVariable("id")String id){
 		return service.selectProductDetails(id);
 	}
 	
