@@ -1,5 +1,8 @@
 package com.shop.demo.pojo;
 
+import lombok.Data;
+
+@Data
 public class Productimgs {
     private String imgid;
 

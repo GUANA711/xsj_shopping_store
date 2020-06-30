@@ -98,4 +98,5 @@
       sort = #{sort,jdbcType=INTEGER}
     where imgid = #{imgid,jdbcType=VARCHAR}
   </update>
+
 </mapper>

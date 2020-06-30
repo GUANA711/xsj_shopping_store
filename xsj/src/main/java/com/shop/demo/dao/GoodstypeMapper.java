@@ -2,7 +2,10 @@ package com.shop.demo.dao;
 
 import com.shop.demo.pojo.Goodstype;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Mapper
 @Repository
@@ -19,5 +22,6 @@ public interface GoodstypeMapper {
 
     int updateByPrimaryKey(Goodstype record);
 
-    Goodstype selectGoodsTypeList(Goodstype goodstype);
+    @Select("select * from goodstype")
+    List<Goodstype> showAll();
 }

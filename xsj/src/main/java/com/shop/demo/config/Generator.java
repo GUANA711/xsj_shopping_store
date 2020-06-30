@@ -8,6 +8,10 @@ import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
+/**
+ * @author GUANA
+ * 逆向工程生成函数
+ */
 public class Generator {
     public void generator() throws Exception{
         List<String> warnings = new ArrayList<String>();
