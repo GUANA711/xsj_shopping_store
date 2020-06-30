@@ -17,7 +17,7 @@ public class Product {
 
     private String description;
 
-    private Date publishtime;
+    private String publishtime;
 
     private Integer recommend;
 
@@ -25,11 +25,6 @@ public class Product {
 
     private Integer hot;
 
-    private String fields1;
-
-    private String fields2;
-
-    private String fields3;
 
     private String typeid;
 
@@ -91,11 +86,11 @@ public class Product {
         this.description = description == null ? null : description.trim();
     }
 
-    public Date getPublishtime() {
+    public String getPublishtime() {
         return publishtime;
     }
 
-    public void setPublishtime(Date publishtime) {
+    public void setPublishtime(String publishtime) {
         this.publishtime = publishtime;
     }
 
@@ -123,29 +118,6 @@ public class Product {
         this.hot = hot;
     }
 
-    public String getFields1() {
-        return fields1;
-    }
-
-    public void setFields1(String fields1) {
-        this.fields1 = fields1 == null ? null : fields1.trim();
-    }
-
-    public String getFields2() {
-        return fields2;
-    }
-
-    public void setFields2(String fields2) {
-        this.fields2 = fields2 == null ? null : fields2.trim();
-    }
-
-    public String getFields3() {
-        return fields3;
-    }
-
-    public void setFields3(String fields3) {
-        this.fields3 = fields3 == null ? null : fields3.trim();
-    }
 
     public String getTypeid() {
         return typeid;

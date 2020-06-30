@@ -13,15 +13,12 @@
     <result column="recommend" jdbcType="INTEGER" property="recommend" />
     <result column="oldest" jdbcType="INTEGER" property="oldest" />
     <result column="hot" jdbcType="INTEGER" property="hot" />
-    <result column="fields1" jdbcType="VARCHAR" property="fields1" />
-    <result column="fields2" jdbcType="VARCHAR" property="fields2" />
-    <result column="fields3" jdbcType="VARCHAR" property="fields3" />
     <result column="typeid" jdbcType="VARCHAR" property="typeid" />
     <result column="typename" jdbcType="VARCHAR" property="typename" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, price, title, stock, number, description, publishtime, recommend, oldest, 
-    hot, fields1, fields2, fields3, typeid, typename
+    hot,  typeid, typename
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -37,14 +34,12 @@
     insert into product (id, name, price, 
       title, stock, number, 
       description, publishtime, recommend, 
-      oldest, hot, fields1, 
-      fields2, fields3, typeid, 
+      oldest, hot, typeid,
       typename)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
       #{title,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, 
       #{description,jdbcType=VARCHAR}, #{publishtime,jdbcType=TIMESTAMP}, #{recommend,jdbcType=INTEGER}, 
-      #{oldest,jdbcType=INTEGER}, #{hot,jdbcType=INTEGER}, #{fields1,jdbcType=VARCHAR}, 
-      #{fields2,jdbcType=VARCHAR}, #{fields3,jdbcType=VARCHAR}, #{typeid,jdbcType=VARCHAR}, 
+      #{oldest,jdbcType=INTEGER}, #{hot,jdbcType=INTEGER}, #{typeid,jdbcType=VARCHAR},
       #{typename,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shop.demo.pojo.Product">
@@ -82,15 +77,6 @@
       </if>
       <if test="hot != null">
         hot,
-      </if>
-      <if test="fields1 != null">
-        fields1,
-      </if>
-      <if test="fields2 != null">
-        fields2,
-      </if>
-      <if test="fields3 != null">
-        fields3,
       </if>
       <if test="typeid != null">
         typeid,
@@ -133,15 +119,6 @@
       <if test="hot != null">
         #{hot,jdbcType=INTEGER},
       </if>
-      <if test="fields1 != null">
-        #{fields1,jdbcType=VARCHAR},
-      </if>
-      <if test="fields2 != null">
-        #{fields2,jdbcType=VARCHAR},
-      </if>
-      <if test="fields3 != null">
-        #{fields3,jdbcType=VARCHAR},
-      </if>
       <if test="typeid != null">
         #{typeid,jdbcType=VARCHAR},
       </if>
@@ -183,15 +160,6 @@
       <if test="hot != null">
         hot = #{hot,jdbcType=INTEGER},
       </if>
-      <if test="fields1 != null">
-        fields1 = #{fields1,jdbcType=VARCHAR},
-      </if>
-      <if test="fields2 != null">
-        fields2 = #{fields2,jdbcType=VARCHAR},
-      </if>
-      <if test="fields3 != null">
-        fields3 = #{fields3,jdbcType=VARCHAR},
-      </if>
       <if test="typeid != null">
         typeid = #{typeid,jdbcType=VARCHAR},
       </if>
@@ -213,9 +181,6 @@
       recommend = #{recommend,jdbcType=INTEGER},
       oldest = #{oldest,jdbcType=INTEGER},
       hot = #{hot,jdbcType=INTEGER},
-      fields1 = #{fields1,jdbcType=VARCHAR},
-      fields2 = #{fields2,jdbcType=VARCHAR},
-      fields3 = #{fields3,jdbcType=VARCHAR},
       typeid = #{typeid,jdbcType=VARCHAR},
       typename = #{typename,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

@@ -1,15 +1,10 @@
-package com.shop.demo.dao;
+package com.shop.demo.service;
 
 import com.shop.demo.pojo.Product;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Mapper
-@Repository
-public interface ProductMapper {
+public interface ProductService {
     int deleteByPrimaryKey(String id);
 
     int insert(Product record);
@@ -22,6 +17,5 @@ public interface ProductMapper {
 
     int updateByPrimaryKey(Product record);
 
-    @Select("select * from product")
     List<Product> show();
 }

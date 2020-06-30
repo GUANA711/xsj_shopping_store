@@ -8,4 +8,12 @@ public interface CustomerMapper {
     int insert(Customer record);
 
     int insertSelective(Customer record);
+
+    Customer selectByPrimaryKey(String openid);
+
+    int updateByPrimaryKeySelective(Customer record);
+
+    int updateByPrimaryKey(Customer record);
+
+
 }

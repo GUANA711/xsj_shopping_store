@@ -3,14 +3,24 @@
 <mapper namespace="com.shop.demo.dao.CustomerMapper">
   <resultMap id="BaseResultMap" type="com.shop.demo.pojo.Customer">
     <id column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
   </resultMap>
+  <sql id="Base_Column_List">
+    openid, nickname
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where openid = #{openid,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from customer
     where openid = #{openid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.shop.demo.pojo.Customer">
-    insert into customer (openid)
-    values (#{openid,jdbcType=VARCHAR})
+    insert into customer (openid, nickname)
+    values (#{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shop.demo.pojo.Customer">
     insert into customer
@@ -18,11 +28,31 @@
       <if test="openid != null">
         openid,
       </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="openid != null">
         #{openid,jdbcType=VARCHAR},
       </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.demo.pojo.Customer">
+    update customer
+    <set>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where openid = #{openid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.demo.pojo.Customer">
+    update customer
+    set nickname = #{nickname,jdbcType=VARCHAR}
+    where openid = #{openid,jdbcType=VARCHAR}
+  </update>
 </mapper>
