@@ -1,7 +1,13 @@
 package com.shop.demo.dao;
 
 import com.shop.demo.pojo.Productimgs;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Mapper
+@Repository
 public interface ProductimgsMapper {
     int deleteByPrimaryKey(String imgid);
 
@@ -14,4 +20,10 @@ public interface ProductimgsMapper {
     int updateByPrimaryKeySelective(Productimgs record);
 
     int updateByPrimaryKey(Productimgs record);
+    /**
+     * 根据商品id查询商品所有的图片列表
+     * @param pid
+     * @return
+     */
+    List<Productimgs> selectByPid(String pid);
 }

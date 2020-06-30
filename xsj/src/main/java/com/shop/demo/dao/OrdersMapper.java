@@ -1,7 +1,11 @@
 package com.shop.demo.dao;
 
 import com.shop.demo.pojo.Orders;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+@Mapper
+@Repository
 public interface OrdersMapper {
     int deleteByPrimaryKey(String id);
 
