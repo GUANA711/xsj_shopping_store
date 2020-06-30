@@ -1,7 +1,6 @@
 package com.shop.demo.service;
 
 
-import com.shop.demo.pojo.Product;
 import com.shop.demo.pojo.Productimgs;
 
 import java.util.List;

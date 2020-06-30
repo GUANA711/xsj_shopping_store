@@ -1,7 +1,6 @@
 package com.shop.demo.service;
 
 import com.shop.demo.pojo.Goodstype;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 

@@ -19,15 +19,41 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, name, price, title, stock, number, description, publishtime, recommend, oldest, 
-    hot,  typeid, typename,pthoto
+    hot,  typeid, typename,photo
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
     <include refid="Base_Column_List" />
     from product
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+
+
+  <select id="selectProductList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
+    select
+    id, name, price, title, stock, number, description, publishtime, recommend, oldest,
+    hot, typeid, typename
+    from product
+    <where>
+      <if test="typeid!=null and typeid!='-1'">
+        and typeid=#{typeid}
+      </if>
+      <if test="hot!=null and hot!='-1'">
+        and hot=#{hot}
+      </if>
+      <if test="recommend!=null and recommend!='-1'">
+        and recommend=#{recommend}
+      </if>
+      <if test="oldest!=null and oldest!='-1'">
+        and oldest=#{oldest}
+      </if>
+      <if test="name!=null and name!=''">
+        and name like #{name}
+      </if>
+    </where>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from product
     where id = #{id,jdbcType=VARCHAR}
   </delete>
@@ -136,41 +162,41 @@
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.shop.demo.pojo.Product">
     update product
-    <set>
-      <if test="name != null">
+    <set >
+      <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="price != null">
+      <if test="price != null" >
         price = #{price,jdbcType=DOUBLE},
       </if>
-      <if test="title != null">
+      <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="stock != null">
+      <if test="stock != null" >
         stock = #{stock,jdbcType=INTEGER},
       </if>
-      <if test="number != null">
+      <if test="number != null" >
         number = #{number,jdbcType=INTEGER},
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="publishtime != null">
+      <if test="publishtime != null" >
         publishtime = #{publishtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="recommend != null">
+      <if test="recommend != null" >
         recommend = #{recommend,jdbcType=INTEGER},
       </if>
-      <if test="oldest != null">
+      <if test="oldest != null" >
         oldest = #{oldest,jdbcType=INTEGER},
       </if>
-      <if test="hot != null">
+      <if test="hot != null" >
         hot = #{hot,jdbcType=INTEGER},
       </if>
-      <if test="typeid != null">
+      <if test="typeid != null" >
         typeid = #{typeid,jdbcType=VARCHAR},
       </if>
-      <if test="typename != null">
+      <if test="typename != null" >
         typename = #{typename,jdbcType=VARCHAR},
       </if>
       <if test="pthoto != null">
@@ -179,7 +205,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shop.demo.pojo.Product">
+  <update id="updateByPrimaryKey" parameterType="com.shop.demo.pojo.Product" >
     update product
     set name = #{name,jdbcType=VARCHAR},
       price = #{price,jdbcType=DOUBLE},
