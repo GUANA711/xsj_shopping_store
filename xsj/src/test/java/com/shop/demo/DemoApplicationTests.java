@@ -1,7 +1,10 @@
 package com.shop.demo;
 
+import com.shop.demo.pojo.Product;
 import com.shop.demo.pojo.Productimgs;
+import com.shop.demo.service.ProductService;
 import com.shop.demo.service.ProductimgsService;
+import com.shop.demo.utiles.FileServerAddr;
 import com.sun.org.apache.xalan.internal.xsltc.dom.SortingIterator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,28 @@ class DemoApplicationTests {
     public void select(){
         List<Productimgs> productimgsList=productimgsService.selectByproductid("1");
         System.out.println(productimgsList);
+    }
+    @Test
+    public void fileServer(){
+        System.out.println(FileServerAddr.getFileServer());
+    }
+
+    @Autowired
+    ProductService productService;
+    @Test
+    public void Product(){
+        Product product=new Product();
+        product.setPthoto("131321");
+        product.setId("2");
+        System.out.println(product.getPthoto());
+        productService.insertSelective(product);
+    }
+    @Test
+    public void selectPrpduct(){
+        Product product=new Product();
+        product.setTypename("男士");
+        product.setRecommend(0);
+        System.out.println(productService.selectBySelective(product));
     }
 
 }

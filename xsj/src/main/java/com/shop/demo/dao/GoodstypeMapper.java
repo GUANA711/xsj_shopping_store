@@ -24,4 +24,7 @@ public interface GoodstypeMapper {
 
     @Select("select * from goodstype")
     List<Goodstype> showAll();
+
+    @Select("select * from goodstype where name=#{name}")
+    Goodstype selectByname(String name);
 }

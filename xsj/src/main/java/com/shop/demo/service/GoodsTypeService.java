@@ -19,4 +19,6 @@ public interface GoodsTypeService {
     int updateByPrimaryKey(Goodstype record);
 
     List<Goodstype> showAll();
+
+    Goodstype selectByname(String name);
 }

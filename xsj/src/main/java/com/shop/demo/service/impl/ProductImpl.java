@@ -23,6 +23,11 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
+    public List<Product> selectBySelective(Product record) {
+        return productMapper.selectBySelective(record);
+    }
+
+    @Override
     public int insert(Product record) {
         return productMapper.insert(record);
     }

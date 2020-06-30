@@ -24,4 +24,6 @@ public interface ProductMapper {
 
     @Select("select * from product")
     List<Product> show();
+    
+    List<Product> selectBySelective(Product record);
 }
