@@ -8,9 +8,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class GoodsTypeImpl implements GoodsTypeService {
+class GoodsTypeImpl implements GoodsTypeService {
     @Autowired
     GoodstypeMapper goodstypeMapper;
+
+    @Override
+    public Goodstype selectByname(String name) {
+        return goodstypeMapper.selectByname(name);
+    }
+
     @Override
     public int deleteByPrimaryKey(String id) {
         return goodstypeMapper.deleteByPrimaryKey(id);

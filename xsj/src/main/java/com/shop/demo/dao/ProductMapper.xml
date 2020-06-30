@@ -19,7 +19,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, name, price, title, stock, number, description, publishtime, recommend, oldest, 
-    hot,  typeid, typename,photo
+    hot,  typeid, typename,pthoto
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
@@ -50,6 +50,7 @@
       <if test="name!=null and name!=''">
         and name like #{name}
       </if>
+
     </where>
   </select>
 
@@ -265,6 +266,9 @@
         <if test="typename != null">
             and typename like CONCAT(CONCAT('%', #{typename}), '%')
         </if>
+      <if test="pthoto != null">
+        and pthoto like CONCAT(CONCAT('%', #{pthoto}), '%')
+      </if>
     </where>
   </select>
 </mapper>
