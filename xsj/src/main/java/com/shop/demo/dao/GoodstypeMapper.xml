@@ -20,10 +20,8 @@
 
 
 
-  <select id="selectGoodsTypeList" parameterType="com.shop.demo.pojo.Goodstype" resultMap="BaseResultMap">
-    select
-    id, name, state
-    from goodstype
+  <select id="showGoodsTypeList" resultMap="BaseResultMap">
+    select id, name, state from goodstype;
   </select>
 
 

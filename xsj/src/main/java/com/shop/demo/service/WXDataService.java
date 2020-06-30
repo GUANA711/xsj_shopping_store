@@ -13,42 +13,41 @@ import com.shop.demo.pojo.*;
 public interface WXDataService {
 
 	/**
-	 * 查询商品列表（主要用于首页的精选推荐，最新产品，热销产品的查询）
-	 * @param p
+	 * 登录后保存用户信息
+	 * @param cus
 	 * @return
 	 */
-	List<Product> selectProductList(Product p);
+	int insertCustomer(Customer cus);
+
+
 	/**
 	 * 根据openid查询用户详细信息
 	 * @param openid
 	 * @return
 	 */
 	Customer selectCustomerById(String openid);
+
+
 	/**
-	 * 保存客户信息
-	 * @param cus
+	 * 显示商品列表（主要用于首页的精选推荐，最新产品，热销产品的查询）
+	 * @param p
 	 * @return
 	 */
-	int insertCustomer(Customer cus);
+	List<Product> showHomeProductList(Product p);
+
 	/**
-	 * 查询分类商品列表
+	 * 显示分类商品列表
 	 * @return
 	 */
 	List<GoodsTypeProduct> selectGoodsTypeProduct();
 	
 	/**
-	 * 查询商品详情的service
+	 * 显示商品详情的service
 	 * 1、根据id查询商品的详细信息
 	 * 2、根据id查询商品的图片列表
 	 * @param pid
 	 * @return
 	 */
-	ProductDetailDto selectProductDetails(String pid);
+	ProductDetailDto showProductDetails(String pid);
 
-	/**
-	 * 根据id查询一条商品类型的详细信息
-	 * @param id
-	 * @return
-	 */
-	Goodstype selectGoodsTypeById(String id);
 }

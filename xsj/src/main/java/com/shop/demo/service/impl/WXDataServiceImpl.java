@@ -21,41 +21,65 @@ import org.springframework.stereotype.Service;
 public class WXDataServiceImpl implements WXDataService {
 
 	@Autowired
-	private ProductMapper pmapper;
+	private ProductMapper productMapper;
 
-	private CustomerMapper cusmapper;
 	@Autowired
-	private GoodstypeMapper gtmapper;
+	private CustomerMapper customerMapper;
 
-	private ProductimgsMapper imgmapper;
+	@Autowired
+	private GoodstypeMapper goodstypeMapper;
 
-	private CusaddressMapper addrmapper;
-	@Override
-	public List<Product> selectProductList(Product p) {
-		return pmapper.selectProductList(p);
-	}
-	@Override
-	public Customer selectCustomerById(String openid) {
-		return cusmapper.selectByPrimaryKey(openid);
-	}
+	@Autowired
+	private ProductimgsMapper productimgsMapper;
+
+
+	/**
+	 * 登录后保存用户信息
+	 * @param cus
+	 * @return
+	 */
 	@Override
 	public int insertCustomer(Customer cus) {
-		return cusmapper.insert(cus);
+		return customerMapper.insert(cus);
 	}
+
+	/**
+	 * 根据openid查询用户详细信息
+	 * @param openid
+	 * @return
+	 */
+	@Override
+	public Customer selectCustomerById(String openid) {
+		return customerMapper.selectByPrimaryKey(openid);
+	}
+
+
+	/**
+	 * 显示商品列表（主要用于首页的精选推荐，最新产品，热销产品的查询）
+	 * @param p
+	 * @return
+	 */
+	@Override
+	public List<Product> showHomeProductList(Product p) {
+		return productMapper.selectProductList(p);
+	}
+
+
+
 
 	@Override
 	public List<GoodsTypeProduct> selectGoodsTypeProduct() {
 		//查询所有可用的商品分类列表
 		Goodstype gt = new Goodstype();
 		gt.setState(1);
-		List<Goodstype> gtlist =  gtmapper.selectGoodsTypeList(gt);
+		List<Goodstype> gtlist =  goodstypeMapper.showGoodsTypeList(gt);
 		//查询每一个分类中的商品,然后再将其保存到goodstypeproduct对象中
 		List<GoodsTypeProduct> list = new ArrayList<>();
 		Product p = new Product();
 //		p.setFields1("1");
 		for(Goodstype type : gtlist){
 			p.setTypeid(type.getId());
-			List<Product> plist = pmapper.selectProductList(p);
+			List<Product> plist = productMapper.selectProductList(p);
 			GoodsTypeProduct gtp = new GoodsTypeProduct();
 			gtp.setId(type.getId());
 			gtp.setName(type.getName());
@@ -64,12 +88,20 @@ public class WXDataServiceImpl implements WXDataService {
 		}	
 		return list;
 	}
+
+	/**
+	 * 显示商品详情的service
+	 *  1、根据id查询商品的详细信息
+	 * 	2、根据id查询商品的图片列表
+	 * @param id
+	 * @return
+	 */
 	@Override
-	public ProductDetailDto selectProductDetails(String pid) {
+	public ProductDetailDto showProductDetails(String id) {
 		//根据id查询商品详情
-		Product p = pmapper.selectByPrimaryKey(pid);
+		Product p = productMapper.selectByPrimaryKey(id);
 		//根据商品id查询商品的图片列表
-		List<Productimgs> imgs = (List<Productimgs>) imgmapper.selectByPrimaryKey(pid);
+		List<Productimgs> imgs = (List<Productimgs>) productimgsMapper.selectByPrimaryKey(id);
 		//整合返回值
 		ProductDetailDto dto = new ProductDetailDto();
 		dto.setProduct(p);
@@ -77,9 +109,5 @@ public class WXDataServiceImpl implements WXDataService {
 		return dto;
 	}
 
-	@Override
-	public Goodstype selectGoodsTypeById(String id) {
-		return null;
-	}
 
 }

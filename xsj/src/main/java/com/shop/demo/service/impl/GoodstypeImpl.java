@@ -7,17 +7,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-/**
- * @author Alice
- */
 @Service
-public class GoodstypeImpl implements GoodsTypeService {
-
+public class GoodsTypeImpl implements GoodsTypeService {
     @Autowired
-    private GoodstypeMapper goodstypeMapper;
+    GoodstypeMapper goodstypeMapper;
     @Override
-    public Goodstype selectGoodsTypeById(String id) {
-        return null;
+    public int deleteByPrimaryKey(String id) {
+        return goodstypeMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int insert(Goodstype record) {
+        return goodstypeMapper.insert(record);
+    }
+
+    @Override
+    public int insertSelective(Goodstype record) {
+        return goodstypeMapper.insertSelective(record);
+    }
+
+    @Override
+    public Goodstype selectByPrimaryKey(String id) {
+        return goodstypeMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Goodstype record) {
+        return goodstypeMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Goodstype record) {
+        return goodstypeMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Goodstype> showAll() {
+        return goodstypeMapper.showAll();
     }
 }
