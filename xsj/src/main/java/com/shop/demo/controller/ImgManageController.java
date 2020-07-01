@@ -14,6 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * 图片管理后台接口
+ * @author GUANA
+ */
 @Controller
 @ResponseBody
 @RequestMapping("/fastDfs")
@@ -48,9 +52,14 @@ public class ImgManageController {
                     productimgs.setImgurl(url);
                     productimgs.setProductid(productID);
                     productimgs.setSort(sort);
-                    productimgsService.insert(productimgs);
-                    status_guana.setMsg("图片添加成功");
-                    status_guana.setStatus(true);
+                    int i=productimgsService.insert(productimgs);
+                    if(i>0){
+                        status_guana.setMsg("图片添加成功");
+                        status_guana.setStatus(true);
+                    }else {
+                        status_guana.setMsg("图片添加失败");
+                    }
+
                 }else {
                     status_guana.setMsg("图片添加失败");
                 }
@@ -83,9 +92,14 @@ public class ImgManageController {
             FastDFSClient dfsClient=new FastDFSClient();
             Boolean isSucss= dfsClient.delFile(imgPath);
             if(isSucss){
-                productimgsService.deleteByPrimaryKey(productimgs.getImgid());
-                status_guana.setStatus(true);
-                status_guana.setMsg("图片删除成功");
+                int i=productimgsService.deleteByPrimaryKey(productimgs.getImgid());
+                if(i>0){
+                    status_guana.setStatus(true);
+                    status_guana.setMsg("图片删除成功");
+                }else {
+                    status_guana.setMsg("图片删除失败");
+                }
+
             }
             else {
                 status_guana.setStatus(false);
@@ -115,11 +129,16 @@ public class ImgManageController {
         productimgs.setImgurl(json.getString("imgurl"));
         productimgs.setImgid(json.getString("imgid"));
         try {
-            productimgsService.updateByPrimaryKeySelective(productimgs);
-            status_guana.setMsg("修改成功");
-            status_guana.setStatus(true);
+            int i=productimgsService.updateByPrimaryKeySelective(productimgs);
+            if(i>0){
+                status_guana.setMsg("修改成功");
+                status_guana.setStatus(true);
+            }else {
+                status_guana.setMsg("修改失败");
+            }
+
         }catch (Exception e){
-            status_guana.setMsg("修改失败");
+
             return status_guana;
         }
         return status_guana;

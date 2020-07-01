@@ -24,6 +24,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * 商品管理接口
+ * @author GUANA
+ */
 @Controller
 @ResponseBody
 @RequestMapping("/product")
@@ -35,11 +39,30 @@ public class ProductManageController {
     @Autowired
     ProductimgsService productimgsService;
 
+    /**
+     *显示所有商品
+     * @return
+     */
     @PostMapping("/show")
     public List<Product> show() {
         return productService.show();
     }
 
+    /**
+     * 添加商品
+     * @param name
+     * @param price
+     * @param title
+     * @param stock
+     * @param number
+     * @param description
+     * @param recommend
+     * @param oldest
+     * @param hot
+     * @param typeid
+     * @param file
+     * @return
+     */
     @PostMapping("/add")
     public Status_guana add(@RequestParam("name") String name ,
                             @RequestParam("price") String price,
@@ -103,7 +126,13 @@ public class ProductManageController {
                 if (url != null && !url.equals("")) {
                     System.out.println(url);
                     product.setPthoto(url);
-                    productService.insertSelective(product);
+                    int i=productService.insertSelective(product);
+                    if(i>0){
+                        status_guana.setMsg("添加成功");
+                        status_guana.setStatus(true);
+                    }else {
+                        status_guana.setMsg("添加失败");
+                    }
 
                 } else {
                     status_guana.setMsg("图片添加失败");
@@ -116,11 +145,17 @@ public class ProductManageController {
                 return status_guana;
             }
         }
-        status_guana.setStatus(true);
-        status_guana.setMsg("添加成功");
+
         return status_guana;
     }
 
+    /**
+     * ckeditor上传文件
+     * @param file
+     * @param response
+     * @param request
+     * @return
+     */
     @PostMapping("/ckImg")
     public Status_guana ckImg(@RequestParam("file")MultipartFile file, HttpServletResponse response, HttpServletRequest request){
         Status_guana status_guana=new Status_guana();
@@ -206,7 +241,13 @@ public class ProductManageController {
                 dfsClient.delFile(productService.selectByPrimaryKey(id).getPthoto());
                 if (url != null && !url.equals("")) {
                     product.setPthoto(url);
-                    productService.updateByPrimaryKeySelective(product);
+                    int i=productService.updateByPrimaryKeySelective(product);
+                    if(i>0){
+                        status_guana.setMsg("图片修改成功");
+                        status_guana.setStatus(true);
+                    }else {
+                        status_guana.setMsg("图片修改失败");
+                    }
 
                 } else {
                     status_guana.setMsg("图片修改失败");
@@ -220,10 +261,15 @@ public class ProductManageController {
             }
         }
 
-        status_guana.setMsg("修改成功");
+
         return status_guana;
     }
 
+    /**
+     * 搜索商品
+     * @param json
+     * @return
+     */
     @PostMapping("/select")
     public  List<Product> select(@RequestBody JSONObject json) {
         String id = json.getString("id");
@@ -242,7 +288,9 @@ public class ProductManageController {
 
         Product product = new Product();
         product.setName(name);
-        if (price != null) {product.setPrice(Double.parseDouble(price));}
+            if (price != null) {
+                product.setPrice(Double.parseDouble(price));
+            }
 
             if (stock != null) {
                 product.setStock(Integer.parseInt(stock));
@@ -268,6 +316,33 @@ public class ProductManageController {
 
             return productService.selectBySelective(product);
         }
+
+    /**
+     * 删除商品
+     * @param json
+     * @return
+     */
+     @PostMapping("/delete")
+     public Status_guana delete(@RequestBody JSONObject json){
+        Status_guana status_guana=new Status_guana();
+        String id=json.getString("id");
+        try {
+            int i=productService.deleteByPrimaryKey(id);
+            if(i>0){
+                status_guana.setMsg("删除成功");
+                status_guana.setStatus(true);
+            }else {
+                status_guana.setMsg("删除失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            status_guana.setMsg("删除失败");
+            return status_guana;
+        }
+
+        return status_guana;
+
+     }
 
 
 }
