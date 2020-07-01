@@ -1,7 +1,9 @@
-package com.shop.demo.services;
+package com.shop.demo.service.impl;
 
 import com.shop.demo.dao.CollectionMapper;
+import com.shop.demo.dto.CollectionDetail;
 import com.shop.demo.pojo.Collection;
+import com.shop.demo.service.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,8 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public List<Collection> selectCollection() {
-        return collectionMapper.select();
+    public List<CollectionDetail> selectCollection(String openid) {
+        return collectionMapper.select(openid);
     }
 
     @Override

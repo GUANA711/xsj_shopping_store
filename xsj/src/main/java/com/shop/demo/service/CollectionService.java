@@ -1,5 +1,6 @@
-package com.shop.demo.services;
+package com.shop.demo.service;
 
+import com.shop.demo.dto.CollectionDetail;
 import com.shop.demo.pojo.Collection;
 
 import javax.annotation.Resource;
@@ -13,6 +14,6 @@ import java.util.List;
 @Resource
 public interface CollectionService {
     public int addCollection(Collection collection);
-    public List<Collection> selectCollection();
-    public int deleteCollection(String productid,String openid);
+    public List<CollectionDetail> selectCollection(String openid);
+    public int deleteCollection(String productid, String openid);
 }
