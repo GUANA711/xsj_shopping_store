@@ -1,7 +1,9 @@
 package com.shop.demo.pojo;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class Product {
     private String id;
 
@@ -26,6 +28,8 @@ public class Product {
     private Integer hot;
 
     private String fields;
+
+    private String pthoto;
 
     private String typeid;
 
@@ -141,5 +145,13 @@ public class Product {
 
     public void setTypename(String typename) {
         this.typename = typename == null ? null : typename.trim();
+    }
+
+    public String getPthoto() {
+        return pthoto;
+    }
+
+    public void setPthoto(String pthoto) {
+        this.pthoto=pthoto;
     }
 }

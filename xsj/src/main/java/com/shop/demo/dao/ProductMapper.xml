@@ -13,13 +13,14 @@
     <result column="recommend" property="recommend" jdbcType="INTEGER" />
     <result column="oldest" property="oldest" jdbcType="INTEGER" />
     <result column="hot" property="hot" jdbcType="INTEGER" />
-    <result column="fields" property="fields1" jdbcType="VARCHAR" />
-    <result column="typeid" property="typeid" jdbcType="VARCHAR" />
+      <result column="fields" property="fields1" jdbcType="VARCHAR" />
+      <result column="typeid" property="typeid" jdbcType="VARCHAR" />
     <result column="typename" property="typename" jdbcType="VARCHAR" />
+      <result column="pthoto" jdbcType="VARCHAR" property="pthoto" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-    hot, fields, typeid, typename
+    hot,fields typeid, typename,pthoto
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
@@ -32,7 +33,7 @@
   <select id="selectProductList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
     select
     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-    hot, fields, typeid, typename
+    hot,fields, typeid, typename
     from product
     <where>
       <if test="typeid!=null and typeid!='-1'">
@@ -48,7 +49,7 @@
         and oldest=#{oldest}
       </if>
       <if test="fields!=null and fields!='-1'">
-        and fields=#{fields}
+          and fields=#{fields}
       </if>
       <if test="name!=null and name!=''">
         and name like #{name}
@@ -70,7 +71,7 @@
       #{title,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{number,jdbcType=INTEGER},
       #{description,jdbcType=VARCHAR}, #{publishtime,jdbcType=TIMESTAMP}, #{recommend,jdbcType=INTEGER},
       #{oldest,jdbcType=INTEGER}, #{hot,jdbcType=INTEGER},#{fields,jdbcType=VARCHAR}, #{typeid,jdbcType=VARCHAR},
-      #{typename,jdbcType=VARCHAR})
+      #{typename,jdbcType=VARCHAR}),#{pthoto,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shop.demo.pojo.Product" >
     insert into product
@@ -108,15 +109,18 @@
       <if test="hot != null" >
         hot,
       </if>
-      <if test="fields != null" >
-        fields,
-      </if>
       <if test="typeid != null" >
         typeid,
       </if>
+        <if test="fields != null" >
+            fields,
+        </if>
       <if test="typename != null" >
         typename,
       </if>
+        <if test="pthoto!= null">
+            pthoto,
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.shop.demo.pojo.Product" >
@@ -152,15 +156,18 @@
       <if test="hot != null" >
         hot = #{hot,jdbcType=INTEGER},
       </if>
-      <if test="fields != null" >
-        #{fields,jdbcType=VARCHAR},
-      </if>
       <if test="typeid != null" >
         typeid = #{typeid,jdbcType=VARCHAR},
       </if>
+        <if test="fields != null" >
+            #{fields,jdbcType=VARCHAR},
+        </if>
       <if test="typename != null" >
         typename = #{typename,jdbcType=VARCHAR},
       </if>
+        <if test="pthoto != null">
+            pthoto = #{pthoto,jdbcType=VARCHAR},
+        </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -179,6 +186,54 @@
       fields = #{fields,jdbcType=VARCHAR},
       typeid = #{typeid,jdbcType=VARCHAR},
       typename = #{typename,jdbcType=VARCHAR}
+      pthoto = #{pthoto,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+    <select id="selectBySelective" parameterType="com.shop.demo.pojo.Product" resultType="com.shop.demo.pojo.Product">
+        select * from product
+        <where>
+            <if test="id != null">
+                and id like CONCAT(CONCAT('%', #{id}), '%')
+            </if>
+            <if test="name != null">
+                and name like CONCAT(CONCAT('%', #{name}), '%')
+            </if>
+            <if test="price != null">
+                and price like CONCAT(CONCAT('%', #{name}), '%')
+            </if>
+            <if test="title != null">
+                and title like CONCAT(CONCAT('%', #{title}), '%')
+            </if>
+            <if test="stock != null">
+                and stock like CONCAT(CONCAT('%', #{stock}), '%')
+            </if>
+            <if test="number != null">
+                and number like CONCAT(CONCAT('%', #{number}), '%')
+            </if>
+            <if test="description != null">
+                and description like CONCAT(CONCAT('%', #{description}), '%')
+            </if>
+            <if test="publishtime != null">
+                and publishtime like CONCAT(CONCAT('%', #{publishtime}), '%')
+            </if>
+            <if test="recommend != null">
+                and recommend like CONCAT(CONCAT('%', #{recommend}), '%')
+            </if>
+            <if test="oldest != null">
+                and oldest like CONCAT(CONCAT('%', #{oldest}), '%')
+            </if>
+            <if test="hot != null">
+                and hot like CONCAT(CONCAT('%', #{hot}), '%')
+            </if>
+            <if test="typeid != null">
+                and typeid like CONCAT(CONCAT('%', #{typeid}), '%')
+            </if>
+            <if test="typename != null">
+                and typename like CONCAT(CONCAT('%', #{typename}), '%')
+            </if>
+            <if test="pthoto != null">
+                and pthoto like CONCAT(CONCAT('%', #{pthoto}), '%')
+            </if>
+        </where>
+    </select>
 </mapper>

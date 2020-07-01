@@ -25,6 +25,8 @@ public interface ProductMapper {
     @Select("select * from product")
     List<Product> show();
 
+    List<Product> selectBySelective(Product record);
+
     /**
      * 显示首页商品列表
      * @param product

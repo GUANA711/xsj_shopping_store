@@ -45,4 +45,9 @@ public class GoodsTypeImpl implements GoodsTypeService {
     public List<Goodstype> showAll() {
         return goodstypeMapper.showAll();
     }
+
+    @Override
+    public Goodstype selectByname(String name) {
+        return goodstypeMapper.selectByname(name);
+    }
 }

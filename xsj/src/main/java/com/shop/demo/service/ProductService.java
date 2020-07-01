@@ -18,4 +18,6 @@ public interface ProductService {
     int updateByPrimaryKey(Product record);
 
     List<Product> show();
+
+    List<Product> selectBySelective(Product record);
 }
