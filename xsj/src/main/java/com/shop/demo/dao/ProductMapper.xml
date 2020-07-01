@@ -13,12 +13,13 @@
     <result column="recommend" property="recommend" jdbcType="INTEGER" />
     <result column="oldest" property="oldest" jdbcType="INTEGER" />
     <result column="hot" property="hot" jdbcType="INTEGER" />
+    <result column="fields" property="fields1" jdbcType="VARCHAR" />
     <result column="typeid" property="typeid" jdbcType="VARCHAR" />
     <result column="typename" property="typename" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-    hot, typeid, typename
+    hot, fields, typeid, typename
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
@@ -31,7 +32,7 @@
   <select id="selectProductList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
     select
     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-    hot, typeid, typename
+    hot, fields, typeid, typename
     from product
     <where>
       <if test="typeid!=null and typeid!='-1'">
@@ -45,6 +46,9 @@
       </if>
       <if test="oldest!=null and oldest!='-1'">
         and oldest=#{oldest}
+      </if>
+      <if test="fields!=null and fields!='-1'">
+        and fields=#{fields}
       </if>
       <if test="name!=null and name!=''">
         and name like #{name}
@@ -60,12 +64,12 @@
     insert into product (id, name, price,
       title, stock, number,
       description, publishtime, recommend,
-      oldest, hot, typeid,
+      oldest, hot,fields, typeid,
       typename)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE},
       #{title,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{number,jdbcType=INTEGER},
       #{description,jdbcType=VARCHAR}, #{publishtime,jdbcType=TIMESTAMP}, #{recommend,jdbcType=INTEGER},
-      #{oldest,jdbcType=INTEGER}, #{hot,jdbcType=INTEGER}, #{typeid,jdbcType=VARCHAR},
+      #{oldest,jdbcType=INTEGER}, #{hot,jdbcType=INTEGER},#{fields,jdbcType=VARCHAR}, #{typeid,jdbcType=VARCHAR},
       #{typename,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shop.demo.pojo.Product" >
@@ -103,6 +107,9 @@
       </if>
       <if test="hot != null" >
         hot,
+      </if>
+      <if test="fields != null" >
+        fields,
       </if>
       <if test="typeid != null" >
         typeid,
@@ -145,6 +152,9 @@
       <if test="hot != null" >
         hot = #{hot,jdbcType=INTEGER},
       </if>
+      <if test="fields != null" >
+        #{fields,jdbcType=VARCHAR},
+      </if>
       <if test="typeid != null" >
         typeid = #{typeid,jdbcType=VARCHAR},
       </if>
@@ -166,6 +176,7 @@
       recommend = #{recommend,jdbcType=INTEGER},
       oldest = #{oldest,jdbcType=INTEGER},
       hot = #{hot,jdbcType=INTEGER},
+      fields = #{fields,jdbcType=VARCHAR},
       typeid = #{typeid,jdbcType=VARCHAR},
       typename = #{typename,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

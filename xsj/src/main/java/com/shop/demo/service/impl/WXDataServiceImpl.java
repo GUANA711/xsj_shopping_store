@@ -55,18 +55,19 @@ public class WXDataServiceImpl implements WXDataService {
 
 
 	/**
-	 * 显示商品列表（主要用于首页的精选推荐，最新产品，热销产品的查询）
+	 * 显示首页商品列表（主要用于首页的精选推荐，最新产品，热销产品的查询）
 	 * @param p
 	 * @return
 	 */
 	@Override
-	public List<Product> showHomeProductList(Product p) {
+	public List<Product> selectIndexProduct(Product p) {
 		return productMapper.selectProductList(p);
 	}
 
-
-
-
+	/**
+	 * 显示分类商品列表
+	 * @return
+	 */
 	@Override
 	public List<GoodsTypeProduct> selectGoodsTypeProduct() {
 		//查询所有可用的商品分类列表
@@ -76,7 +77,7 @@ public class WXDataServiceImpl implements WXDataService {
 		//查询每一个分类中的商品,然后再将其保存到goodstypeproduct对象中
 		List<GoodsTypeProduct> list = new ArrayList<>();
 		Product p = new Product();
-//		p.setFields1("1");
+		p.setFields("1");
 		for(Goodstype type : gtlist){
 			p.setTypeid(type.getId());
 			List<Product> plist = productMapper.selectProductList(p);
@@ -97,11 +98,11 @@ public class WXDataServiceImpl implements WXDataService {
 	 * @return
 	 */
 	@Override
-	public ProductDetailDto showProductDetails(String id) {
-		//根据id查询商品详情
+	public ProductDetailDto selectProductDetails(String id) {
+		//根据商品id查询商品详情
 		Product p = productMapper.selectByPrimaryKey(id);
 		//根据商品id查询商品的图片列表
-		List<Productimgs> imgs = (List<Productimgs>) productimgsMapper.selectByPrimaryKey(id);
+		List<Productimgs> imgs = productimgsMapper.selectByproductid(id);
 		//整合返回值
 		ProductDetailDto dto = new ProductDetailDto();
 		dto.setProduct(p);

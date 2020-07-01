@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * 商品分类显示的dto
+ * 包含  商品类型：Goodstype  商品列表：productlist
  *
  * @author Alice
  */

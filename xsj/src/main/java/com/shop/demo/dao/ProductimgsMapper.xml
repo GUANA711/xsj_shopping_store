@@ -20,15 +20,6 @@
   </select>
 
 
-  <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    imgid, productid, imgurl, sort
-    from productimgs
-    where productid = #{productid,jdbcType=VARCHAR}
-    order by sort asc
-  </select>
-
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from productimgs
     where imgid = #{imgid,jdbcType=VARCHAR}

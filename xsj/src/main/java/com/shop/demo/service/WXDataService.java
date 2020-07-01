@@ -33,7 +33,7 @@ public interface WXDataService {
 	 * @param p
 	 * @return
 	 */
-	List<Product> showHomeProductList(Product p);
+	List<Product> selectIndexProduct(Product p);
 
 	/**
 	 * 显示分类商品列表
@@ -45,9 +45,9 @@ public interface WXDataService {
 	 * 显示商品详情的service
 	 * 1、根据id查询商品的详细信息
 	 * 2、根据id查询商品的图片列表
-	 * @param pid
+	 * @param id
 	 * @return
 	 */
-	ProductDetailDto showProductDetails(String pid);
+	ProductDetailDto selectProductDetails(String id);
 
 }

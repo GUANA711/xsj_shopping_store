@@ -26,7 +26,7 @@ public interface ProductMapper {
     List<Product> show();
 
     /**
-     * 查询商品的列表
+     * 显示首页商品列表
      * @param product
      * @return
      */

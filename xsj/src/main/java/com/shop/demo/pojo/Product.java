@@ -25,6 +25,7 @@ public class Product {
 
     private Integer hot;
 
+    private String fields;
 
     private String typeid;
 
@@ -118,6 +119,13 @@ public class Product {
         this.hot = hot;
     }
 
+    public String getFields() {
+        return fields;
+    }
+
+    public void setFields(String fields) {
+        this.fields = fields;
+    }
 
     public String getTypeid() {
         return typeid;
