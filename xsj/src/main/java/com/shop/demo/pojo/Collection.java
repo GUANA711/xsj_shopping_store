@@ -9,7 +9,7 @@ public class Collection {
 
     private String openid;
 
-    private Date collecttime;
+    private String collecttime;
 
     public String getId() {
         return id;
@@ -35,11 +35,11 @@ public class Collection {
         this.openid = openid == null ? null : openid.trim();
     }
 
-    public Date getCollecttime() {
+    public String getCollecttime() {
         return collecttime;
     }
 
-    public void setCollecttime(Date collecttime) {
+    public void setCollecttime(String collecttime) {
         this.collecttime = collecttime;
     }
 }

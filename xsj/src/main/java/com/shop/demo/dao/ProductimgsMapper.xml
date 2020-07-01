@@ -10,22 +10,28 @@
   <sql id="Base_Column_List">
     imgid, productid, imgurl, sort
   </sql>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from productimgs
     where imgid = #{imgid,jdbcType=VARCHAR}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from productimgs
     where imgid = #{imgid,jdbcType=VARCHAR}
   </delete>
+
   <insert id="insert" parameterType="com.shop.demo.pojo.Productimgs">
     insert into productimgs (imgid, productid, imgurl, 
       sort)
     values (#{imgid,jdbcType=VARCHAR}, #{productid,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
       #{sort,jdbcType=INTEGER})
   </insert>
+
   <insert id="insertSelective" parameterType="com.shop.demo.pojo.Productimgs">
     insert into productimgs
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -57,6 +63,8 @@
       </if>
     </trim>
   </insert>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.shop.demo.pojo.Productimgs">
     update productimgs
     <set>
@@ -72,6 +80,8 @@
     </set>
     where imgid = #{imgid,jdbcType=VARCHAR}
   </update>
+
+
   <update id="updateByPrimaryKey" parameterType="com.shop.demo.pojo.Productimgs">
     update productimgs
     set productid = #{productid,jdbcType=VARCHAR},
@@ -79,4 +89,5 @@
       sort = #{sort,jdbcType=INTEGER}
     where imgid = #{imgid,jdbcType=VARCHAR}
   </update>
+
 </mapper>
