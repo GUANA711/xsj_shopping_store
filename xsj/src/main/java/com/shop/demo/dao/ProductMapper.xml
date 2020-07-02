@@ -13,7 +13,7 @@
     <result column="recommend" property="recommend" jdbcType="INTEGER" />
     <result column="oldest" property="oldest" jdbcType="INTEGER" />
     <result column="hot" property="hot" jdbcType="INTEGER" />
-      <result column="fields" property="fields1" jdbcType="VARCHAR" />
+      <result column="fields" property="fields" jdbcType="VARCHAR" />
       <result column="typeid" property="typeid" jdbcType="VARCHAR" />
     <result column="typename" property="typename" jdbcType="VARCHAR" />
       <result column="pthoto" jdbcType="VARCHAR" property="pthoto" />
@@ -33,20 +33,20 @@
     select
     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
     hot,fields, typeid, typename
-    from product where recommend=1;
+    from product where recommend=1 and fields=1;
   </select>
     <select id="selectoldestList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
      select
      id, name, price, title, stock, number, description, publishtime, recommend, oldest,
      hot,fields, typeid, typename
-     from product where oldest=1;
+     from product where oldest=1 and fields=1;
   </select>
 
     <select id="selecthotList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
      select
      id, name, price, title, stock, number, description, publishtime, recommend, oldest,
      hot,fields, typeid, typename
-     from product where hot=1;
+     from product where hot=1 and fields=1;
     </select>
 
 
