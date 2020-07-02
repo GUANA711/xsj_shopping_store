@@ -37,7 +37,7 @@ public class WXLoginController {
 	 * 1、使用code与微信交换得到openid 
 	 * 2、判断保存openid与nickname到数据库（需要先判断是否已经保存）
 	 * @param code
-	 *            微信登录的code值
+	 *            微信登录的code值（每次获取到的code不一样）
 	 * @param nickname
 	 *            用户的昵称
 	 * @return openid。如果注册不成功，返回空字符串

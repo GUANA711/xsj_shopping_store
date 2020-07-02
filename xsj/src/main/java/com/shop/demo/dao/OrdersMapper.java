@@ -23,4 +23,6 @@ public interface OrdersMapper {
     int updateByPrimaryKey(Orders record);
 
     List<OdersDto> selectBySelective(Orders orders);
+
+    List<Orders> selectAllOrder();
 }

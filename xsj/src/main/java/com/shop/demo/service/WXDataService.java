@@ -60,4 +60,37 @@ public interface WXDataService {
 	 */
 	ProductDetailDto selectProductDetails(String id);
 
+	/**
+	 * 添加购物车
+	 * @param record
+	 * @return
+	 */
+	int insert(Buycar record);
+
+	/**
+	 * 根据openid查询购物车
+	 */
+	List<Buycar> selectByopenid (String openid);
+
+
+	/**
+	 * 移除购物车
+	 */
+	int deleteByPrimaryKey(int id);
+
+	/**
+	 * 统计用户
+	 */
+	List<Customer> selectAllCustomer ();
+
+	/**
+	 * 订单统计
+	 */
+	List<Orders> selectAllOrder ();
+
+	/**
+	 * 商品统计
+	 */
+	List<Product> selectAllProduct();
+
 }

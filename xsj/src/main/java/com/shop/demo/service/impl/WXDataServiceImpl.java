@@ -32,6 +32,11 @@ public class WXDataServiceImpl implements WXDataService {
 	@Autowired
 	private ProductimgsMapper productimgsMapper;
 
+	@Autowired
+    private BuycarMapper buycarMapper;
+
+	@Autowired
+	private OrdersMapper ordersMapper;
 
 	/**
 	 * 登录后保存用户信息
@@ -124,5 +129,54 @@ public class WXDataServiceImpl implements WXDataService {
 		return dto;
 	}
 
+    /**
+     * 添加购物车
+     * @param record
+     * @return
+     */
+    @Override
+    public int insert(Buycar record){
+        return buycarMapper.insert(record);
+    }
 
+	/**
+	 * 根据openid查询购物车
+	 */
+	@Override
+	 public List<Buycar> selectByopenid (String openid){
+		return buycarMapper.selectByopenid(openid);
+	}
+
+	/**
+	 * 移除购物车
+	 */
+	@Override
+	public int deleteByPrimaryKey(int id){
+		return buycarMapper.deleteByPrimaryKey(id);
+	}
+
+	/**
+	 * 统计用户
+	 */
+	@Override
+	public List<Customer> selectAllCustomer (){
+		return customerMapper.selectAllCustomer();
+	}
+
+	/**
+	 * 订单统计
+	 */
+	@Override
+	public List<Orders> selectAllOrder (){
+		return ordersMapper.selectAllOrder();
+	}
+
+	/**
+	 * 商品统计
+	 */
+	@Override
+	public List<Product> selectAllProduct (){
+		return productMapper.show();
+	}
 }
+
