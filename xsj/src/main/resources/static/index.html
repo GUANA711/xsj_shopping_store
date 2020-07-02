@@ -50,16 +50,15 @@
             </ul>
 
             <ul class="layui-nav layui-layout-right">
-
+                <!-- 刷新页面 -->
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
                 </li>
-                <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:;" data-clear="清理" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
-                </li>
+                <!-- 全屏页面 -->
                 <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
                     <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                 </li>
+                <!-- 用户 -->
                 <li class="layui-nav-item layuimini-setting">
                     <a href="javascript:;">admin</a>
                     <dl class="layui-nav-child">
@@ -67,10 +66,10 @@
                             <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料"
                                data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
                         </dd>
-                        <dd>
+                        <!-- <dd>
                             <a href="javascript:;" layuimini-content-href="page/user-password.html" data-title="修改密码"
                                data-icon="fa fa-gears">修改密码</a>
-                        </dd>
+                        </dd> -->
                         <dd>
                             <hr>
                         </dd>
@@ -79,15 +78,60 @@
                         </dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item layuimini-select-bgcolor" lay-unselect>
-                    <a href="javascript:;" data-bgcolor="配色方案"><i class="fa fa-ellipsis-v"></i></a>
-                </li>
+                <!--  <li class="layui-nav-item layuimini-select-bgcolor" lay-unselect>
+                     <a href="javascript:;" data-bgcolor="配色方案"><i class="fa fa-ellipsis-v"></i></a>
+                 </li> -->
             </ul>
         </div>
     </div>
 
     <!--无限极左侧菜单-->
     <div class="layui-side layui-bg-black layuimini-menu-left">
+        <ul class="layui-nav layui-nav-tree layui-this" id="multi_module_0">
+            <li class="layui-nav-item menu-li  undefined layui-nav-itemed"><a target="_self" href="javascript:;"> <i
+                    class="fa fa-home"></i> <span class="layui-left-nav">主页</span><span
+                    class="layui-nav-more"></span></a>
+            </li>
+            <!-- <li class="layui-nav-item menu-li  undefined layui-this"> <a layuimini-href="page/table.html" target="_self"
+                    href="javascript:;"> <i class="fa fa-file-text"></i> <span class="layui-left-nav">表格示例</span></a>
+            </li> -->
+            <!-- <li class="layui-nav-item menu-li  undefined layui-nav-itemed"> <a target="_self" href="javascript:;"> <i
+                        class="fa fa-calendar"></i> <span class="layui-left-nav">表单示例</span><span
+                        class="layui-nav-more"></span></a>
+                <dl class="layui-nav-child">
+                    <dd class="menu-dd"> <a href="javascript:;" layuimini-href="page/form.html" target="_self"> <i
+                                class="fa fa-list-alt"></i> <span class="layui-left-nav"> 普通表单</span></a> </dd>
+                    <dd class="menu-dd"> <a href="javascript:;" layuimini-href="page/form-step.html" target="_self"> <i
+                                class="fa fa-navicon"></i> <span class="layui-left-nav"> 分步表单</span></a> </dd>
+                </dl>
+            </li> -->
+            <li class="layui-nav-item menu-li  undefined"><a target="_self" href="javascript:;"> <i
+                    class="fa fa-flag-o"></i> <span class="layui-left-nav">商品管理</span><span
+                    class="layui-nav-more"></span></a>
+                <dl class="layui-nav-child ">
+                    <dd class="menu-dd"><a href="javascript:;" layuimini-href="page/login-1.html" target="_blank"> <i
+                            class="fa fa-stumbleupon-circle"></i> <span class="layui-left-nav">查看商品</span></a>
+                    </dd>
+                    <dd class="menu-dd"><a href="javascript:;" layuimini-href="page/login-2.html" target="_blank"> <i
+                            class="fa fa-viacoin"></i> <span class="layui-left-nav"> 添加商品</span></a>
+                    </dd>
+                    <dd class="menu-dd"><a href="javascript:;" layuimini-href="page/login-2.html" target="_blank"> <i
+                            class="fa fa-viacoin"></i> <span class="layui-left-nav"> 图片管理</span></a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item menu-li  undefined layui-nav-itemed"><a href="javascript:;"> <i
+                    class="fa fa-snowflake-o"></i> <span class="layui-left-nav">订单管理</span><span
+                    class="layui-nav-more"></span></a>
+                <dl class="layui-nav-child">
+                    <dd class="menu-dd"><a href="javascript:;" layuimini-href="page/button.html" target="_self"> <i
+                            class="fa fa-snowflake-o"></i> <span class="layui-left-nav"> 订单查询</span></a></dd>
+                    <dd class="menu-dd"><a href="javascript:;" layuimini-href="page/layer.html" target="_self"> <i
+                            class="fa fa-shield"></i> <span class="layui-left-nav"> 订单处理</span></a></dd>
+                </dl>
+            </li>
+            <span class="layui-nav-bar" style="top: 230px; height: 0px; opacity: 0;"></span>
+        </ul>
     </div>
 
     <!--初始化加载层-->
