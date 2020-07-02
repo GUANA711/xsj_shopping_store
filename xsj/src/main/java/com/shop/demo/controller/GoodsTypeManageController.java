@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * 商品管理后台接口
+ * @author GUANA
+ */
 @Controller
 @ResponseBody
 @RequestMapping("/goodsType")
@@ -45,11 +49,19 @@ public class GoodsTypeManageController {
             return  status_guana;
         }
         goodstype.setName(name);
-        goodstype.setState(Integer.parseInt(state));
+        if(state!=null){
+            goodstype.setState(Integer.parseInt(state));
+        }
+
         try {
-            goodsTypeService.insertSelective(goodstype);
-            status_guana.setMsg("添加成功");
-            status_guana.setStatus(true);
+            int i=goodsTypeService.insertSelective(goodstype);
+            if(i>0){
+                status_guana.setMsg("添加成功");
+                status_guana.setStatus(true);
+            }else {
+                status_guana.setMsg("添加失败");
+            }
+
         }catch (Exception e){
             e.printStackTrace();
             status_guana.setMsg("添加失败");
@@ -68,9 +80,14 @@ public class GoodsTypeManageController {
         Status_guana status_guana=new Status_guana();
         String id=json.getString("id");
         try {
-            goodsTypeService.deleteByPrimaryKey(id);
-            status_guana.setMsg("删除成功");
-            status_guana.setStatus(true);
+            int i=goodsTypeService.deleteByPrimaryKey(id);
+            if(i>0){
+                status_guana.setMsg("删除成功");
+                status_guana.setStatus(true);
+            }else {
+                status_guana.setMsg("删除失败");
+            }
+
         }catch (Exception e){
             e.printStackTrace();
             status_guana.setMsg("删除失败");
@@ -91,13 +108,21 @@ public class GoodsTypeManageController {
         String name=json.getString("name");
         String state=json.getString("state");
         Goodstype goodstype=new Goodstype();
-        goodstype.setState(Integer.parseInt(state));
+        if(state!=null){
+            goodstype.setState(Integer.parseInt(state));
+        }
+
         goodstype.setName(name);
         goodstype.setId(id);
         try {
-            goodsTypeService.updateByPrimaryKeySelective(goodstype);
-            status_guana.setMsg("修改成功");
-            status_guana.setStatus(true);
+            int i=goodsTypeService.updateByPrimaryKeySelective(goodstype);
+            if(i>0){
+                status_guana.setMsg("修改成功");
+                status_guana.setStatus(true);
+            }else {
+                status_guana.setMsg("修改失败");
+            }
+
         }catch (Exception e){
             e.printStackTrace();
             status_guana.setMsg("修改失败");

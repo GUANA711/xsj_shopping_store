@@ -1,15 +1,11 @@
-package com.shop.demo.dao;
+package com.shop.demo.service;
 
 import com.shop.demo.dto.OdersDto;
 import com.shop.demo.pojo.Orders;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Mapper
-@Repository
-public interface OrdersMapper {
+public interface OdersService {
     int deleteByPrimaryKey(String id);
 
     int insert(Orders record);
