@@ -25,8 +25,7 @@ public interface CollectionMapper {
     int updateByPrimaryKey(Collection record);
 
     //查询收藏
-    @Select("select collecttime,name,price,stock,number,pthoto from product,collection" +
-            "where collection.productid = product.id and collection.openid = #{openid}")
+    @Select("select collecttime,productid,name,price,stock,number,pthoto from product,collection where collection.productid = product.id and collection.openid = #{openid}")
     List<CollectionDetail> select(String openid);
 
     //移除收藏

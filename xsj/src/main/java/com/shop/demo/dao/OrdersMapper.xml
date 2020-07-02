@@ -196,4 +196,22 @@
       addrid = #{addrid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="select" resultType="com.shop.demo.pojo.Orders">
+    select * from orders
+      <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <if test = "openid!=null">
+          openid = #{openid}
+        </if>
+        <if test="ispay!=-1">
+          and ispay = #{ispay}
+        </if>
+        <if test="receive!=-1">
+          and receive = #{receive}
+        </if>
+        <if test="productid!=null">
+          and productid = #{productid}
+        </if>
+      </trim>
+  </select>
 </mapper>

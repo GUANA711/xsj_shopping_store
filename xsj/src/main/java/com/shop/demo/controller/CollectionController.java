@@ -52,11 +52,8 @@ public class CollectionController {
      * 移除收藏
      * productid：商品id
      * openid:用户标识
-     * @param1:productid
-     * @param2:openid
-     * @return
      */
-    @DeleteMapping("/collection/delete")
+    @GetMapping("/collection/delete")
     public Map<String,Object> deleteCollection(@RequestBody JSONObject json){
         Map<String,Object> map = new HashMap<>();
         String pId = json.getString("productid");
@@ -79,7 +76,7 @@ public class CollectionController {
      * @return
      */
     @GetMapping("/collection/select")
-    public Map<String,Object> selectCollection(String openid){
+    public Map<String,Object> selectCollection(@RequestParam("openid")String openid ){
         Map<String,Object> map = new HashMap<>();
         try {
             List<CollectionDetail> res = collectionService.selectCollection(openid);

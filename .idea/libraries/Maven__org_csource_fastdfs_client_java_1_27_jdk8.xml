@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.csource:fastdfs-client-java:1.27-jdk8">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/csource/fastdfs-client-java/1.27-jdk8/fastdfs-client-java-1.27-jdk8.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/csource/fastdfs-client-java/1.27-jdk8/fastdfs-client-java-1.27-jdk8-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/csource/fastdfs-client-java/1.27-jdk8/fastdfs-client-java-1.27-jdk8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
