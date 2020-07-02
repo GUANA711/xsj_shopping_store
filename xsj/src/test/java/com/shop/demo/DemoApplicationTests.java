@@ -1,9 +1,11 @@
 package com.shop.demo;
 
+import com.shop.demo.dto.GoodsTypeProduct;
 import com.shop.demo.pojo.Product;
 import com.shop.demo.pojo.Productimgs;
 import com.shop.demo.service.ProductService;
 import com.shop.demo.service.ProductimgsService;
+import com.shop.demo.service.WXDataService;
 import com.shop.demo.utiles.FileServerAddr;
 import com.sun.org.apache.xalan.internal.xsltc.dom.SortingIterator;
 import org.junit.jupiter.api.Test;
@@ -68,5 +70,29 @@ class DemoApplicationTests {
         product.setRecommend(0);
         System.out.println(productService.selectBySelective(product));
     }
+
+
+//    WXDataService service;
+//    @Test
+//    public void selectIndexProduct(){
+//        Product p = new Product();
+//        String cmd="hot";
+//        p.setFields("1");
+//        if(cmd.equals("recommend")){
+//            p.setRecommend(1);
+//        }else if(cmd.equals("oldest")){
+//            p.setOldest(1);
+//        }else if(cmd.equals("hot")){
+//            p.setHot(1);
+//        }
+//        List<Product> list = service.selectIndexProduct(p);
+//        System.out.println(list);
+//    }
+//
+//    @Test
+//    public List<GoodsTypeProduct> selectGoodsTypeProduct(){
+//        return service.selectGoodsTypeProduct();
+//    }
+
 
 }

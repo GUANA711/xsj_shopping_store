@@ -30,10 +30,20 @@ public interface WXDataService {
 
 	/**
 	 * 显示商品列表（主要用于首页的精选推荐，最新产品，热销产品的查询）
-	 * @param p
+	 * @param
 	 * @return
 	 */
-	List<Product> selectIndexProduct(Product p);
+	List<Product> selectrecommendList();
+	List<Product> selectoldestList();
+	List<Product> selecthotList();
+
+
+
+	/**
+	 * 查询某一类所有的商品
+	 */
+	List<Product> selectOneList(String id);
+
 
 	/**
 	 * 显示分类商品列表

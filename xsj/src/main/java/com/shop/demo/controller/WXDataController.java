@@ -2,15 +2,14 @@ package com.shop.demo.controller;
 
 import java.util.List;
 
-import com.alibaba.fastjson.JSONObject;
 import com.shop.demo.dto.GoodsTypeProduct;
+import com.shop.demo.pojo.Goodstype;
 import com.shop.demo.pojo.Product;
 import com.shop.demo.dto.ProductDetailDto;
 import com.shop.demo.service.WXDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -40,16 +39,14 @@ public class WXDataController {
 	@RequestMapping("/index/{cmd}")
 	@ResponseBody
 	public List<Product> selectIndexProduct(@PathVariable("cmd")String cmd){
-		Product p = new Product();
-		p.setFields("1");
+		List<Product> list =null;
 		if(cmd.equals("recommend")){
-			p.setRecommend(1);
+			list = service.selectrecommendList();
 		}else if(cmd.equals("oldest")){
-			p.setOldest(1);
+			list = service.selectoldestList();
 		}else if(cmd.equals("hot")){
-			p.setHot(1);
+			list = service.selecthotList();
 		}
-		List<Product> list = service.selectIndexProduct(p);
 		return list;
 	}
 	
@@ -62,6 +59,7 @@ public class WXDataController {
 	public List<GoodsTypeProduct> selectGoodsTypeProduct(){
 		return service.selectGoodsTypeProduct();
 	}
+
 	
 	/**
 	 * 	显示商品详情的service
@@ -74,5 +72,18 @@ public class WXDataController {
 	public ProductDetailDto selectProductDetails(@PathVariable("id")String id){
 		return service.selectProductDetails(id);
 	}
+
+	/**
+	 * 加入购物车
+	 */
+
+	/**
+	 * 查询购物车
+	 */
+
+	/**
+	 * 移除购物车
+	 */
+
 	
 }
