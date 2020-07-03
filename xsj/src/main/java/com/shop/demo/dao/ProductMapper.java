@@ -28,10 +28,16 @@ public interface ProductMapper {
     List<Product> selectBySelective(Product record);
 
     /**
-     * 显示首页商品列表
-     * @param product
+     * 首页商品显示
      * @return
      */
-    List<Product> selectProductList(Product product);
+    List<Product> selectrecommendList();
+    List<Product> selectoldestList();
+    List<Product> selecthotList();
+
+    /**
+     * 查询某一类所有的商品
+     */
+    List<Product> selectOneList(String id);
 
 }

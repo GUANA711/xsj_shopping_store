@@ -1,5 +1,6 @@
 package com.shop.demo.dao;
 
+import com.shop.demo.dto.OdersDto;
 import com.shop.demo.pojo.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -47,4 +48,8 @@ public interface OrdersMapper {
     /*取消订单*/
     @Update("update orders set state = 2 where openid = #{openid} and productid = #{productid}")
     int cancel(String openid,String productid);
+
+    List<OdersDto> selectBySelective(Orders orders);
+
+    List<Orders> selectAllOrder();
 }

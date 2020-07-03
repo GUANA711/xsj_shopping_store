@@ -27,6 +27,13 @@
     from orders
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectAllOrder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from orders
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from orders
     where id = #{id,jdbcType=VARCHAR}
@@ -213,5 +220,57 @@
           and productid = #{productid}
         </if>
       </trim>
+  </select>
+  <select id="selectBySelective" parameterType="com.shop.demo.pojo.Orders" resultType="com.shop.demo.dto.OdersDto">
+    select o.id, o.openid, o.productid,
+    o.productname, o.title, o.price,
+    o.number, o.totle, o.ispay,
+    o.invoice, o.receive, o.state,
+    o.address, o.addrid,p.stock,p.pthoto from product p,orders o
+    <where>
+      p.id=o.productid
+      <if test="id != null">
+        and id =#{id}
+      </if>
+      <if test="openid != null">
+        and  openid like CONCAT(CONCAT('%', #{openid}), '%')
+      </if>
+      <if test="productid!= null">
+        and productid like CONCAT(CONCAT('%', #{productid}), '%')
+      </if>
+      <if test="productname!= null">
+        and productname like CONCAT(CONCAT('%', #{productname}), '%')
+      </if>
+      <if test="title!= null">
+        and title like CONCAT(CONCAT('%', #{title}), '%')
+      </if>
+      <if test="price!= null">
+        and price like CONCAT(CONCAT('%', #{price}), '%')
+      </if>
+      <if test="number!= null">
+        and number like CONCAT(CONCAT('%', #{number}), '%')
+      </if>
+      <if test="totle!= null">
+        and totle like CONCAT(CONCAT('%', #{totle}), '%')
+      </if>
+      <if test="ispay!= null">
+        and ispay like CONCAT(CONCAT('%', #{ispay}), '%')
+      </if>
+      <if test="invoice!= null">
+        and invoice like CONCAT(CONCAT('%', #{invoice}), '%')
+      </if>
+      <if test="receive!= null">
+        and receive like CONCAT(CONCAT('%', #{receive}), '%')
+      </if>
+      <if test="state!= null">
+        and state like CONCAT(CONCAT('%', #{state}), '%')
+      </if>
+      <if test="address!= null">
+        and address like CONCAT(CONCAT('%', #{address}), '%')
+      </if>
+      <if test="addrid!= null">
+        and addrid like CONCAT(CONCAT('%', #{addrid}), '%')
+      </if>
+    </where>
   </select>
 </mapper>

@@ -13,7 +13,7 @@
     <result column="recommend" property="recommend" jdbcType="INTEGER" />
     <result column="oldest" property="oldest" jdbcType="INTEGER" />
     <result column="hot" property="hot" jdbcType="INTEGER" />
-      <result column="fields" property="fields1" jdbcType="VARCHAR" />
+      <result column="fields" property="fields" jdbcType="VARCHAR" />
       <result column="typeid" property="typeid" jdbcType="VARCHAR" />
     <result column="typename" property="typename" jdbcType="VARCHAR" />
       <result column="pthoto" jdbcType="VARCHAR" property="pthoto" />
@@ -29,33 +29,37 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-
-  <select id="selectProductList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
+  <select id="selectrecommendList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
     select
     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
     hot,fields, typeid, typename
-    from product
-    <where>
-      <if test="typeid!=null and typeid!='-1'">
-        and typeid=#{typeid}
-      </if>
-      <if test="hot!=null and hot!='-1'">
-        and hot=#{hot}
-      </if>
-      <if test="recommend!=null and recommend!='-1'">
-        and recommend=#{recommend}
-      </if>
-      <if test="oldest!=null and oldest!='-1'">
-        and oldest=#{oldest}
-      </if>
-      <if test="fields!=null and fields!='-1'">
-          and fields=#{fields}
-      </if>
-      <if test="name!=null and name!=''">
-        and name like #{name}
-      </if>
-    </where>
+    from product where recommend=1 and fields=1;
   </select>
+    <select id="selectoldestList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
+     select
+     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
+     hot,fields, typeid, typename
+     from product where oldest=1 and fields=1;
+  </select>
+
+    <select id="selecthotList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
+     select
+     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
+     hot,fields, typeid, typename
+     from product where hot=1 and fields=1;
+    </select>
+
+
+    <select id="selectOneList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
+     select
+     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
+     hot,fields, typeid, typename
+     from product where typeid=#{typeid};
+    </select>
+
+
+
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from product

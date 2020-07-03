@@ -30,10 +30,20 @@ public interface WXDataService {
 
 	/**
 	 * 显示商品列表（主要用于首页的精选推荐，最新产品，热销产品的查询）
-	 * @param p
+	 * @param
 	 * @return
 	 */
-	List<Product> selectIndexProduct(Product p);
+	List<Product> selectrecommendList();
+	List<Product> selectoldestList();
+	List<Product> selecthotList();
+
+
+
+	/**
+	 * 查询某一类所有的商品
+	 */
+	List<Product> selectOneList(String id);
+
 
 	/**
 	 * 显示分类商品列表
@@ -49,5 +59,38 @@ public interface WXDataService {
 	 * @return
 	 */
 	ProductDetailDto selectProductDetails(String id);
+
+	/**
+	 * 添加购物车
+	 * @param record
+	 * @return
+	 */
+	int insert(Buycar record);
+
+	/**
+	 * 根据openid查询购物车
+	 */
+	List<Buycar> selectByopenid (String openid);
+
+
+	/**
+	 * 移除购物车
+	 */
+	int deleteByPrimaryKey(int id);
+
+	/**
+	 * 统计用户
+	 */
+	List<Customer> selectAllCustomer ();
+
+	/**
+	 * 订单统计
+	 */
+	List<Orders> selectAllOrder ();
+
+	/**
+	 * 商品统计
+	 */
+	List<Product> selectAllProduct();
 
 }

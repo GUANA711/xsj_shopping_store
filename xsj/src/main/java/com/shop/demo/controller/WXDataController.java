@@ -4,15 +4,16 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shop.demo.dto.GoodsTypeProduct;
+import com.shop.demo.pojo.Buycar;
+import com.shop.demo.pojo.Customer;
+import com.shop.demo.pojo.Orders;
 import com.shop.demo.pojo.Product;
 import com.shop.demo.dto.ProductDetailDto;
 import com.shop.demo.service.WXDataService;
+import com.shop.demo.utiles.Status_Alice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -40,16 +41,14 @@ public class WXDataController {
 	@RequestMapping("/index/{cmd}")
 	@ResponseBody
 	public List<Product> selectIndexProduct(@PathVariable("cmd")String cmd){
-		Product p = new Product();
-		p.setFields("1");
+		List<Product> list =null;
 		if(cmd.equals("recommend")){
-			p.setRecommend(1);
+			list = service.selectrecommendList();
 		}else if(cmd.equals("oldest")){
-			p.setOldest(1);
+			list = service.selectoldestList();
 		}else if(cmd.equals("hot")){
-			p.setHot(1);
+			list = service.selecthotList();
 		}
-		List<Product> list = service.selectIndexProduct(p);
 		return list;
 	}
 	
@@ -62,6 +61,7 @@ public class WXDataController {
 	public List<GoodsTypeProduct> selectGoodsTypeProduct(){
 		return service.selectGoodsTypeProduct();
 	}
+
 	
 	/**
 	 * 	显示商品详情的service
@@ -74,5 +74,112 @@ public class WXDataController {
 	public ProductDetailDto selectProductDetails(@PathVariable("id")String id){
 		return service.selectProductDetails(id);
 	}
-	
+
+
+	/**
+	 * 加入购物车
+	 */
+	@PostMapping("/addBuyCar")
+	@ResponseBody
+	public Status_Alice addBuyCar(@RequestBody JSONObject json) {
+
+		//从前端获取数据
+		String productid=json.getString("productid");
+		String openid=json.getString("openid");
+
+		Buycar buycar = new Buycar();
+		Status_Alice status_alice=new Status_Alice();
+
+		if (productid != null) {
+			buycar.setProductid(productid);
+		}
+		if (openid != null) {
+			buycar.setOpenid(openid);
+		}
+		try {
+			int i=service.insert(buycar);
+			if(i>0){
+				status_alice.setMsg("添加成功");
+				status_alice.setStatus(true);
+			}else {
+				status_alice.setMsg("添加失败");
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+			status_alice.setMsg("失败");
+		}
+		return status_alice;
+	}
+
+
+	/**
+	 * 根据openid查询购物车
+	 */
+
+	@RequestMapping("/selectByopenid")
+	@ResponseBody
+	public List<Buycar> selectByopenid(@RequestBody JSONObject json){
+
+		//从前端获取数据
+		String openid=json.getString("openid");
+
+		return service.selectByopenid(openid);
+	}
+
+	/**
+	 * 移除购物车
+	 * @return
+	 */
+	@RequestMapping("/deleteBuyCar")
+	@ResponseBody
+	public Status_Alice deleteBuyCar(@RequestBody JSONObject json){
+
+		//从前端获取数据
+		String id=json.getString("id");
+
+		Status_Alice status_alice=new Status_Alice();
+
+		try {
+			int i=service.deleteByPrimaryKey(Integer.parseInt(id));
+			if(i>0){
+				status_alice.setMsg("删除成功");
+				status_alice.setStatus(true);
+			}else {
+				status_alice.setMsg("删除失败");
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+			status_alice.setMsg("删除失败");
+		}
+		return status_alice;
+	}
+
+
+	/**
+	 * 统计用户
+	 */
+	@RequestMapping("/selectAllCustomer")
+	@ResponseBody
+	public List<Customer> selectAllCustomer(){
+		return service.selectAllCustomer();
+	}
+
+	/**
+	 * 订单统计
+	 */
+	@RequestMapping("/selectAllOrder")
+	@ResponseBody
+	public List<Orders> selectAllOrder(){
+		return service.selectAllOrder();
+	}
+
+
+	/**
+	 * 商品统计
+	 */
+	@RequestMapping("/selectAllProduct")
+	@ResponseBody
+	public List<Product> selectAllProduct(){
+		return service.selectAllProduct();
+	}
 }

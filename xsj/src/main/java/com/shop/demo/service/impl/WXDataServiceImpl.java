@@ -32,6 +32,11 @@ public class WXDataServiceImpl implements WXDataService {
 	@Autowired
 	private ProductimgsMapper productimgsMapper;
 
+	@Autowired
+    private BuycarMapper buycarMapper;
+
+	@Autowired
+	private OrdersMapper ordersMapper;
 
 	/**
 	 * 登录后保存用户信息
@@ -56,12 +61,28 @@ public class WXDataServiceImpl implements WXDataService {
 
 	/**
 	 * 显示首页商品列表（主要用于首页的精选推荐，最新产品，热销产品的查询）
-	 * @param p
 	 * @return
 	 */
 	@Override
-	public List<Product> selectIndexProduct(Product p) {
-		return productMapper.selectProductList(p);
+	public List<Product> selectrecommendList() {
+		return productMapper.selectrecommendList();
+	}
+	@Override
+	public List<Product> selectoldestList() {
+		return productMapper.selectoldestList();
+	}
+	@Override
+	public List<Product> selecthotList() {
+		return productMapper.selecthotList();
+	}
+
+
+	/**
+	 * 查询某一类所有的商品
+	 */
+	@Override
+	public List<Product> selectOneList(String id) {
+		return productMapper.selectOneList(id);
 	}
 
 	/**
@@ -72,23 +93,21 @@ public class WXDataServiceImpl implements WXDataService {
 	public List<GoodsTypeProduct> selectGoodsTypeProduct() {
 		//查询所有可用的商品分类列表
 		Goodstype gt = new Goodstype();
-		gt.setState(1);
 		List<Goodstype> gtlist =  goodstypeMapper.showGoodsTypeList(gt);
-		//查询每一个分类中的商品,然后再将其保存到goodstypeproduct对象中
+		//查询每一个分类中的商品selectOneList(type.getId())
+		// 然后再将其保存到goodstypeproduct对象中
 		List<GoodsTypeProduct> list = new ArrayList<>();
-		Product p = new Product();
-		p.setFields("1");
-		for(Goodstype type : gtlist){
-			p.setTypeid(type.getId());
-			List<Product> plist = productMapper.selectProductList(p);
+		for(Goodstype type : gtlist) {
+			List<Product> plist = productMapper.selectOneList(type.getId());
 			GoodsTypeProduct gtp = new GoodsTypeProduct();
 			gtp.setId(type.getId());
 			gtp.setName(type.getName());
 			gtp.setProductlist(plist);
 			list.add(gtp);
-		}	
+		}
 		return list;
 	}
+
 
 	/**
 	 * 显示商品详情的service
@@ -110,5 +129,54 @@ public class WXDataServiceImpl implements WXDataService {
 		return dto;
 	}
 
+    /**
+     * 添加购物车
+     * @param record
+     * @return
+     */
+    @Override
+    public int insert(Buycar record){
+        return buycarMapper.insert(record);
+    }
 
+	/**
+	 * 根据openid查询购物车
+	 */
+	@Override
+	 public List<Buycar> selectByopenid (String openid){
+		return buycarMapper.selectByopenid(openid);
+	}
+
+	/**
+	 * 移除购物车
+	 */
+	@Override
+	public int deleteByPrimaryKey(int id){
+		return buycarMapper.deleteByPrimaryKey(id);
+	}
+
+	/**
+	 * 统计用户
+	 */
+	@Override
+	public List<Customer> selectAllCustomer (){
+		return customerMapper.selectAllCustomer();
+	}
+
+	/**
+	 * 订单统计
+	 */
+	@Override
+	public List<Orders> selectAllOrder (){
+		return ordersMapper.selectAllOrder();
+	}
+
+	/**
+	 * 商品统计
+	 */
+	@Override
+	public List<Product> selectAllProduct (){
+		return productMapper.show();
+	}
 }
+
