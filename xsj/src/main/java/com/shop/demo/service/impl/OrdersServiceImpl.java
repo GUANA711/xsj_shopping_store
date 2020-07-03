@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Repository
 public class OrdersServiceImpl implements OrdersService {
     @Autowired
     public OrdersMapper ordersMapper;

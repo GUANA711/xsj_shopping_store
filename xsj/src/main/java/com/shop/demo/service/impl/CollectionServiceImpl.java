@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Repository
 public class CollectionServiceImpl implements CollectionService {
     @Autowired
     public CollectionMapper collectionMapper;
