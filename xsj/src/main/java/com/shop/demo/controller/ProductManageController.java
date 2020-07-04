@@ -74,6 +74,7 @@ public class ProductManageController {
                             @RequestParam("oldest") String oldest,
                             @RequestParam("hot")  String hot,
                             @RequestParam("typeid")  String typeid,
+                            @RequestParam("fields")  String fields,
                             @RequestParam("file") MultipartFile file) {
         Status_guana status_guana = new Status_guana();
         Product product = new Product();
@@ -112,6 +113,7 @@ public class ProductManageController {
         product.setPublishtime(date);
         product.setTypename(typename);
         product.setTypeid(typeid);
+        product.setFields(fields);
 
 
         //添加封面图片
@@ -199,6 +201,7 @@ public class ProductManageController {
                                @RequestParam("recommend")  String recommend,
                                @RequestParam("oldest") String oldest,
                                @RequestParam("hot")  String hot,
+                               @RequestParam("fields")  String fields,
                                @RequestParam("typename")  String typename,
                                @RequestParam("file") MultipartFile file){
         Status_guana status_guana=new Status_guana();
@@ -227,6 +230,7 @@ public class ProductManageController {
         product.setDescription(description);
         product.setTypename(typename);
         product.setId(id);
+        product.setFields(fields);
         product.setTypeid(goodsTypeService.selectByname(typename).getId());
 
 
@@ -285,6 +289,7 @@ public class ProductManageController {
         String hot = json.getString("hot");
         String typeid = json.getString("typeid");
         String typename = json.getString("typename");
+        String fields = json.getString("fields");
 
         Product product = new Product();
         product.setName(name);
@@ -313,6 +318,7 @@ public class ProductManageController {
             product.setId(id);
             product.setTypeid(typeid);
             product.setPublishtime(publishtime);
+            product.setFields(fields);
 
             return productService.selectBySelective(product);
         }
