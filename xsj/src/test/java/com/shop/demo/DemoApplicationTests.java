@@ -1,6 +1,7 @@
 package com.shop.demo;
 
 import com.shop.demo.dto.GoodsTypeProduct;
+import com.shop.demo.pojo.Buycar;
 import com.shop.demo.pojo.Product;
 import com.shop.demo.pojo.Productimgs;
 import com.shop.demo.service.ProductService;
@@ -71,6 +72,63 @@ class DemoApplicationTests {
         System.out.println(productService.selectBySelective(product));
     }
 
+
+
+
+
+    @Autowired
+    WXDataService wxDataService;
+    @Test
+    public void selectalluser(){
+        System.out.println(wxDataService.selectAllCustomer());
+    }
+
+
+    @Test
+    public void selectIndexProduct(){
+        String cmd="hot";
+        if(cmd.equals("recommend")){
+            System.out.println(wxDataService.selectrecommendList());
+        }else if(cmd.equals("oldest")){
+            System.out.println(wxDataService.selectoldestList());
+        }else if(cmd.equals("hot")){
+            System.out.println(wxDataService.selecthotList());
+        }
+    }
+
+    @Test
+    public void GoodsTypeProduct(){
+        System.out.println(wxDataService.selectGoodsTypeProduct());
+    }
+
+    @Test
+    public void selectProductDetails(){
+        String id="1";
+        System.out.println(wxDataService.selectProductDetails(id));
+    }
+
+
+    @Test
+    public void addBuyCar(){
+        Buycar buycar = new Buycar();
+        String productid="11";
+        String openid="11";
+        buycar.setProductid(productid);
+        buycar.setOpenid(openid);
+        wxDataService.insert(buycar);
+    }
+
+    @Test
+    public void selectByopenid(){
+        String openid="11";
+        wxDataService.selectByopenid(openid);
+    }
+
+    @Test
+    public void deleteBuyCar(){
+        String id="5";
+        wxDataService.deleteByPrimaryKey(Integer.parseInt(id));
+    }
 
 
 }
