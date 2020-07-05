@@ -27,6 +27,13 @@
     from orders
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectAllOrder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from orders
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from orders
     where id = #{id,jdbcType=VARCHAR}
@@ -197,6 +204,23 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
+  <select id="select" resultType="com.shop.demo.pojo.Orders">
+    select * from orders
+      <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <if test = "openid!=null">
+          openid = #{openid}
+        </if>
+        <if test="ispay!=-1">
+          and ispay = #{ispay}
+        </if>
+        <if test="receive!=-1">
+          and receive = #{receive}
+        </if>
+        <if test="productid!=null">
+          and productid = #{productid}
+        </if>
+      </trim>
+  </select>
   <select id="selectBySelective" parameterType="com.shop.demo.pojo.Orders" resultType="com.shop.demo.dto.OdersDto">
     select o.id, o.openid, o.productid,
     o.productname, o.title, o.price,

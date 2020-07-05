@@ -2,6 +2,8 @@ package com.shop.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.shop.demo.pojo.Goodstype;
 import com.shop.demo.pojo.Product;
 import com.shop.demo.pojo.Productimgs;
@@ -10,6 +12,7 @@ import com.shop.demo.service.ProductService;
 import com.shop.demo.service.ProductimgsService;
 import com.shop.demo.utiles.FastDFSClient;
 import com.shop.demo.utiles.FileServerAddr;
+import com.shop.demo.utiles.ResultInfoList;
 import com.shop.demo.utiles.Status_guana;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -43,9 +47,15 @@ public class ProductManageController {
      *显示所有商品
      * @return
      */
-    @PostMapping("/show")
-    public List<Product> show() {
-        return productService.show();
+    @PostMapping("/show/{page}/{limit}")
+    public ResultInfoList show(@PathVariable("page") int page, @PathVariable("limit") int limit) {
+        ResultInfoList resultInfoList=new ResultInfoList();
+        PageHelper.startPage(page,limit);
+        List<Product> productList=productService.show();
+        PageInfo<Product> info=new PageInfo<>(productList);
+        resultInfoList.setTotal(info.getTotal());
+        resultInfoList.setSelectList(productList);
+        return resultInfoList;
     }
 
     /**
@@ -74,6 +84,7 @@ public class ProductManageController {
                             @RequestParam("oldest") String oldest,
                             @RequestParam("hot")  String hot,
                             @RequestParam("typeid")  String typeid,
+                            @RequestParam("fields")  String fields,
                             @RequestParam("file") MultipartFile file) {
         Status_guana status_guana = new Status_guana();
         Product product = new Product();
@@ -112,6 +123,7 @@ public class ProductManageController {
         product.setPublishtime(date);
         product.setTypename(typename);
         product.setTypeid(typeid);
+        product.setFields(fields);
 
 
         //添加封面图片
@@ -194,11 +206,11 @@ public class ProductManageController {
                                @RequestParam("price") String price,
                                @RequestParam("title")  String title,
                                @RequestParam("stock") String stock,
-                               @RequestParam("number") String number,
                                @RequestParam("description")  String description,
                                @RequestParam("recommend")  String recommend,
                                @RequestParam("oldest") String oldest,
                                @RequestParam("hot")  String hot,
+                               @RequestParam("fields")  String fields,
                                @RequestParam("typename")  String typename,
                                @RequestParam("file") MultipartFile file){
         Status_guana status_guana=new Status_guana();
@@ -207,9 +219,7 @@ public class ProductManageController {
         if (stock != null) {
             product.setStock(Integer.parseInt(stock));
         }
-        if (number != null) {
-            product.setNumber(Integer.parseInt(number));
-        }
+
         if (recommend != null) {
             product.setRecommend(Integer.parseInt(recommend));
         }
@@ -227,6 +237,7 @@ public class ProductManageController {
         product.setDescription(description);
         product.setTypename(typename);
         product.setId(id);
+        product.setFields(fields);
         product.setTypeid(goodsTypeService.selectByname(typename).getId());
 
 
@@ -270,8 +281,8 @@ public class ProductManageController {
      * @param json
      * @return
      */
-    @PostMapping("/select")
-    public  List<Product> select(@RequestBody JSONObject json) {
+    @PostMapping("/select/{page}/{limit}")
+    public  ResultInfoList select(@RequestBody JSONObject json,@PathVariable("page") int page,@PathVariable("limit") int limit) {
         String id = json.getString("id");
         String name = json.getString("name");
         String price = json.getString("price");
@@ -285,6 +296,7 @@ public class ProductManageController {
         String hot = json.getString("hot");
         String typeid = json.getString("typeid");
         String typename = json.getString("typename");
+        String fields = json.getString("fields");
 
         Product product = new Product();
         product.setName(name);
@@ -313,8 +325,17 @@ public class ProductManageController {
             product.setId(id);
             product.setTypeid(typeid);
             product.setPublishtime(publishtime);
+            product.setFields(fields);
 
-            return productService.selectBySelective(product);
+        ResultInfoList resultInfoList=new ResultInfoList();
+        PageHelper.startPage(page,limit);
+        List<Product> productList=productService.selectBySelective(product);
+        PageInfo<Product> info=new PageInfo<>(productList);
+        resultInfoList.setTotal(info.getTotal());
+        resultInfoList.setSelectList(productList);
+        return resultInfoList;
+
+
         }
 
     /**

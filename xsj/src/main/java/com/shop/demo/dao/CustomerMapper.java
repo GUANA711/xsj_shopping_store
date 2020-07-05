@@ -4,6 +4,8 @@ import com.shop.demo.pojo.Customer;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface CustomerMapper {
@@ -28,4 +30,6 @@ public interface CustomerMapper {
     int updateByPrimaryKeySelective(Customer record);
 
     int updateByPrimaryKey(Customer record);
+
+    List<Customer> selectAllCustomer();
 }
