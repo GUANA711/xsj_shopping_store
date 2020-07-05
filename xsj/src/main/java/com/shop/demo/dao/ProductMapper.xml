@@ -164,7 +164,7 @@
         typeid = #{typeid,jdbcType=VARCHAR},
       </if>
         <if test="fields != null" >
-            #{fields,jdbcType=VARCHAR},
+        fields =   #{fields,jdbcType=VARCHAR},
         </if>
       <if test="typename != null" >
         typename = #{typename,jdbcType=VARCHAR},
@@ -198,6 +198,9 @@
         <where>
             <if test="id != null">
                 and id like CONCAT(CONCAT('%', #{id}), '%')
+            </if>
+            <if test="fields != null">
+                and fields like CONCAT(CONCAT('%', #{fields}), '%')
             </if>
             <if test="name != null">
                 and name like CONCAT(CONCAT('%', #{name}), '%')
