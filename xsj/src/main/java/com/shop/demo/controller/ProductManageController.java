@@ -2,6 +2,8 @@ package com.shop.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.shop.demo.pojo.Goodstype;
 import com.shop.demo.pojo.Product;
 import com.shop.demo.pojo.Productimgs;
@@ -10,6 +12,7 @@ import com.shop.demo.service.ProductService;
 import com.shop.demo.service.ProductimgsService;
 import com.shop.demo.utiles.FastDFSClient;
 import com.shop.demo.utiles.FileServerAddr;
+import com.shop.demo.utiles.ResultInfoList;
 import com.shop.demo.utiles.Status_guana;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -43,9 +47,15 @@ public class ProductManageController {
      *显示所有商品
      * @return
      */
-    @PostMapping("/show")
-    public List<Product> show() {
-        return productService.show();
+    @PostMapping("/show/{page}/{limit}")
+    public ResultInfoList show(@PathVariable("page") int page, @PathVariable("limit") int limit) {
+        ResultInfoList resultInfoList=new ResultInfoList();
+        PageHelper.startPage(page,limit);
+        List<Product> productList=productService.show();
+        PageInfo<Product> info=new PageInfo<>(productList);
+        resultInfoList.setTotal(info.getTotal());
+        resultInfoList.setSelectList(productList);
+        return resultInfoList;
     }
 
     /**
@@ -271,8 +281,8 @@ public class ProductManageController {
      * @param json
      * @return
      */
-    @PostMapping("/select")
-    public  List<Product> select(@RequestBody JSONObject json) {
+    @PostMapping("/select/{page}/{limit}")
+    public  ResultInfoList select(@RequestBody JSONObject json,@PathVariable("page") int page,@PathVariable("limit") int limit) {
         String id = json.getString("id");
         String name = json.getString("name");
         String price = json.getString("price");
@@ -317,7 +327,15 @@ public class ProductManageController {
             product.setPublishtime(publishtime);
             product.setFields(fields);
 
-            return productService.selectBySelective(product);
+        ResultInfoList resultInfoList=new ResultInfoList();
+        PageHelper.startPage(page,limit);
+        List<Product> productList=productService.selectBySelective(product);
+        PageInfo<Product> info=new PageInfo<>(productList);
+        resultInfoList.setTotal(info.getTotal());
+        resultInfoList.setSelectList(productList);
+        return resultInfoList;
+
+
         }
 
     /**
