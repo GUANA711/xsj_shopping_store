@@ -72,27 +72,5 @@ class DemoApplicationTests {
     }
 
 
-//    WXDataService service;
-//    @Test
-//    public void selectIndexProduct(){
-//        Product p = new Product();
-//        String cmd="hot";
-//        p.setFields("1");
-//        if(cmd.equals("recommend")){
-//            p.setRecommend(1);
-//        }else if(cmd.equals("oldest")){
-//            p.setOldest(1);
-//        }else if(cmd.equals("hot")){
-//            p.setHot(1);
-//        }
-//        List<Product> list = service.selectIndexProduct(p);
-//        System.out.println(list);
-//    }
-//
-//    @Test
-//    public List<GoodsTypeProduct> selectGoodsTypeProduct(){
-//        return service.selectGoodsTypeProduct();
-//    }
-
 
 }
