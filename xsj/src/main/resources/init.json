@@ -36,19 +36,19 @@
             {
               "title": "添加商品",
               "href": "page/editor.html",
-              "icon": "fa fa-check-circle-o",
+              "icon": "fa fa-list-alt",
               "target": "_self"
             },
             {
               "title": "图片管理",
               "href": "page/table.html",
-              "icon": "fa fa-image",
+              "icon": "fa fa-list-alt",
               "target": "_self"
             },
             {
               "title": "商品类型",
               "href": "page/table.html",
-              "icon": "fa fa-reorder",
+              "icon": "fa fa-list-alt",
               "target": "_self"
             }
           ]
@@ -57,7 +57,21 @@
           "title": "订单管理",
           "href": "page/table.html",
           "icon": "fa fa-snowflake-o",
-          "target": "_self"
+          "target": "_self",
+          "child": [
+            {
+              "title": "订单查询",
+              "href": "page/table.html",
+              "icon": "fa fa-tag",
+              "target": "_self"
+            },
+            {
+              "title": "订单处理",
+              "href": "page/table.html",
+              "icon": "fa fa-tags",
+              "target": "_self"
+            }
+          ]
         }
       ]
     }

@@ -47,13 +47,15 @@ public class ProductManageController {
      *显示所有商品
      * @return
      */
-    @PostMapping("/show/{page}/{limit}")
-    public ResultInfoList show(@PathVariable("page") int page, @PathVariable("limit") int limit) {
+
+    @GetMapping("/show")
+    public ResultInfoList show(@RequestParam Integer page, @RequestParam Integer limit) {
         ResultInfoList resultInfoList=new ResultInfoList();
         PageHelper.startPage(page,limit);
         List<Product> productList=productService.show();
         PageInfo<Product> info=new PageInfo<>(productList);
         resultInfoList.setTotal(info.getTotal());
+        resultInfoList.setCode(0);
         resultInfoList.setSelectList(productList);
         return resultInfoList;
     }
@@ -166,7 +168,7 @@ public class ProductManageController {
      * @return
      */
     @PostMapping("/ckImg")
-    public Status_guana ckImg(@RequestParam("file")MultipartFile file, HttpServletResponse response, HttpServletRequest request){
+    public Status_guana ckImg(@RequestParam("upload")MultipartFile upload, HttpServletResponse response, HttpServletRequest request){
         Status_guana status_guana=new Status_guana();
         String fileServer=FileServerAddr.getFileServer();
         Productimgs productimgs=new Productimgs();
@@ -174,16 +176,16 @@ public class ProductManageController {
         try {
             FastDFSClient dfsClient = new FastDFSClient();
             //获取文件后缀名
-            String fileName = file.getOriginalFilename();
+            String fileName = upload.getOriginalFilename();
             String fileExName = fileName.substring(fileName.lastIndexOf(".") + 1);
             //返回文件存储在dfs的URL
-            String url = dfsClient.uploadFile(file.getBytes(), fileExName);
+            String url = dfsClient.uploadFile(upload.getBytes(), fileExName);
             String imgpath = fileServer+"/"+url;
             response.setContentType("text/html;charset=UTF-8");
             String callback = request.getParameter("CKEditorFuncNum");
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
-            out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + imgpath  + ")");
+            out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + imgpath  + "')");
 
             out.println("</script>");
             out.flush();
@@ -280,6 +282,7 @@ public class ProductManageController {
      * @return
      */
     @PostMapping("/select/{page}/{limit}")
+
     public  ResultInfoList select(@RequestBody JSONObject json,@PathVariable("page") int page,@PathVariable("limit") int limit) {
         String id = json.getString("id");
         String name = json.getString("name");
