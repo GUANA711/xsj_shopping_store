@@ -78,7 +78,6 @@ public class ProductManageController {
                             @RequestParam("price") String price,
                             @RequestParam("title")  String title,
                             @RequestParam("stock") String stock,
-                            @RequestParam("number") String number,
                             @RequestParam("description")  String description,
                             @RequestParam("recommend")  String recommend,
                             @RequestParam("oldest") String oldest,
@@ -96,9 +95,7 @@ public class ProductManageController {
         if (stock != null) {
             product.setStock(Integer.parseInt(stock));
         }
-        if (number != null) {
-            product.setNumber(Integer.parseInt(number));
-        }
+
         if (recommend != null) {
             product.setRecommend(Integer.parseInt(recommend));
         }
