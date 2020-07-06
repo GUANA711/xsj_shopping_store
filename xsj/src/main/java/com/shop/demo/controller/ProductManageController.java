@@ -183,7 +183,8 @@ public class ProductManageController {
             String callback = request.getParameter("CKEditorFuncNum");
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
-            out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + imgpath + "',''" + ")");
+            out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + imgpath  + ")");
+
             out.println("</script>");
             out.flush();
             out.close();
