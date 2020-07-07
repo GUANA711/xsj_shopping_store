@@ -1,7 +1,6 @@
 package com.shop.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shop.demo.pojo.Goodstype;
@@ -14,6 +13,7 @@ import com.shop.demo.utiles.FastDFSClient;
 import com.shop.demo.utiles.FileServerAddr;
 import com.shop.demo.utiles.ResultInfoList;
 import com.shop.demo.utiles.Status_guana;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 商品管理接口
@@ -66,7 +63,7 @@ public class ProductManageController {
      * @param price
      * @param title
      * @param stock
-     * @param number
+     *
      * @param description
      * @param recommend
      * @param oldest
@@ -162,7 +159,7 @@ public class ProductManageController {
 
     /**
      * ckeditor上传文件
-     * @param file
+     * @param
      * @param response
      * @param request
      * @return
@@ -170,33 +167,39 @@ public class ProductManageController {
     @PostMapping("/ckImg")
     public Status_guana ckImg(@RequestParam("upload")MultipartFile upload, HttpServletResponse response, HttpServletRequest request){
         Status_guana status_guana=new Status_guana();
+        Map<String, String> resultMap=new HashMap<>();
         String fileServer=FileServerAddr.getFileServer();
         Productimgs productimgs=new Productimgs();
+        if(ServletFileUpload.isMultipartContent(request)){
+            try {
+                FastDFSClient dfsClient = new FastDFSClient();
+                //获取文件后缀名
+                String fileName = upload.getOriginalFilename();
+                String fileExName = fileName.substring(fileName.lastIndexOf(".") + 1);
+                //返回文件存储在dfs的URL
+                String url = dfsClient.uploadFile(upload.getBytes(), fileExName);
+                String imgpath = fileServer+"/"+url;
+                response.setContentType("text/html;charset=UTF-8");
+                String callback = request.getParameter("CKEditorFuncNum");
+                PrintWriter out = response.getWriter();
+                resultMap.put("uploaded", "true");
+                resultMap.put("url",imgpath);
+                status_guana.setData(resultMap);
 
-        try {
-            FastDFSClient dfsClient = new FastDFSClient();
-            //获取文件后缀名
-            String fileName = upload.getOriginalFilename();
-            String fileExName = fileName.substring(fileName.lastIndexOf(".") + 1);
-            //返回文件存储在dfs的URL
-            String url = dfsClient.uploadFile(upload.getBytes(), fileExName);
-            String imgpath = fileServer+"/"+url;
-            response.setContentType("text/html;charset=UTF-8");
-            String callback = request.getParameter("CKEditorFuncNum");
-            PrintWriter out = response.getWriter();
-            out.println("<script type=\"text/javascript\">");
-            out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + imgpath  + "')");
+                status_guana.setMsg("图片添加成功");
 
-            out.println("</script>");
-            out.flush();
-            out.close();
-            status_guana.setMsg("图片添加成功");
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+                status_guana.setMsg("图片添加失败");
+                return status_guana;
+            }
+        }else {
+            resultMap.put("uploaded", "false");
+            resultMap.put("url",null);
+            status_guana.setData(resultMap);
             status_guana.setMsg("图片添加失败");
-            return status_guana;
         }
+
         return status_guana;
     }
 
