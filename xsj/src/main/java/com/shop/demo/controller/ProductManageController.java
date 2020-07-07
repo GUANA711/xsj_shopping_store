@@ -167,7 +167,6 @@ public class ProductManageController {
     @PostMapping("/ckImg")
     public Status_guana ckImg(@RequestParam("upload")MultipartFile upload, HttpServletResponse response, HttpServletRequest request){
         Status_guana status_guana=new Status_guana();
-        Map<String, String> resultMap=new HashMap<>();
         String fileServer=FileServerAddr.getFileServer();
         Productimgs productimgs=new Productimgs();
         if(ServletFileUpload.isMultipartContent(request)){
@@ -182,10 +181,8 @@ public class ProductManageController {
                 response.setContentType("text/html;charset=UTF-8");
                 String callback = request.getParameter("CKEditorFuncNum");
                 PrintWriter out = response.getWriter();
-                resultMap.put("uploaded", "true");
-                resultMap.put("url",imgpath);
-                status_guana.setData(resultMap);
-
+                status_guana.setData(imgpath);
+                status_guana.setStatus(true);
                 status_guana.setMsg("图片添加成功");
 
             } catch (Exception e) {
@@ -194,9 +191,7 @@ public class ProductManageController {
                 return status_guana;
             }
         }else {
-            resultMap.put("uploaded", "false");
-            resultMap.put("url",null);
-            status_guana.setData(resultMap);
+
             status_guana.setMsg("图片添加失败");
         }
 
