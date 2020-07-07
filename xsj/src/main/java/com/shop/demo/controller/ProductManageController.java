@@ -165,8 +165,8 @@ public class ProductManageController {
      * @return
      */
     @PostMapping("/ckImg")
-    public Status_guana ckImg(@RequestParam("upload")MultipartFile upload, HttpServletResponse response, HttpServletRequest request){
-        Status_guana status_guana=new Status_guana();
+    public Map<String,String> ckImg(@RequestParam("upload")MultipartFile upload, HttpServletRequest request){
+        Map<String,String> map=new HashMap<>();
         String fileServer=FileServerAddr.getFileServer();
         Productimgs productimgs=new Productimgs();
         if(ServletFileUpload.isMultipartContent(request)){
@@ -178,24 +178,24 @@ public class ProductManageController {
                 //返回文件存储在dfs的URL
                 String url = dfsClient.uploadFile(upload.getBytes(), fileExName);
                 String imgpath = fileServer+"/"+url;
-                response.setContentType("text/html;charset=UTF-8");
-                String callback = request.getParameter("CKEditorFuncNum");
-                PrintWriter out = response.getWriter();
-                status_guana.setData(imgpath);
-                status_guana.setStatus(true);
-                status_guana.setMsg("图片添加成功");
+
+                map.put("uploaded","true");
+                map.put("url",imgpath);
+
 
             } catch (Exception e) {
                 e.printStackTrace();
-                status_guana.setMsg("图片添加失败");
-                return status_guana;
+                map.put("uploaded","false");
+                map.put("url","/");
+                return map;
             }
         }else {
 
-            status_guana.setMsg("图片添加失败");
+            map.put("uploaded","false");
+            map.put("url","/");
         }
 
-        return status_guana;
+        return map;
     }
 
     @PostMapping("/update")
