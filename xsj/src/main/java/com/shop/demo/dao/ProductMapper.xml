@@ -32,20 +32,20 @@
   <select id="selectrecommendList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
     select
     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-    hot,fields, typeid, typename
+    hot,fields, typeid, typename,pthoto
     from product where recommend=1 and fields=1;
   </select>
     <select id="selectoldestList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
      select
      id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-     hot,fields, typeid, typename
+     hot,fields, typeid, typename,pthoto
      from product where oldest=1 and fields=1;
   </select>
 
     <select id="selecthotList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
      select
      id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-     hot,fields, typeid, typename
+     hot,fields, typeid, typename,pthoto
      from product where hot=1 and fields=1;
     </select>
 
@@ -53,7 +53,7 @@
     <select id="selectOneList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
      select
      id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-     hot,fields, typeid, typename
+     hot,fields, typeid, typename,pthoto
      from product where typeid=#{typeid};
     </select>
 
@@ -70,7 +70,7 @@
       title, stock, number,
       description, publishtime, recommend,
       oldest, hot,fields, typeid,
-      typename)
+      typename,pthoto)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE},
       #{title,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{number,jdbcType=INTEGER},
       #{description,jdbcType=VARCHAR}, #{publishtime,jdbcType=TIMESTAMP}, #{recommend,jdbcType=INTEGER},
