@@ -30,7 +30,7 @@ public class CusaddressServiceImpl implements CusaddressService {
     }
 
     @Override
-    public int update(String id, String address, int isdefault, String phone, String title) {
-        return cusaddressMapper.update(id,address,isdefault,phone,title);
+    public int update(String id, String openid,String address, int isdefault, String phone, String title) {
+        return cusaddressMapper.update(id,openid,address,isdefault,phone,title);
     }
 }

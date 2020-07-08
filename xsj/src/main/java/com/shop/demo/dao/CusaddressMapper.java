@@ -30,7 +30,7 @@ public interface CusaddressMapper {
     @Delete("delete from cusaddress where id = #{id}")
     int delete(String id);
 
-    int update(@Param("id") String id,@Param("address") String address,@Param("isdefault") int isdefault,@Param("phone") String phone,@Param("title") String title);
+    int update(@Param("id") String id,@Param("openid") String openid,@Param("address") String address,@Param("isdefault") int isdefault,@Param("phone") String phone,@Param("title") String title);
 
 
 }

@@ -120,6 +120,13 @@
         title = #{title,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id}
+    <where>
+      <if test="id != null">
+        id = #{id}
+      </if>
+      <if test="openid != null">
+        and openid = #{openid}
+      </if>
+    </where>
   </update>
 </mapper>
