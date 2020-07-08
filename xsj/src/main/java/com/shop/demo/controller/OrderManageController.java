@@ -93,7 +93,7 @@ public class OrderManageController {
      * @param json
      * @return
      */
-     @PostMapping("/select/{page}/{limit}")
+     @GetMapping("/select/{page}/{limit}")
      public ResultInfoList select(@RequestBody JSONObject json,@PathVariable("page") int page,@PathVariable("limit") int limit){
          String id=json.getString("id");
          String openid=json.getString("openid");
@@ -161,7 +161,7 @@ public class OrderManageController {
      * 待支付订单显示
      * @return
      */
-     @PostMapping("/nopay_show/{page}/{limit}")
+     @GetMapping("/nopay_show/{page}/{limit}")
     public ResultInfoList nopay(@PathVariable("page") int page,@PathVariable("limit") int limit){
          Orders orders=new Orders();
          orders.setIspay(0);
@@ -182,7 +182,7 @@ public class OrderManageController {
      * 待发货显示
      * @return
      */
-    @PostMapping("/noallcation_show/{page}/{limit}")
+    @GetMapping("/noallcation_show/{page}/{limit}")
     public ResultInfoList noallocation(@PathVariable("page") int page,@PathVariable("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
@@ -202,7 +202,7 @@ public class OrderManageController {
      * 待收货显示
      * @return
      */
-    @PostMapping("/norecive_show/{page}/{limit}")
+    @GetMapping("/norecive_show/{page}/{limit}")
     public ResultInfoList norecive(@PathVariable("page") int page,@PathVariable("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
@@ -221,7 +221,7 @@ public class OrderManageController {
      * 完成订单显示显示
      * @return
      */
-    @PostMapping("/ok_show/{page}/{limit}")
+    @GetMapping("/ok_show/{page}/{limit}")
     public ResultInfoList nok_show(@PathVariable("page") int page,@PathVariable("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
@@ -240,7 +240,7 @@ public class OrderManageController {
      * 被取消订单显示显示
      * @return
      */
-    @PostMapping("/cancel_show/{page}/{limit}")
+    @GetMapping("/cancel_show/{page}/{limit}")
     public ResultInfoList cancel_show(@PathVariable("page") int page,@PathVariable("limit") int limit){
         Orders orders=new Orders();
         orders.setState(2);
@@ -258,7 +258,7 @@ public class OrderManageController {
      * @param json
      * @return
      */
-    @PostMapping("/allocate")
+    @GetMapping("/allocate")
     public Status_guana allocate(@RequestBody JSONObject json){
         String id=json.getString("id");
         Status_guana status_guana=new Status_guana();

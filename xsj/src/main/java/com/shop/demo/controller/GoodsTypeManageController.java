@@ -3,6 +3,7 @@ package com.shop.demo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.shop.demo.pojo.Goodstype;
 import com.shop.demo.service.GoodsTypeService;
+import com.shop.demo.utiles.ResultInfoList;
 import com.shop.demo.utiles.Status_guana;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,8 +30,11 @@ public class GoodsTypeManageController {
      * @return
      */
     @PostMapping("/show_all")
-    public List<Goodstype> showAll(){
-        return goodsTypeService.showAll();
+    public ResultInfoList showAll(){
+         ResultInfoList resultInfoList=new ResultInfoList();
+         resultInfoList.setSelectList(goodsTypeService.showAll());
+         resultInfoList.setCode(1);
+        return resultInfoList;
     }
 
     /**

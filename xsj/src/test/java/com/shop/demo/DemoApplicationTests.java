@@ -2,8 +2,10 @@ package com.shop.demo;
 
 import com.shop.demo.dto.GoodsTypeProduct;
 import com.shop.demo.pojo.Buycar;
+import com.shop.demo.pojo.Orders;
 import com.shop.demo.pojo.Product;
 import com.shop.demo.pojo.Productimgs;
+import com.shop.demo.service.OdersService;
 import com.shop.demo.service.ProductService;
 import com.shop.demo.service.ProductimgsService;
 import com.shop.demo.service.WXDataService;
@@ -70,6 +72,14 @@ class DemoApplicationTests {
         product.setTypename("男士");
         product.setRecommend(0);
         System.out.println(productService.selectBySelective(product));
+    }
+    @Autowired
+    OdersService odersService;
+    @Test
+    public void selectOders(){
+        Orders orders=new Orders();
+        orders.setIspay(1);
+        System.out.println(odersService.selectBySelective(orders));
     }
 
 

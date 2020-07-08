@@ -11,5 +11,5 @@ import java.util.List;
 public class ResultInfoList {
     private long total;
     private List<?> selectList;
-    private int code;
+    private int code=1;
 }
