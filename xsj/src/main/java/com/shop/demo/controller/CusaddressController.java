@@ -84,6 +84,7 @@ public class CusaddressController {
         Map<String,Object> map = new HashMap<>();
         String id = json.getString("id");
         String address = json.getString("address");
+        String openid = json.getString("openid");
         int isdefault;
         if(json.getString("isdefault")!=null){
             isdefault = Integer.parseInt(json.getString("isdefault"));
@@ -92,8 +93,19 @@ public class CusaddressController {
         }
         String phone = json.getString("phone");
         String title = json.getString("title");
+        if (isdefault == 1){
+            try{
+                int updateDefault = 0;
+                String update = null;
+                int res = cusaddressService.update(update,openid,update,updateDefault,update,update);
+            }catch (SqlSessionException e){
+                map.put("status",500);
+                map.put("msg","更新失败");
+                return map;
+            }
+        }
         try{
-            int res = cusaddressService.update(id,address,isdefault,phone,title);
+            int res = cusaddressService.update(id,openid,address,isdefault,phone,title);
             map.put("status",200);
             map.put("info",res);
             map.put("msg","更新成功");

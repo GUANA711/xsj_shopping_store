@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.UUID;
 
@@ -133,6 +134,7 @@ public class ImgManageController {
         productimgs.setImgurl(json.getString("imgurl"));
         productimgs.setImgid(json.getString("imgid"));
         try {
+
             int i=productimgsService.updateByPrimaryKeySelective(productimgs);
             if(i>0){
                 status_guana.setMsg("修改成功");
@@ -148,17 +150,13 @@ public class ImgManageController {
         return status_guana;
     }
 
-    @PostMapping("/select_img/{page}/{limit}")
-    public ResultInfoList select(@RequestBody JSONObject json,@PathVariable("page") int page,@PathVariable("limit") int limit){
-        String productid=json.getString("productid");
+    @GetMapping("/select_img")
+    public List<Productimgs> select(@PathParam("productid") String productid){
+
         try {
-            ResultInfoList resultInfoList=new ResultInfoList();
-            PageHelper.startPage(page,limit);
+
             List<Productimgs> productimgsList= productimgsService.selectByproductid(productid);
-            PageInfo<Productimgs> info=new PageInfo<>(productimgsList);
-            resultInfoList.setTotal(info.getTotal());
-            resultInfoList.setSelectList(productimgsList);
-            return resultInfoList;
+           return productimgsList;
 
         }catch (Exception e){
             return null;
