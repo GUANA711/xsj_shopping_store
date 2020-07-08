@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.UUID;
 
@@ -150,8 +151,8 @@ public class ImgManageController {
     }
 
     @GetMapping("/select_img")
-    public List<Productimgs> select(@RequestBody JSONObject json){
-        String productid=json.getString("productid");
+    public List<Productimgs> select(@PathParam("productid") String productid){
+
         try {
 
             List<Productimgs> productimgsList= productimgsService.selectByproductid(productid);
