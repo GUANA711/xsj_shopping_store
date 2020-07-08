@@ -5,11 +5,11 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="listId" jdbcType="VARCHAR" property="listId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, state
+    id, name, state,listId
   </sql>
-
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -18,13 +18,9 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-
-
-  <select id="showGoodsTypeList" resultMap="BaseResultMap">
-    select id, name, state from goodstype;
+  <select id="showGoodsTypeList" resultType="com.shop.demo.pojo.Goodstype">
+    select id, name,state, listId from goodstype;
   </select>
-
-
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from goodstype

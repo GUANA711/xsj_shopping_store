@@ -7,6 +7,8 @@ public class Goodstype {
 
     private Integer state;
 
+    private String listId;
+
     public String getId() {
         return id;
     }
@@ -30,4 +32,13 @@ public class Goodstype {
     public void setState(Integer state) {
         this.state = state;
     }
+
+    public String getListId() {
+        return listId;
+    }
+
+    public void setListId(String listId) {
+        this.listId = listId == null ? null : listId.trim();
+    }
+
 }

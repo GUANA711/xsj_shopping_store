@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.demo.dao.LogMapper">
+
+    <insert id="addLog" parameterType="com.shop.demo.pojo.Log">
+        insert into log (logid,openid,nickname,Operation,Method,IP,Create_time)
+        values(#{logid},#{openid},#{nickname},#{Operation},#{Method},#{IP},#{Create_time});
+    </insert>
+
+    <select id="selectnickname" parameterType="String" resultType="String">
+        select nickname from customer where openid=#{openid};
+    </select>
+</mapper>
