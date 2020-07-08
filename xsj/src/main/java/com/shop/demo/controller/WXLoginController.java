@@ -3,8 +3,11 @@ package com.shop.demo.controller;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shop.demo.dao.MyLog;
 import com.shop.demo.pojo.Customer;
 import com.shop.demo.service.WXDataService;
+import com.shop.demo.utiles.Status_Alice;
+import jdk.internal.dynalink.beans.StaticClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +34,9 @@ public class WXLoginController {
 
 	@Autowired
 	private WXDataService service;
-	
+
+
+	static String openid;
 	/**
 	 * 微信授权登录接口 
 	 * 1、使用code与微信交换得到openid 
@@ -42,10 +47,12 @@ public class WXLoginController {
 	 *            用户的昵称
 	 * @return openid。如果注册不成功，返回空字符串
 	 */
+
+    @MyLog("用户登录")
 	@RequestMapping("/login")
 	@ResponseBody
 	public String login(String code, String nickname) {
-		String openid = getopenid(code);
+		openid = getopenid(code);
 		//判断数据库中是否有openid存在
 		Customer cus = service.selectCustomerById(openid);
 		if(cus==null){
@@ -69,7 +76,7 @@ public class WXLoginController {
 	 * @param code
 	 * @return
 	 */
-	private String getopenid(String code) {
+	public String getopenid(String code) {
 		String WX_URL = "https://api.weixin.qq.com/sns/jscode2session?appid=wxc5d2242a2cb10217&secret=618dacb56e78908973e09ed2dcc2abcb&js_code="
 				+ code + "&grant_type=authorization_code";
 		//获取到的是一个json字符串。
