@@ -1,9 +1,13 @@
 package com.shop.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.shop.demo.dto.OdersDto;
 import com.shop.demo.pojo.Orders;
+import com.shop.demo.pojo.Product;
 import com.shop.demo.service.OdersService;
+import com.shop.demo.utiles.ResultInfoList;
 import com.shop.demo.utiles.Status_guana;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,12 +89,12 @@ public class OrderManageController {
      }
 
     /**
-     * 查询订单/更新订单
+     * 查询订单
      * @param json
      * @return
      */
-     @PostMapping("/select")
-     public List<OdersDto> select(@RequestBody JSONObject json){
+     @GetMapping("/select/{page}/{limit}")
+     public ResultInfoList select(@RequestBody JSONObject json,@PathVariable("page") int page,@PathVariable("limit") int limit){
          String id=json.getString("id");
          String openid=json.getString("openid");
          String productid=json.getString("productid");
@@ -136,7 +140,14 @@ public class OrderManageController {
          }
 
          try {
-             return odersService.selectBySelective(orders);
+             ResultInfoList resultInfoList=new ResultInfoList();
+             PageHelper.startPage(page,limit);
+             List<OdersDto> odersDtoList=odersService.selectBySelective(orders);
+             PageInfo<OdersDto> info=new PageInfo<>(odersDtoList);
+             resultInfoList.setTotal(info.getTotal());
+             resultInfoList.setSelectList(odersDtoList);
+             return resultInfoList;
+
          }catch (Exception e){
              e.printStackTrace();
              return null;
@@ -150,66 +161,104 @@ public class OrderManageController {
      * 待支付订单显示
      * @return
      */
-     @PostMapping("/nopay_show")
-    public List<OdersDto> nopay(){
+     @GetMapping("/nopay_show/{page}/{limit}")
+    public ResultInfoList nopay(@PathVariable("page") int page,@PathVariable("limit") int limit){
          Orders orders=new Orders();
          orders.setIspay(0);
          orders.setState(1);
          orders.setReceive(2);
-         return odersService.selectBySelective(orders);
+
+         ResultInfoList resultInfoList=new ResultInfoList();
+         PageHelper.startPage(page,limit);
+         List<OdersDto> odersDtoList=odersService.selectBySelective(orders);
+         PageInfo<OdersDto> info=new PageInfo<>(odersDtoList);
+         resultInfoList.setTotal(info.getTotal());
+         resultInfoList.setSelectList(odersDtoList);
+         return resultInfoList;
+
      }
 
     /***
      * 待发货显示
      * @return
      */
-    @PostMapping("/noallcation_show")
-    public List<OdersDto> noallocation(){
+    @GetMapping("/noallcation_show/{page}/{limit}")
+    public ResultInfoList noallocation(@PathVariable("page") int page,@PathVariable("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(1);
         orders.setReceive(2);
-        return odersService.selectBySelective(orders);
+        ResultInfoList resultInfoList=new ResultInfoList();
+        PageHelper.startPage(page,limit);
+        List<OdersDto> odersDtoList=odersService.selectBySelective(orders);
+        PageInfo<OdersDto> info=new PageInfo<>(odersDtoList);
+        resultInfoList.setTotal(info.getTotal());
+        resultInfoList.setSelectList(odersDtoList);
+        return resultInfoList;
+
     }
 
     /**
      * 待收货显示
      * @return
      */
-    @PostMapping("/norecive_show")
-    public List<OdersDto> norecive(){
+    @GetMapping("/norecive_show/{page}/{limit}")
+    public ResultInfoList norecive(@PathVariable("page") int page,@PathVariable("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(1);
         orders.setReceive(0);
-        return odersService.selectBySelective(orders);
+        ResultInfoList resultInfoList=new ResultInfoList();
+        PageHelper.startPage(page,limit);
+        List<OdersDto> odersDtoList=odersService.selectBySelective(orders);
+        PageInfo<OdersDto> info=new PageInfo<>(odersDtoList);
+        resultInfoList.setTotal(info.getTotal());
+        resultInfoList.setSelectList(odersDtoList);
+        return resultInfoList;
     }
 
     /**
      * 完成订单显示显示
      * @return
      */
-    @PostMapping("/ok_show")
-    public List<OdersDto> nok_show(){
+    @GetMapping("/ok_show/{page}/{limit}")
+    public ResultInfoList nok_show(@PathVariable("page") int page,@PathVariable("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(3);
         orders.setReceive(1);
-        return odersService.selectBySelective(orders);
+        ResultInfoList resultInfoList=new ResultInfoList();
+        PageHelper.startPage(page,limit);
+        List<OdersDto> odersDtoList=odersService.selectBySelective(orders);
+        PageInfo<OdersDto> info=new PageInfo<>(odersDtoList);
+        resultInfoList.setTotal(info.getTotal());
+        resultInfoList.setSelectList(odersDtoList);
+        return resultInfoList;
     }
 
     /**
      * 被取消订单显示显示
      * @return
      */
-    @PostMapping("/cancel_show")
-    public List<OdersDto> cancel_show(){
+    @GetMapping("/cancel_show/{page}/{limit}")
+    public ResultInfoList cancel_show(@PathVariable("page") int page,@PathVariable("limit") int limit){
         Orders orders=new Orders();
         orders.setState(2);
-        return odersService.selectBySelective(orders);
+        ResultInfoList resultInfoList=new ResultInfoList();
+        PageHelper.startPage(page,limit);
+        List<OdersDto> odersDtoList=odersService.selectBySelective(orders);
+        PageInfo<OdersDto> info=new PageInfo<>(odersDtoList);
+        resultInfoList.setTotal(info.getTotal());
+        resultInfoList.setSelectList(odersDtoList);
+        return resultInfoList;
     }
 
-    @PostMapping("/allocate")
+    /**
+     * 去发货
+     * @param json
+     * @return
+     */
+    @GetMapping("/allocate")
     public Status_guana allocate(@RequestBody JSONObject json){
         String id=json.getString("id");
         Status_guana status_guana=new Status_guana();

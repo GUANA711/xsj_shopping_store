@@ -208,7 +208,7 @@
     select * from orders
       <trim prefix="WHERE" prefixOverrides="AND|OR">
         <if test = "openid!=null">
-          openid = #{openid}
+          and openid = #{openid}
         </if>
         <if test="ispay!=-1">
           and ispay = #{ispay}

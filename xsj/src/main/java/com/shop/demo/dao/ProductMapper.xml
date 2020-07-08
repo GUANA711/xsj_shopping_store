@@ -32,20 +32,20 @@
   <select id="selectrecommendList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
     select
     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-    hot,fields, typeid, typename
+    hot,fields, typeid, typename,pthoto
     from product where recommend=1 and fields=1;
   </select>
     <select id="selectoldestList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
      select
      id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-     hot,fields, typeid, typename
+     hot,fields, typeid, typename,pthoto
      from product where oldest=1 and fields=1;
   </select>
 
     <select id="selecthotList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
      select
      id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-     hot,fields, typeid, typename
+     hot,fields, typeid, typename,pthoto
      from product where hot=1 and fields=1;
     </select>
 
@@ -53,7 +53,7 @@
     <select id="selectOneList" resultMap="BaseResultMap" parameterType="com.shop.demo.pojo.Product" >
      select
      id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-     hot,fields, typeid, typename
+     hot,fields, typeid, typename,pthoto
      from product where typeid=#{typeid};
     </select>
 
@@ -70,7 +70,7 @@
       title, stock, number,
       description, publishtime, recommend,
       oldest, hot,fields, typeid,
-      typename)
+      typename,pthoto)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE},
       #{title,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{number,jdbcType=INTEGER},
       #{description,jdbcType=VARCHAR}, #{publishtime,jdbcType=TIMESTAMP}, #{recommend,jdbcType=INTEGER},
@@ -126,6 +126,54 @@
             pthoto,
         </if>
     </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+          <if test="id != null" >
+              #{id,jdbcType=VARCHAR},
+
+          </if>
+          <if test="name != null" >
+              #{name,jdbcType=VARCHAR},
+          </if>
+          <if test="price != null" >
+              #{price,jdbcType=DOUBLE},
+          </if>
+          <if test="title != null" >
+              #{title,jdbcType=VARCHAR},
+          </if>
+          <if test="stock != null" >
+              #{stock,jdbcType=INTEGER},
+          </if>
+          <if test="number != null" >
+              #{number,jdbcType=INTEGER},
+          </if>
+          <if test="description != null" >
+              #{description,jdbcType=VARCHAR},
+          </if>
+          <if test="publishtime != null" >
+              #{publishtime,jdbcType=TIMESTAMP},
+          </if>
+          <if test="recommend != null" >
+              #{recommend,jdbcType=INTEGER},
+          </if>
+          <if test="oldest != null" >
+              #{oldest,jdbcType=INTEGER},
+          </if>
+          <if test="hot != null" >
+              #{hot,jdbcType=INTEGER},
+          </if>
+          <if test="typeid != null" >
+              #{typeid,jdbcType=VARCHAR},
+          </if>
+          <if test="fields != null" >
+              #{fields,jdbcType=VARCHAR},
+          </if>
+          <if test="typename != null" >
+            #{typename,jdbcType=VARCHAR},
+          </if>
+          <if test="pthoto!= null">
+              #{pthoto,jdbcType=VARCHAR},
+          </if>
+      </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.shop.demo.pojo.Product" >
     update product
@@ -164,7 +212,7 @@
         typeid = #{typeid,jdbcType=VARCHAR},
       </if>
         <if test="fields != null" >
-            #{fields,jdbcType=VARCHAR},
+        fields =   #{fields,jdbcType=VARCHAR},
         </if>
       <if test="typename != null" >
         typename = #{typename,jdbcType=VARCHAR},
@@ -198,6 +246,9 @@
         <where>
             <if test="id != null">
                 and id like CONCAT(CONCAT('%', #{id}), '%')
+            </if>
+            <if test="fields != null">
+                and fields like CONCAT(CONCAT('%', #{fields}), '%')
             </if>
             <if test="name != null">
                 and name like CONCAT(CONCAT('%', #{name}), '%')

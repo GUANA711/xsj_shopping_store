@@ -1,9 +1,13 @@
 package com.shop.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.shop.demo.dto.OdersDto;
 import com.shop.demo.pojo.Productimgs;
 import com.shop.demo.service.ProductimgsService;
 import com.shop.demo.utiles.FastDFSClient;
+import com.shop.demo.utiles.ResultInfoList;
 import com.shop.demo.utiles.Status_guana;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +133,7 @@ public class ImgManageController {
         productimgs.setImgurl(json.getString("imgurl"));
         productimgs.setImgid(json.getString("imgid"));
         try {
+
             int i=productimgsService.updateByPrimaryKeySelective(productimgs);
             if(i>0){
                 status_guana.setMsg("修改成功");
@@ -144,12 +149,14 @@ public class ImgManageController {
         return status_guana;
     }
 
-    @PostMapping("/select_img")
+    @GetMapping("/select_img")
     public List<Productimgs> select(@RequestBody JSONObject json){
         String productid=json.getString("productid");
         try {
+
             List<Productimgs> productimgsList= productimgsService.selectByproductid(productid);
-            return  productimgsList;
+           return productimgsList;
+
         }catch (Exception e){
             return null;
         }
