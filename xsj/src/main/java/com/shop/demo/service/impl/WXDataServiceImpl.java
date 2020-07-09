@@ -160,6 +160,15 @@ public class WXDataServiceImpl implements WXDataService {
 	}
 
 	/**
+	 * 清空购物车
+	 */
+	@Override
+	public int deleteByopenid(String openid){
+		return buycarMapper.deleteByopenid(openid);
+	}
+
+
+	/**
 	 * 统计用户
 	 */
 	@Override
