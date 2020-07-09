@@ -43,10 +43,13 @@ public interface ProductMapper {
 
     /*增加库存*/
     @Update("update product set stock = stock+1 where id = #{id}")
-    int addStoke(String id);
+    int addStock(String id);
 
     /*减少库存*/
     @Update("update product set stock = stock-1 where id = #{id}")
-    int decreaseStoke(String id);
+    int decreaseStock(String id);
+
+    @Select("select stock from product where id = #{id}")
+    int selectStock(String id);
 
 }

@@ -23,5 +23,7 @@ public interface ProductService {
 
     int addStock(String id);
 
-    int decreaseStoke(String id);
+    int decreaseStock(String id);
+
+    int selectStock(String id);
 }
