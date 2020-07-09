@@ -35,19 +35,19 @@
             },
             {
               "title": "添加商品",
-              "href": "page/editor.html",
+              "href": "page/table/add.html",
               "icon": "fa fa-check-circle-o",
               "target": "_self"
             },
             {
               "title": "图片管理",
-              "href": "page/table.html",
+              "href": "page/picture.html",
               "icon": "fa fa-image",
               "target": "_self"
             },
             {
-              "title": "商品类型",
-              "href": "page/table.html",
+              "title": "分类管理",
+              "href": "page/goods.html",
               "icon": "fa fa-reorder",
               "target": "_self"
             }
@@ -55,8 +55,46 @@
         },
         {
           "title": "订单管理",
-          "href": "page/table.html",
+          "href": "",
           "icon": "fa fa-snowflake-o",
+          "target": "_self",
+          "child": [
+            {
+              "title": "待发货订单",
+              "href": "page/deliver.html",
+              "icon": "fa fa-paper-plane-o",
+              "target": "_self"
+            },
+            {
+              "title": "未付款订单",
+              "href": "page/pay.html",
+              "icon": "fa fa-credit-card",
+              "target": "_self"
+            },
+            {
+              "title": "待收货订单",
+              "href": "page/receive.html",
+              "icon": "fa fa-tags",
+              "target": "_self"
+            },
+            {
+              "title": "已取消订单",
+              "href": "page/cancel.html",
+              "icon": "fa fa-circle-o-notch",
+              "target": "_self"
+            },
+            {
+              "title": "已完成订单",
+              "href": "page/over.html",
+              "icon": "fa fa-check-circle-o",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "系统日志",
+          "href": "page/log.html",
+          "icon": "fa fa-gear",
           "target": "_self"
         }
       ]

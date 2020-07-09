@@ -14,8 +14,12 @@
 
             background-color: #ffffff;
         }
-        .ck-editor__editable_inline { 
-            height: 300px !important; 
+        .ck-editor__editable{ 
+            min-height: 250px !important; 
+            width: 780px !important;
+        }
+        .ck-toolbar{
+            width: 800px !important;
         }
     </style>
 </head>
@@ -61,7 +65,7 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">商品状态</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-inline" style="margin-right:45px">
                 <input type="radio" name="fields" value="1" title="上架" checked="">
                 <input type="radio" name="fields" value="0" title="下架">
             </div>
@@ -75,6 +79,7 @@
             <label class="layui-form-label">是否推荐</label>
             <div class="layui-input-inline">
                 <input type="radio" name="recommend" value="1" title="是" checked="">
+                &emsp;
                 <input type="radio" name="recommend" value="0" title="否">
             </div>
             <label class="layui-form-label">热门商品</label>
@@ -88,12 +93,13 @@
             <input type="file" style="display: none;" id="uploadInput" name="file"
                 accept="image/jpg,image/jpeg,image/png,image/gif">
             <button type="button" class="layui-btn layui-btn-primary" id="uploadImg">选择图片</button>
+            <img src="" alt="coverImg" id="coverImg" style="width: 100px;height: 100px;" hidden>
             <tip id="fileName">未选择任何文件</tip>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">商品详情</label>
             <div class="layui-input-block">
-                <div id="toolbar-container"></div>
+                <!-- <div id="toolbar-container"></div> -->
                 <textarea rows="100" cols="100" class="ckeditor" name="description" id="ckeditor">
                     <p>添加 <b>商品详情</b> 描述</p>
                 </textarea>
@@ -108,7 +114,6 @@
     </div>
     <script src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
     <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
-    <!-- <script src="../../js/lay-config.js" charset="utf-8"></script> -->
     <script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
     <script src="../../lib/jq-module/zyupload/zyupload-1.0.0.min.js" charset="utf-8"></script>
     <script>        
@@ -123,17 +128,40 @@
             var fileName=$('#uploadInput').val();
             fileName=fileName.split('\\');
             i = fileName.length-1;
+            $('#fileName').show();
             $('#fileName').text(fileName[i]);
+            let files = $(this)[0].files[0];    //获取文件信息
+            if (files) {        //选择了图片
+                $("#coverImg").show();
+                var reader = new FileReader();  //调用FileReader
+                reader.onload = function (evt) {   //读取操作完成时触发。
+                    $("#coverImg").attr('src', evt.target.result);  //将img标签的src绑定为DataURL
+                }
+                reader.readAsDataURL(files); //将文件读取为 DataURL(base64)
+            }else{              //没有选择
+                if (coverSrc) {                 //显示之前的图片
+                    $("#coverImg").attr('src', coverSrc);
+                } else {
+                    $("#coverImg").hide();
+                    $('#fileName').show();
+                    $('#fileName').text("暂无封面图片");
+                }
+                
+            }
         });
-        /* 获取富文本值 */
-        let editor;
+        let editor;/* 获取富文本值 */
+            var load;
+            var id;
+            let ip = 'http://121.199.79.42/';
+            var des;
+            var coverFile;
+            var coverSrc;
          /* 表单 */
         layui.use(['form'], function () {
             var form = layui.form,
                 layer = layui.layer,
                 $ = layui.$;
-                var load = layer.load(0, { time: 10 * 1000 });
-            // form.render();
+                load = layer.load(0, { time: 10 * 1000 });
             //自定义验证
             form.verify({
              integer: function(value){ //value：表单的值、item：表单的DOM对象
@@ -150,10 +178,7 @@
             }
             });
             $(document).ready(function () {
-                var id = $('input[name="id"]').val();
-                var name = $('input[name="name"]').val();
-                console.log(id);
-                console.log(name);
+                id = $('input[name="id"]').val();
                 //获取商品类型选择
                 $.ajax({
                     type: "post",
@@ -162,8 +187,8 @@
                     contentType: 'application/json',
                     dataType: 'json',
                     success: function (response) {
-                        if (response.length > 0) { //有分类
-                            response.forEach(item => {
+                        if (response.selectList.length > 0) { //有分类
+                            response.selectList.forEach(item => {
                                 if (item.state == 1) { //可用状态
                                     $("#goodsType").append('<option value=' + item.name + '>' + item.name + '</option>');
                                 }
@@ -177,12 +202,11 @@
                     }
                 });
                 // 加载信息
-
                 if (id.length > 0) {
-                    jsonId = { "id": id };
+                    jsonId = { "id": id,"page":1,"limit":1 };
                     $.ajax({
                         type: "post",
-                        url: "/product/select/1/1",
+                        url: "/product/select",
                         data: JSON.stringify(jsonId),
                         contentType: 'application/json',
                         dataType: 'json',
@@ -190,14 +214,10 @@
                             if (response.total > 0) { //有数据
                                 response.selectList.forEach(data => {
                                     layui.form.val('formTab', {
-                                        // "fields": data.fields // "name": "value"
-                                        // , "hot": data.hot
-                                        // , "oldest": data.oldest
-                                        // , "recommend": data.recommend
                                         "name": data.name
-                                        // , "file": ip + data.pthoto
+                                        // , "file": data.pthoto
                                         , "price": data.price
-                                        , "description": data.description
+                                        // , "description": data.description
                                         , "stock": data.stock
                                         , "title": data.title
                                         , "typename": data.typename
@@ -210,22 +230,24 @@
                                         , "recommend": $("input[name=recommend][value=0]").attr("checked", data.recommend == 0 ? true : false)
                                         , "recommend": $("input[name=recommend][value=1]").attr("checked", data.recommend == 1 ? true : false)
                                     });
-                                    // $("input[name='name']").val(item.name);
-                                    // $("input[name='title']").val(item.title);
-                                    // $("input[name='stock']").val(item.stock);
-                                    // $("input[name='price']").val(item.price);
-                                    // $("select[name='typename']").val(item.typename);
-                                    // $("[name='description']").val(item.description);
-                                    // $("input[name='oldest']").val(item.oldest);
-                                    // $("input[name='hot']").val(item.hot);
-                                    // $("input[name='recommend']").val(item.recommend);
-                                    // $("input[name='fields']").val(item.fields);
+                                    des = data.description;
+                                    $("#ckeditor").val(des);
+                                    console.log($("#ckeditor").val());
+                                    if (data.pthoto) {
+                                        $("#coverImg").show();
+                                        $("#fileName").hide();
+                                        coverSrc = ip + data.pthoto;
+                                        $("#coverImg").attr('src', ip + data.pthoto)
+                                    }else{
+                                        $("#fileName").show();
+                                        $("#coverImg").hide();
+                                        $('#fileName').text("暂无封面图片");
+                                    }
+
                                 });
                             } else {
-                                layer.msg(response.msg, { icon: 6 });    //6是成，5是 error
+                                layer.msg(response.msg, { icon: 5 });    //6是成，5是 error
                             }
-                            // form.render('radio');
-                            // form.render();//更新 lay-filter="test2" 所在容器内的全部 select 状态
                         }
                     });
                 }
@@ -233,22 +255,24 @@
             // 富文本
             ClassicEditor
                 .create(document.querySelector('#ckeditor'), {
-                    removePlugins: ['Insert media', 'Insert media', 'Link', 'Redo', 'Block quote'],
+                    removePlugins: ['Insert media', 'Link', 'Redo', 'Block quote'],
                     ckfinder: {
                         uploadUrl: "/product/ckImg"
                     },
-                    height: '300'
                 }
                 )
                 .then(thisEditor => {
-                    const toolbarContainer = document.querySelector('#toolbar-container');
-                    toolbarContainer.appendChild(thisEditor.ui.view.toolbar.element);
                     editor = thisEditor;
+                    editor.updateSourceElement();
+                    editor.updateSourceElement(des);
                     layer.close(load);
                 })
                 .catch(error => {
                     console.error(error);
                 });
+            // $(function(){
+            //     editor.updateSourceElement(des);
+            // });
             //监听提交
             form.on('submit(saveBtn)', function (data) {
                 console.log(data.field);
@@ -261,9 +285,7 @@
                 // var objForm = obj.getFormData();
                 // console.log(objForm);
                  var postData = new FormData();
-                 if (id==0) {
-                    postData.append("id",'002');
-                 }
+                 postData.append("id", data.field.id);
                  postData.append("fields",data.field.fields);
                  postData.append("hot",data.field.hot);
                  postData.append("name",data.field.name);
