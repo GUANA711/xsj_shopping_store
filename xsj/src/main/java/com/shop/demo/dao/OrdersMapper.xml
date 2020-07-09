@@ -204,9 +204,10 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <select id="select" resultType="com.shop.demo.pojo.Orders">
-    select * from orders
+  <select id="select" resultType="com.shop.demo.dto.OrdersDetail">
+    select productid,productname,orders.title,orders.price,totle,ispay,invoice,orders.number,receive,stock,pthoto,address from orders,product
       <trim prefix="WHERE" prefixOverrides="AND|OR">
+        and orders.productid = product.id
         <if test = "openid!=null">
           and openid = #{openid}
         </if>
@@ -219,6 +220,7 @@
         <if test="productid!=null">
           and productid = #{productid}
         </if>
+        and state = 1
       </trim>
   </select>
   <select id="selectBySelective" parameterType="com.shop.demo.pojo.Orders" resultType="com.shop.demo.dto.OdersDto">

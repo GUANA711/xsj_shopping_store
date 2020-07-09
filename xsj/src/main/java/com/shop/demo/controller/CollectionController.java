@@ -53,7 +53,7 @@ public class CollectionController {
      * productid：商品id
      * openid:用户标识
      */
-    @GetMapping("/collection/delete")
+    @PostMapping("/collection/delete")
     public Map<String,Object> deleteCollection(@RequestBody JSONObject json){
         Map<String,Object> map = new HashMap<>();
         String pId = json.getString("productid");
