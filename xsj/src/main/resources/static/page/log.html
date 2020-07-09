@@ -52,7 +52,7 @@
             //显示全部
             table.render({
                 elem: '#currentTableId',
-                url: '',
+                url: '/log/showLog',
                 id: 'currentTableFilter',
                 response: {
                     // statusCode: 1 //规定成功的状态码，默认：0
@@ -73,35 +73,48 @@
                     [
                         {
                             field: 'logid',
-                            width: 120,
+                            width: 80,
                             title: '日志ID',
                             sort: true
                         },
                         {
                             field: 'openid',
-                            width: 100,
+                            MinWidth: 150,
                             title: '用户id',
                             sort: true
                         },
                         {
                             field: 'nickname',
-                            width: 110,
+                            width: 120,
                             title: '用户名'
                         },
                         {
-                            field: 'Operation',
+                            field: 'operation',
                             width: 120,
-                            title: '操作',
+                            title: '用户操作',
                         },
                         {
-                            field: 'IP',
-                            width: 100,
+                            field: 'method',
+                            width: 110,
+                            title: '方法',
+                            templet: function (item) {
+                                if (item.method) {
+                                    context = item.method.split('.');
+                                    i = context.length;
+                                    return item.method = context[i-1];
+                                }
+                                return '无';
+                            }
+                        },
+                        {
+                            field: 'ip',
+                            width: 140,
                             title: 'IP',
                         },
                         {
-                            field: 'Create_time',
-                            width: 100,
-                            title: '时间',
+                            field: 'create_time',
+                            width: 170,
+                            title: '操作时间',
                             sort: true
                         }
                         ]

@@ -35,20 +35,20 @@ public interface OrdersMapper {
     List<OrdersDetail> select(@Param("openid") String openid, @Param("ispay") int ispay, @Param("receive") int receive, @Param("productid") String productid);
 
     /*去支付*/
-    @Update("update orders set ispay = 1,receive = 2 where openid = #{openid} and productid = #{productid}")
-    int updateIspay(String openid,String productid);
+    @Update("update orders set ispay = 1,receive = 2 where id = #{id}")
+    int updateIspay(String id);
 
     /*去发货*/
-    @Update("update orders set receive = 0 where openid = #{openid} and productid = #{productid}")
-    int updateReceiceByMan(String openid,String productid);
+    @Update("update orders set receive = 0 where id = #{id}")
+    int updateReceiceByMan(String id);
 
     /*去收货*/
-    @Update("update orders set receive = 1, state = 3 where openid = #{openid} and productid = #{productid}")
-    int updateReceice(String openid,String productid);
+    @Update("update orders set receive = 1, state = 3 where id = #{id}")
+    int updateReceice(String id);
 
     /*取消订单*/
-    @Update("update orders set state = 2 where openid = #{openid} and productid = #{productid}")
-    int cancel(String openid,String productid);
+    @Update("update orders set state = 2 where id = #{id}")
+    int cancel(String id);
 
     List<OdersDto> selectBySelective(Orders orders);
 
