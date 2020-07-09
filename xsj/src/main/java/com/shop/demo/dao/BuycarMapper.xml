@@ -17,7 +17,7 @@
   </select>
 
   <select id="selectByopenid" parameterType="java.lang.String" resultType="map">
-    select distinct b.id, b.productid, b.openid,p.name,p.price,p.stock,p.number,pi.imgurl,o.number ordernum
+    select distinct b.id, b.productid, b.openid,p.name,p.price,p.stock,p.number,pi.imgurl,o.number shopNum
     from product p,buycar b,productimgs pi,orders o
     where pi.productid=p.id and p.id=b.productid and p.id=o.productid and b.openid = #{openid,jdbcType=VARCHAR}
   </select>
