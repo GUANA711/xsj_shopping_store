@@ -29,4 +29,10 @@ public interface ProductimgsMapper {
      */
     @Select("select * from productimgs where productid=#{productid}")
     List<Productimgs> selectByproductid(String productid);
+
+
+    /**
+     * productid查询imgurl
+     */
+    List<Productimgs> selectBypid(String productid);
 }
