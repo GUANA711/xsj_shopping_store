@@ -29,12 +29,17 @@ public class ProductImpl implements ProductService {
 
     @Override
     public int addStock(String id) {
-        return productMapper.addStoke(id);
+        return productMapper.addStock(id);
     }
 
     @Override
-    public int decreaseStoke(String id) {
-        return productMapper.decreaseStoke(id);
+    public int decreaseStock(String id) {
+        return productMapper.decreaseStock(id);
+    }
+
+    @Override
+    public int selectStock(String id) {
+        return productMapper.selectStock(id);
     }
 
     @Override

@@ -54,8 +54,16 @@ public class OrdersController {
         orders.setAddrid(addrid);
         orders.setState(1);
         orders.setReceive(2);
+
+        int pStock = productService.selectStock(productid);
+        if (pStock <=0 ){
+            map.put("status",500);
+            map.put("msg","库存不足");
+            return map;
+        }
+
         try {
-            productService.decreaseStoke(productid);
+            productService.decreaseStock(productid);
             int res = ordersService.add(orders);
             map.put("status",200);
             map.put("info",res);
