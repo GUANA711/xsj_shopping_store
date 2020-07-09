@@ -9,7 +9,11 @@ import java.util.Map;
  */
 public interface LogServive {
     void addLog(Log log);
+
     String selectnickname(String openid);
 
+    List<Log> showLog();
+
+    List<Log> searchLog(Log log);
 
 }

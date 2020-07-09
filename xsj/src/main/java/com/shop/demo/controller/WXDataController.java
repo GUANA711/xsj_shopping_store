@@ -4,11 +4,10 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shop.demo.dto.GoodsTypeProduct;
-import com.shop.demo.pojo.Buycar;
-import com.shop.demo.pojo.Customer;
-import com.shop.demo.pojo.Orders;
-import com.shop.demo.pojo.Product;
+import com.shop.demo.dto.OdersDto;
+import com.shop.demo.pojo.*;
 import com.shop.demo.dto.ProductDetailDto;
+import com.shop.demo.service.LogServive;
 import com.shop.demo.service.WXDataService;
 import com.shop.demo.utiles.ResultInfoList;
 import com.shop.demo.utiles.ResultListTotal;
@@ -220,4 +219,5 @@ public class WXDataController {
         resultListTotal.setSelectList(service.selectAllProduct());
         return resultListTotal;
 	}
+
 }
