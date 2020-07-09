@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.shop.demo.dto.OrdersDetail;
 import com.shop.demo.pojo.Orders;
 import com.shop.demo.service.OrdersService;
+import com.shop.demo.service.ProductService;
 import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,8 @@ import java.util.UUID;
 public class OrdersController {
     @Autowired
     public OrdersService ordersService;
+    @Autowired
+    public ProductService productService;
 
     @PostMapping("/orders/add")
     public Map<String,Object> add(@RequestBody JSONObject json){
@@ -52,6 +55,7 @@ public class OrdersController {
         orders.setState(1);
         orders.setReceive(2);
         try {
+            productService.decreaseStoke(productid);
             int res = ordersService.add(orders);
             map.put("status",200);
             map.put("info",res);
@@ -144,9 +148,11 @@ public class OrdersController {
     }
 
     @PostMapping("/orders/cancel")
-    public Map<String,Object> cancel(@RequestParam("id") String id){
+    public Map<String,Object> cancel(@RequestParam("id") String id,
+                                     @RequestParam("productid") String productid){
         Map<String,Object> map = new HashMap<>();
         try {
+            productService.addStock(productid);
             int res = ordersService.cancel(id);
             map.put("status",200);
             map.put("info",res);

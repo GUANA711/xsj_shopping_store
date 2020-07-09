@@ -3,6 +3,7 @@ package com.shop.demo.dao;
 import com.shop.demo.pojo.Product;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,5 +40,13 @@ public interface ProductMapper {
      * 查询某一类所有的商品
      */
     List<Product> selectOneList(String id);
+
+    /*增加库存*/
+    @Update("update product set stock = stock+1 where id = #{id}")
+    int addStoke(String id);
+
+    /*减少库存*/
+    @Update("update product set stock = stock-1 where id = #{id}")
+    int decreaseStoke(String id);
 
 }
