@@ -124,8 +124,8 @@ public class WXDataServiceImpl implements WXDataService {
 	public ProductDetailDto selectProductDetails(String id) {
 		//根据商品id查询商品详情
 		Product p = productMapper.selectByPrimaryKey(id);
-		//根据商品id查询商品的图片列表
-		List<Productimgs> imgs = productimgsMapper.selectByproductid(id);
+		//根据商品id查询商品的图片url列表
+		List<Productimgs> imgs = productimgsMapper.selectBypid(id);
 		//整合返回值
 		ProductDetailDto dto = new ProductDetailDto();
 		dto.setProduct(p);
@@ -158,6 +158,15 @@ public class WXDataServiceImpl implements WXDataService {
 	public int deleteByPrimaryKey(int id){
 		return buycarMapper.deleteByPrimaryKey(id);
 	}
+
+	/**
+	 * 清空购物车
+	 */
+	@Override
+	public int deleteByopenid(String openid){
+		return buycarMapper.deleteByopenid(openid);
+	}
+
 
 	/**
 	 * 统计用户

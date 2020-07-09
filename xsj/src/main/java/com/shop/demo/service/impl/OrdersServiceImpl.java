@@ -1,6 +1,7 @@
 package com.shop.demo.service.impl;
 
 import com.shop.demo.dao.OrdersMapper;
+import com.shop.demo.dto.OrdersDetail;
 import com.shop.demo.pojo.Orders;
 import com.shop.demo.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public List<Orders> select(String openid, int ispay, int receive, String productid) {
+    public List<OrdersDetail> select(String openid, int ispay, int receive, String productid) {
         return ordersMapper.select(openid,ispay,receive,productid);
     }
 

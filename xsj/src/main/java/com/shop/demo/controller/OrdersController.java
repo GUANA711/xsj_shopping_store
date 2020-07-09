@@ -1,13 +1,13 @@
 package com.shop.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.shop.demo.dto.OrdersDetail;
 import com.shop.demo.pojo.Orders;
 import com.shop.demo.service.OrdersService;
 import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +83,7 @@ public class OrdersController {
             receive = Integer.parseInt(receiveS);
         }
         try {
-            List<Orders> res = ordersService.select(openid,ispay,receive,productid);
+            List<OrdersDetail> res = ordersService.select(openid,ispay,receive,productid);
             map.put("status",200);
             map.put("info",res);
             map.put("msg","查询成功");

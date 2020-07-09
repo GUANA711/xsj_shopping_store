@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -89,55 +90,26 @@ public class OrderManageController {
      }
 
     /**
+
      * 查询订单
-     * @param json
+     * @param
      * @return
      */
-     @GetMapping("/select/{page}/{limit}")
-     public ResultInfoList select(@RequestBody JSONObject json,@PathVariable("page") int page,@PathVariable("limit") int limit){
-         String id=json.getString("id");
-         String openid=json.getString("openid");
-         String productid=json.getString("productid");
-         String productname=json.getString("productname");
-         String title=json.getString("title");
-         String price=json.getString("price");
-         String number=json.getString("number");
-         String totle=json.getString("totle");
-         String ispay=json.getString("ispay");
-         String invoice=json.getString("invoice");
-         String receive=json.getString("receive");
-         String state=json.getString("state");
-         String address=json.getString("address");
-         String addrid=json.getString("addrid");
-         Orders orders=new Orders();
+     @GetMapping("/select")
+     public ResultInfoList select(@RequestParam(value="page",required=false) int page, @RequestParam(value="limit",required=false) int limit,@RequestParam("openid") String openid,@RequestParam("id") String id){
 
+         Orders orders=new Orders();
+         if(id.equals("")){
+             id=null;
+         }
+         if(openid.equals("")){
+             openid=null;
+         }
          orders.setId(id);
          orders.setOpenid(openid);
-         orders.setProductid(productid);
-         orders.setProductname(productname);
-         orders.setTitle(title);
-         orders.setInvoice(invoice);
-         orders.setAddress(address);
-         orders.setAddrid(addrid);
 
-         if(price!=null){
-             orders.setPrice(Double.parseDouble(price));
-         }
-         if(number!=null){
-             orders.setNumber(Integer.parseInt(number));
-         }
-         if(ispay!=null){
-             orders.setIspay(Integer.parseInt(ispay));
-         }
-         if(receive!=null){
-             orders.setReceive(Integer.parseInt(receive));
-         }
-         if(state!=null){
-             orders.setState(Integer.parseInt(state));
-         }
-         if(totle!=null){
-             orders.setTotle(Double.parseDouble(totle));
-         }
+
+
 
          try {
              ResultInfoList resultInfoList=new ResultInfoList();
@@ -161,8 +133,8 @@ public class OrderManageController {
      * 待支付订单显示
      * @return
      */
-     @GetMapping("/nopay_show/{page}/{limit}")
-    public ResultInfoList nopay(@PathVariable("page") int page,@PathVariable("limit") int limit){
+     @GetMapping("/nopay_show")
+    public ResultInfoList nopay(@RequestParam("page") int page,@RequestParam("limit") int limit){
          Orders orders=new Orders();
          orders.setIspay(0);
          orders.setState(1);
@@ -182,8 +154,8 @@ public class OrderManageController {
      * 待发货显示
      * @return
      */
-    @GetMapping("/noallcation_show/{page}/{limit}")
-    public ResultInfoList noallocation(@PathVariable("page") int page,@PathVariable("limit") int limit){
+    @GetMapping("/noallcation_show")
+    public ResultInfoList noallocation(@RequestParam("page") int page,@RequestParam("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(1);
@@ -202,8 +174,8 @@ public class OrderManageController {
      * 待收货显示
      * @return
      */
-    @GetMapping("/norecive_show/{page}/{limit}")
-    public ResultInfoList norecive(@PathVariable("page") int page,@PathVariable("limit") int limit){
+    @GetMapping("/norecive_show")
+    public ResultInfoList norecive(@RequestParam("page") int page,@RequestParam("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(1);
@@ -221,8 +193,8 @@ public class OrderManageController {
      * 完成订单显示显示
      * @return
      */
-    @GetMapping("/ok_show/{page}/{limit}")
-    public ResultInfoList nok_show(@PathVariable("page") int page,@PathVariable("limit") int limit){
+    @GetMapping("/ok_show")
+    public ResultInfoList nok_show(@RequestParam("page") int page,@RequestParam("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(3);
@@ -240,8 +212,8 @@ public class OrderManageController {
      * 被取消订单显示显示
      * @return
      */
-    @GetMapping("/cancel_show/{page}/{limit}")
-    public ResultInfoList cancel_show(@PathVariable("page") int page,@PathVariable("limit") int limit){
+    @GetMapping("/cancel_show")
+    public ResultInfoList cancel_show(@RequestParam("page") int page,@RequestParam("limit") int limit){
         Orders orders=new Orders();
         orders.setState(2);
         ResultInfoList resultInfoList=new ResultInfoList();
