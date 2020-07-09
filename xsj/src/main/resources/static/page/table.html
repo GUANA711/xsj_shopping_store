@@ -107,8 +107,8 @@
                 // statusName: '', //规定数据状态的字段名称，默认：code
                 // ,statusCode: 200 //规定成功的状态码，默认：0
                 // ,msgName: 'hint' //规定状态信息的字段名称，默认：msg
-                // countName: 'total' //规定数据总数的字段名称，默认：count
-                    dataName: 'selectList' //规定数据列表的字段名称，默认：data
+                    countName: 'total' //规定数据总数的字段名称，默认：count
+                    ,dataName: 'selectList' //规定数据列表的字段名称，默认：data
                 },
                 limits:[10],
                 limit: 10,
@@ -244,10 +244,14 @@
                 //执行搜索重载
                 table.reload('currentTableFilter', {
                     method:"post",
-                    url: "/product/select",
+                    url: "/product/select/1/10",
                     contentType: 'application/json',
                     page: {
                         curr: 1
+                    },
+                    response: {
+                // statusName: '', //规定数据状态的字段名称，默认：code
+                    statusCode: 1
                     },
                     where: {
                         'fields': data.field.fields,
@@ -276,6 +280,9 @@
                             //找到子页面的document对象
                             var document = window.frames[frameId].document;
                             $(document).find("input[name='id']").val(data.id);
+                        },
+                        done: function () {
+                            table.reload('currentTableFilter');
                         }
                     });
                     // $(window).on("resize", function () {

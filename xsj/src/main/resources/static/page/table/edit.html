@@ -65,7 +65,7 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">商品状态</label>
-            <div class="layui-input-inline" style="margin-right:45px">
+            <div class="layui-input-inline">
                 <input type="radio" name="fields" value="1" title="上架" checked="">
                 <input type="radio" name="fields" value="0" title="下架">
             </div>
@@ -203,10 +203,10 @@
                 });
                 // 加载信息
                 if (id.length > 0) {
-                    jsonId = { "id": id,"page":1,"limit":1 };
+                    jsonId = { "id": id };
                     $.ajax({
                         type: "post",
-                        url: "/product/select",
+                        url: "/product/select/1/1",
                         data: JSON.stringify(jsonId),
                         contentType: 'application/json',
                         dataType: 'json',

@@ -19,7 +19,7 @@
   </select>
 
   <select id="showGoodsTypeList" resultType="com.shop.demo.pojo.Goodstype">
-    select id, name,state, listId from goodstype;
+    select id, name,state, listId from goodstype where state=1;
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
