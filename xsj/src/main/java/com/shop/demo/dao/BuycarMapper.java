@@ -26,7 +26,7 @@ public interface BuycarMapper {
 
     @Select("select b.id, b.productid, b.openid,p.name,p.price,p.stock,p.number,pi.imgurl\n" +
             "    from product p,buycar b,productimgs pi\n" +
-            "    where pi.productid=p.id and p.id=b.productid and b.openid = #{openid}")
+            "    where pi.productid=p.id and p.id=b.productid and b.openid = #{openid} group by b.id")
     List<BuycarDto> selectByopenid(String openid);
 
     int deleteByopenid(String openid);
