@@ -1,6 +1,7 @@
 package com.shop.demo.dao;
 
 import com.shop.demo.dto.OdersDto;
+import com.shop.demo.dto.OrdersDetail;
 import com.shop.demo.pojo.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,7 +32,7 @@ public interface OrdersMapper {
     * 查询待收货订单
     * 查询待付款订单
     * */
-    List<Orders> select(@Param("openid") String openid,@Param("ispay") int ispay,@Param("receive") int receive,@Param("productid") String productid);
+    List<OrdersDetail> select(@Param("openid") String openid, @Param("ispay") int ispay, @Param("receive") int receive, @Param("productid") String productid);
 
     /*去支付*/
     @Update("update orders set ispay = 1,receive = 2 where openid = #{openid} and productid = #{productid}")
