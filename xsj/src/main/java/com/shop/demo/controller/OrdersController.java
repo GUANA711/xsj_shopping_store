@@ -63,7 +63,7 @@ public class OrdersController {
         return map;
     }
 
-    @GetMapping("/orders/select")
+    @PostMapping("/orders/select")
     public Map<String,Object> selectByNoPay( @RequestBody JSONObject json){
         Map<String,Object> map = new HashMap<>();
         String openid = json.getString("openid");
