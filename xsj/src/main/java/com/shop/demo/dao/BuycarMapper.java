@@ -1,7 +1,9 @@
 package com.shop.demo.dao;
 
+import com.shop.demo.dto.BuycarDto;
 import com.shop.demo.pojo.Buycar;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +24,12 @@ public interface BuycarMapper {
 
     int updateByPrimaryKey(Buycar record);
 
-    List<Buycar> selectByopenid (String openid);
+    @Select("select b.id, b.productid, b.openid,p.name,p.price,p.stock,p.number,pi.imgurl\n" +
+            "    from product p,buycar b,productimgs pi\n" +
+            "    where pi.productid=p.id and p.id=b.productid and b.openid = #{openid}")
+    List<BuycarDto> selectByopenid(String openid);
 
     int deleteByopenid(String openid);
+
+    String selectpid(String openid);
 }

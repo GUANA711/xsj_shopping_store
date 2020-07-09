@@ -3,6 +3,7 @@ package com.shop.demo.service;
 import java.util.List;
 import java.util.Map;
 
+import com.shop.demo.dto.BuycarDto;
 import com.shop.demo.dto.GoodsTypeProduct;
 import com.shop.demo.dto.ProductDetailDto;
 import com.shop.demo.pojo.*;
@@ -71,7 +72,13 @@ public interface WXDataService {
 	/**
 	 * 根据openid查询购物车
 	 */
-	List<Buycar> selectByopenid (String openid);
+	List<BuycarDto> selectByopenid (String openid);
+
+	/**
+	 * 查询某一个商品的库存
+	 */
+	int selectshopNum(String productid);
+    String selectpid(String openid);
 
 
 	/**

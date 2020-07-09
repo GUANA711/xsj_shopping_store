@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import com.shop.demo.dto.BuycarDto;
 import com.shop.demo.dto.GoodsTypeProduct;
 import com.shop.demo.dto.OdersDto;
 import com.shop.demo.pojo.*;
@@ -121,11 +122,12 @@ public class WXDataController {
 
 	@RequestMapping("/selectByopenid")
 	@ResponseBody
-	public List<Buycar> selectByopenid(@RequestBody JSONObject json){
+	public List<BuycarDto> selectByopenid(@RequestBody JSONObject json){
 
 		//从前端获取数据
 		String openid=json.getString("openid");
 
+//		Map<String, Object> map = new HashMap<String, Object>();
 		return service.selectByopenid(openid);
 	}
 

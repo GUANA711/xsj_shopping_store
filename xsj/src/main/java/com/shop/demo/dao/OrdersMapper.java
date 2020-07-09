@@ -53,4 +53,13 @@ public interface OrdersMapper {
     List<OdersDto> selectBySelective(Orders orders);
 
     List<Orders> selectAllOrder();
+
+    /**
+     * 查询某一个商品的库存
+     * @param productid
+     * @return
+     */
+    @Select("select number shopNum from orders where productid=#{productid}")
+    int selectshopNum(String productid);
+
 }

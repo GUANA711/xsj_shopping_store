@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.shop.demo.dao.*;
+import com.shop.demo.dto.BuycarDto;
 import com.shop.demo.dto.GoodsTypeProduct;
 import com.shop.demo.dto.ProductDetailDto;
 import com.shop.demo.pojo.*;
@@ -148,10 +149,22 @@ public class WXDataServiceImpl implements WXDataService {
 	 * 根据openid查询购物车
 	 */
 	@Override
-	 public List<Buycar> selectByopenid (String openid){
+	 public List<BuycarDto> selectByopenid (String openid){
 		return buycarMapper.selectByopenid(openid);
 	}
 
+	/**
+	 *
+	 */
+
+	@Override
+	public int selectshopNum(String productid){
+		return ordersMapper.selectshopNum(productid);
+	}
+    @Override
+    public String selectpid(String openid){
+        return buycarMapper.selectpid(openid);
+    }
 	/**
 	 * 移除购物车
 	 */
