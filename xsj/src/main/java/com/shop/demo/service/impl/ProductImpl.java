@@ -28,6 +28,16 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
+    public int addStock(String id) {
+        return productMapper.addStoke(id);
+    }
+
+    @Override
+    public int decreaseStoke(String id) {
+        return productMapper.decreaseStoke(id);
+    }
+
+    @Override
     public int insert(Product record) {
         return productMapper.insert(record);
     }

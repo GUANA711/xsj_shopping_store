@@ -20,4 +20,8 @@ public interface ProductService {
     List<Product> show();
 
     List<Product> selectBySelective(Product record);
+
+    int addStock(String id);
+
+    int decreaseStoke(String id);
 }

@@ -244,10 +244,14 @@
                 //执行搜索重载
                 table.reload('currentTableFilter', {
                     method:"post",
-                    url: "/product/select",
+                    url: "/product/select/1/10",
                     contentType: 'application/json',
                     page: {
                         curr: 1
+                    },
+                    response: {
+                // statusName: '', //规定数据状态的字段名称，默认：code
+                    statusCode: 1
                     },
                     where: {
                         'fields': data.field.fields,
