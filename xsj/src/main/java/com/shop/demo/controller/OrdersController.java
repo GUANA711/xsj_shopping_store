@@ -96,11 +96,10 @@ public class OrdersController {
 
     /*去收货*/
     @PostMapping("/orders/update/receive")
-    public Map<String,Object> updateReceive(@RequestParam("openid") String openid,
-                                            @RequestParam("productid") String productid){
+    public Map<String,Object> updateReceive(@RequestParam("id") String id){
         Map<String,Object> map = new HashMap<>();
         try {
-            int res = ordersService.updateReceice(openid,productid);
+            int res = ordersService.updateReceice(id);
             map.put("status",200);
             map.put("info",res);
             map.put("msg","收货成功");
@@ -113,11 +112,10 @@ public class OrdersController {
 
     /*去发货*/
     @PostMapping("/orders/update/delivery")
-    public Map<String,Object> updateReceiveByMan(@RequestParam("openid") String openid,
-                                                 @RequestParam("productid") String productid){
+    public Map<String,Object> updateReceiveByMan(@RequestParam("id") String id){
         Map<String,Object> map = new HashMap<>();
         try {
-            int res = ordersService.updateReceiceByMan(openid,productid);
+            int res = ordersService.updateReceiceByMan(id);
             map.put("status",200);
             map.put("info",res);
             map.put("msg","发货成功");
@@ -130,11 +128,11 @@ public class OrdersController {
 
     /*去支付*/
     @PostMapping("/orders/update/pay")
-    public Map<String,Object> updatePay(@RequestParam("openid") String openid,
-                                        @RequestParam("productid") String productid){
+    public Map<String,Object> updatePay(@RequestParam("id") String id
+    ){
         Map<String,Object> map = new HashMap<>();
         try {
-            int res = ordersService.updateIsPay(openid,productid);
+            int res = ordersService.updateIsPay(id);
             map.put("status",200);
             map.put("info",res);
             map.put("msg","支付成功");
@@ -146,11 +144,10 @@ public class OrdersController {
     }
 
     @PostMapping("/orders/cancel")
-    public Map<String,Object> cancel(@RequestParam("openid") String openid,
-                                     @RequestParam("productid") String productid){
+    public Map<String,Object> cancel(@RequestParam("id") String id){
         Map<String,Object> map = new HashMap<>();
         try {
-            int res = ordersService.cancel(openid,productid);
+            int res = ordersService.cancel(id);
             map.put("status",200);
             map.put("info",res);
             map.put("msg","取消成功");

@@ -26,22 +26,22 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public int updateIsPay(String openid, String productid) {
-        return ordersMapper.updateIspay(openid,productid);
+    public int updateIsPay(String id) {
+        return ordersMapper.updateIspay(id);
     }
 
     @Override
-    public int updateReceice(String openid, String productid) {
-        return ordersMapper.updateReceice(openid,productid);
+    public int updateReceice(String id) {
+        return ordersMapper.updateReceice(id);
     }
 
     @Override
-    public int updateReceiceByMan(String openid, String productid) {
-        return ordersMapper.updateReceiceByMan(openid,productid);
+    public int updateReceiceByMan(String id) {
+        return ordersMapper.updateReceiceByMan(id);
     }
 
     @Override
-    public int cancel(String openid, String productid) {
-        return ordersMapper.cancel(openid,productid);
+    public int cancel(String id) {
+        return ordersMapper.cancel(id);
     }
 }

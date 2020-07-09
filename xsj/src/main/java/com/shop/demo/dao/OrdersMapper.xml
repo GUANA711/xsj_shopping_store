@@ -205,7 +205,7 @@
   </update>
 
   <select id="select" resultType="com.shop.demo.dto.OrdersDetail">
-    select productid,productname,orders.title,orders.price,totle,ispay,invoice,orders.number,receive,stock,pthoto,address from orders,product
+    select orders.id,productid,productname,orders.title,orders.price,totle,ispay,invoice,orders.number,receive,stock,pthoto,address from orders,product
       <trim prefix="WHERE" prefixOverrides="AND|OR">
         and orders.productid = product.id
         <if test = "openid!=null">

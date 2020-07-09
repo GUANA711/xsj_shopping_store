@@ -10,8 +10,8 @@ import java.util.List;
 public interface OrdersService {
     public int add(Orders orders);
     public List<OrdersDetail> select(String openid, int ispay, int receive, String productid);
-    public int updateIsPay(String openid,String productid);
-    public int updateReceice(String openid,String productid);
-    public int updateReceiceByMan(String openid,String productid);
-    public int cancel(String openid,String productid);
+    public int updateIsPay(String id);
+    public int updateReceice(String id);
+    public int updateReceiceByMan(String id);
+    public int cancel(String id);
 }

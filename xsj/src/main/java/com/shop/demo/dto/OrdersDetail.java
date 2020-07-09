@@ -2,6 +2,7 @@ package com.shop.demo.dto;
 
 
 public class OrdersDetail {
+    private String id;
     private String productid;
     private String productname;
     private String title;
@@ -14,6 +15,14 @@ public class OrdersDetail {
     private String stock;
     private String pthoto;
     private String address;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getProductid() {
         return productid;
