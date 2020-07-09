@@ -10,6 +10,7 @@ import com.shop.demo.pojo.*;
 import com.shop.demo.service.WXDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
  * @author Alice
  */
 @Service
+@Transactional
 public class WXDataServiceImpl implements WXDataService {
 
 	@Autowired
@@ -92,8 +94,8 @@ public class WXDataServiceImpl implements WXDataService {
 	@Override
 	public List<GoodsTypeProduct> selectGoodsTypeProduct() {
 		//查询所有可用的商品分类列表
-		Goodstype gt = new Goodstype();
-		List<Goodstype> gtlist =  goodstypeMapper.showGoodsTypeList(gt);
+//		Goodstype gt = new Goodstype();
+		List<Goodstype> gtlist =  goodstypeMapper.showGoodsTypeList();
 		//查询每一个分类中的商品selectOneList(type.getId())
 		// 然后再将其保存到goodstypeproduct对象中
 		List<GoodsTypeProduct> list = new ArrayList<>();
@@ -102,6 +104,8 @@ public class WXDataServiceImpl implements WXDataService {
 			GoodsTypeProduct gtp = new GoodsTypeProduct();
 			gtp.setId(type.getId());
 			gtp.setName(type.getName());
+			gtp.setState(type.getState());
+			gtp.setListId(type.getListId());
 			gtp.setProductlist(plist);
 			list.add(gtp);
 		}
@@ -120,8 +124,8 @@ public class WXDataServiceImpl implements WXDataService {
 	public ProductDetailDto selectProductDetails(String id) {
 		//根据商品id查询商品详情
 		Product p = productMapper.selectByPrimaryKey(id);
-		//根据商品id查询商品的图片列表
-		List<Productimgs> imgs = productimgsMapper.selectByproductid(id);
+		//根据商品id查询商品的图片url列表
+		List<Productimgs> imgs = productimgsMapper.selectBypid(id);
 		//整合返回值
 		ProductDetailDto dto = new ProductDetailDto();
 		dto.setProduct(p);
@@ -154,6 +158,15 @@ public class WXDataServiceImpl implements WXDataService {
 	public int deleteByPrimaryKey(int id){
 		return buycarMapper.deleteByPrimaryKey(id);
 	}
+
+	/**
+	 * 清空购物车
+	 */
+	@Override
+	public int deleteByopenid(String openid){
+		return buycarMapper.deleteByopenid(openid);
+	}
+
 
 	/**
 	 * 统计用户

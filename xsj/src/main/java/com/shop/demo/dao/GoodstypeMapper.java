@@ -30,9 +30,9 @@ public interface GoodstypeMapper {
 
     /**
      * 显示商品类型的列表
-     * @param goodstype
+     * @param
      * @return
      */
-    List<Goodstype> showGoodsTypeList(Goodstype goodstype);
+    List<Goodstype> showGoodsTypeList();
 
 }

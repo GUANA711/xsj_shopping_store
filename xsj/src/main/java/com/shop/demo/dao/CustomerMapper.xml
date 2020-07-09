@@ -18,8 +18,7 @@
 
 
   <select id="selectAllCustomer" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
+    select openid, nickname
     from customer
   </select>
 

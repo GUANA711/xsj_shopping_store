@@ -10,6 +10,8 @@ import com.shop.demo.pojo.Orders;
 import com.shop.demo.pojo.Product;
 import com.shop.demo.dto.ProductDetailDto;
 import com.shop.demo.service.WXDataService;
+import com.shop.demo.utiles.ResultInfoList;
+import com.shop.demo.utiles.ResultListTotal;
 import com.shop.demo.utiles.Status_Alice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +30,7 @@ public class WXDataController {
 
 	@Autowired
 	private WXDataService service;
-	
+
 	/**
 	 * 显示首页商品列表
 	 * cmd=recommend:精选推荐
@@ -62,7 +64,7 @@ public class WXDataController {
 		return service.selectGoodsTypeProduct();
 	}
 
-	
+
 	/**
 	 * 	显示商品详情的service
 	 * 1、根据id查询商品的详细信息
@@ -154,23 +156,56 @@ public class WXDataController {
 		return status_alice;
 	}
 
-
 	/**
-	 * 统计用户
+	 * 清空购物车
 	 */
-	@RequestMapping("/selectAllCustomer")
+	@RequestMapping("/clearBuyCar")
 	@ResponseBody
-	public List<Customer> selectAllCustomer(){
-		return service.selectAllCustomer();
+	public Status_Alice clearBuyCar(@RequestBody JSONObject json){
+
+		String openid=json.getString("openid");
+
+		Status_Alice status_alice=new Status_Alice();
+
+		try {
+			int i=service.deleteByopenid(openid);
+			if(i>0){
+				status_alice.setMsg("清空成功");
+				status_alice.setStatus(true);
+			}else {
+				status_alice.setMsg("清空失败");
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+			status_alice.setMsg("购物车已为空，清空失败");
+		}
+		return status_alice;
 	}
+
+
+
+    /**
+     * 统计用户
+     */
+    @RequestMapping("/selectAllCustomer")
+    @ResponseBody
+    public ResultListTotal selectAllCustomer(){
+        ResultListTotal resultListTotal=new ResultListTotal();
+        resultListTotal.setTotal(service.selectAllCustomer().size());
+        resultListTotal.setSelectList(service.selectAllCustomer());
+        return resultListTotal;
+    }
 
 	/**
 	 * 订单统计
 	 */
 	@RequestMapping("/selectAllOrder")
 	@ResponseBody
-	public List<Orders> selectAllOrder(){
-		return service.selectAllOrder();
+	public ResultListTotal selectAllOrder(){
+        ResultListTotal resultListTotal=new ResultListTotal();
+        resultListTotal.setTotal(service.selectAllOrder().size());
+        resultListTotal.setSelectList(service.selectAllOrder());
+        return resultListTotal;
 	}
 
 
@@ -179,7 +214,10 @@ public class WXDataController {
 	 */
 	@RequestMapping("/selectAllProduct")
 	@ResponseBody
-	public List<Product> selectAllProduct(){
-		return service.selectAllProduct();
+	public ResultListTotal selectAllProduct(){
+        ResultListTotal resultListTotal=new ResultListTotal();
+        resultListTotal.setTotal(service.selectAllProduct().size());
+        resultListTotal.setSelectList(service.selectAllProduct());
+        return resultListTotal;
 	}
 }
