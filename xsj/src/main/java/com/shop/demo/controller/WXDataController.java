@@ -10,6 +10,8 @@ import com.shop.demo.pojo.Orders;
 import com.shop.demo.pojo.Product;
 import com.shop.demo.dto.ProductDetailDto;
 import com.shop.demo.service.WXDataService;
+import com.shop.demo.utiles.ResultInfoList;
+import com.shop.demo.utiles.ResultListTotal;
 import com.shop.demo.utiles.Status_Alice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -181,22 +183,29 @@ public class WXDataController {
 	}
 
 
-	/**
-	 * 统计用户
-	 */
-	@RequestMapping("/selectAllCustomer")
-	@ResponseBody
-	public List<Customer> selectAllCustomer(){
-		return service.selectAllCustomer();
-	}
+
+    /**
+     * 统计用户
+     */
+    @RequestMapping("/selectAllCustomer")
+    @ResponseBody
+    public ResultListTotal selectAllCustomer(){
+        ResultListTotal resultListTotal=new ResultListTotal();
+        resultListTotal.setTotal(service.selectAllCustomer().size());
+        resultListTotal.setSelectList(service.selectAllCustomer());
+        return resultListTotal;
+    }
 
 	/**
 	 * 订单统计
 	 */
 	@RequestMapping("/selectAllOrder")
 	@ResponseBody
-	public List<Orders> selectAllOrder(){
-		return service.selectAllOrder();
+	public ResultListTotal selectAllOrder(){
+        ResultListTotal resultListTotal=new ResultListTotal();
+        resultListTotal.setTotal(service.selectAllOrder().size());
+        resultListTotal.setSelectList(service.selectAllOrder());
+        return resultListTotal;
 	}
 
 
@@ -205,7 +214,10 @@ public class WXDataController {
 	 */
 	@RequestMapping("/selectAllProduct")
 	@ResponseBody
-	public List<Product> selectAllProduct(){
-		return service.selectAllProduct();
+	public ResultListTotal selectAllProduct(){
+        ResultListTotal resultListTotal=new ResultListTotal();
+        resultListTotal.setTotal(service.selectAllProduct().size());
+        resultListTotal.setSelectList(service.selectAllProduct());
+        return resultListTotal;
 	}
 }
