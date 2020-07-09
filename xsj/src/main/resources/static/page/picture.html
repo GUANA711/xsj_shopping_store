@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>图片管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../lib/jq-module/zyupload/zyupload-1.0.0.min.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        .layui-card {
+            border: 1px solid #f2f2f2;
+            border-radius: 5px;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #1aa094;
+        }
+
+        .icon-cray {
+            color: #ffb800 !important;
+        }
+
+        .icon-blue {
+            color: #1e9fff !important;
+        }
+
+        .icon-tip {
+            color: #ff5722 !important;
+        }
+
+        .layuimini-qiuck-module {
+            text-align: center;
+            margin-top: 10px
+        }
+
+        .layuimini-qiuck-module a i {
+            display: inline-block;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 2px;
+            font-size: 30px;
+            background-color: #F8F8F8;
+            color: #333;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+        .layuimini-qiuck-module a cite {
+            position: relative;
+            top: 2px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .welcome-module {
+            width: 100%;
+            height: 210px;
+        }
+
+        .panel {
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05)
+        }
+
+        .panel-body {
+            padding: 10px
+        }
+
+        .panel-title {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 12px;
+            color: inherit
+        }
+
+        .label {
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25em;
+            margin-top: .3em;
+        }
+
+        .layui-red {
+            color: red
+        }
+
+        .main_btn>p {
+            height: 40px;
+        }
+
+        .layui-bg-number {
+            background-color: #F8F8F8;
+        }
+
+        .layuimini-notice:hover {
+            background: #f6f6f6;
+        }
+
+        .layuimini-notice {
+            padding: 7px 16px;
+            clear: both;
+            font-size: 12px !important;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .layuimini-notice-title,
+        .layuimini-notice-label {
+            padding-right: 70px !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+        }
+
+        .layuimini-notice-title {
+            line-height: 28px;
+            font-size: 14px;
+        }
+
+        .layuimini-notice-extra {
+            position: absolute;
+            top: 50%;
+            margin-top: -8px;
+            right: 16px;
+            display: inline-block;
+            height: 16px;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-row ">
+                    <!-- 搜索部分 -->
+                    <fieldset class="table-search-fieldset">
+                        <legend>按商品ID搜索图片</legend>
+                        <div style="margin: 10px 10px 10px 10px">
+                            <form class="layui-form layui-form-pane">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">商品ID</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="productid" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i
+                                                class="layui-icon"></i> 搜 索</button>
+                                    </div>
+                                    <div class="layui-inline" id="otherBtn" style="float:right;" hidden> 
+                                        <button type="button" class="layui-btn" id="sort">管理顺序</button>
+                                        <button type="button" class="layui-btn layui-btn-danger" id="delete">删除图片</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </fieldset>
+                </div >
+                <div class="layui-row ">
+                    <!-- 图片部分 -->
+                    <div id="showOff" hidden>
+                        <div class="layui-carousel" id="picShow" style="left: 120px;">
+                            <div carousel-item>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <div id="upload" style="padding:40px 0 0 120px">
+                                <input type="file" style="display: none;" id="uploadInput" name="file"
+                                    accept="image/jpg,image/jpeg,image/png,image/gif">
+                                <button type="button" class="layui-btn" id="add_img">上传图片</button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="uploadImg">选择图片</button>
+                                <tip id="fileName">未选择任何文件</tip>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div >            
+            <!-- <div class="layui-row layui-col-space15">
+                
+                <div class="layui-col-md12">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-md4">
+                            <div class="layui-card">
+                                1
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-card">
+                                2
+                            </div>
+
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-card">
+                                3
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-card">
+                                4
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-card">
+                                5
+                            </div>
+                        
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-card">
+                                6
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+    <script>
+        layui.use(['form', 'layer', 'carousel'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                table = layui.table;
+            var carousel = layui.carousel;
+            var picIdIndex = [];
+            var productID;
+            let ip = 'http://121.199.79.42/';
+            //文件上传
+            $("#coverImg").hide();
+            $("#otherBtn").hide();
+            $('#uploadImg').click(function () {
+                $('#uploadInput').click();
+            });
+            $('#fileName').click(function () {
+                $('#uploadInput').click();
+            });
+            $('#uploadInput').change(function (e) {
+                var fileName = $('#uploadInput').val();
+                fileName = fileName.split('\\');
+                i = fileName.length - 1;
+                if (fileName) {
+                    $('#fileName').text(fileName[i]);
+                } else {
+                    $('#fileName').text("未选择任何图片");
+                }
+            });
+            // 创建轮播
+            var ins = carousel.render({
+                elem: '#picShow'
+                , width: '80%' //设置容器宽度
+                ,height:"380px"
+                , arrow: 'hover' //始终显示箭头
+                ,anim: 'default' //切换动画方式
+            });
+            // 上传图片
+            $('#add_img').click(function () { 
+                let file = $('#uploadInput')[0].files[0];
+                if (!file) {
+                    layer.msg("请先选择要上传的图片！", { icon: 5 });
+                    return;
+                }
+                var postData = new FormData();
+                postData.append("productID", productID.productid);
+                postData.append("imgSort", picIdIndex.length);      //排序位置为最后一个
+                postData.append("file", file);
+                $.ajax({
+                    type: "post",
+                    url: "/fastDfs/add_img",
+                    data: postData,
+                    contentType: false, //必须false才会自动加上正确的Content-Type,否则服务器无法识别
+                    processData: false,//注意以上两个配置
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.status) {
+                            layer.msg(response.msg, { icon: 6 });    //6是成，5是 error
+                            //刷新图片
+                            $.ajax({
+                                type: "get",
+                                url: "/fastDfs/select_img",
+                                data: productID,
+                                contentType: 'application/json',
+                                dataType: 'json',
+                                success: function (response) {
+                                    $('#showOff').show();
+                                    $("#otherBtn").show();
+                                    picIdIndex.length = 0;
+                                    $('.layui-carousel>[carousel-item]').html('');
+                                    $('#uploadInput')[0].files[0] = '';
+                                    response.forEach(itme => {
+                                        picIdIndex.push(itme.imgid);
+                                        $('.layui-carousel>[carousel-item]').append('<img src="' + ip + itme.imgurl + '" alt="error">');
+                                    });
+                                    ins.reload({        //重载
+                                        elem: '#picShow'
+                                    });
+                                },
+                                error: function (res) {
+                                    layer.msg("接口错误", { icon: 5 });
+                                }
+                            });
+                        } else {
+                            layer.msg(response.msg, { icon: 5 });
+                        }
+                    },
+                    error: function (res) {
+                        layer.msg("接口错误", { icon: 5 });
+                    }
+                });
+            
+            });
+            // 搜索操作
+            form.on('submit(data-search-btn)', function (data) {
+                var load = layer.load(2, { time: 5 * 1000 });
+                productID = data.field;
+                //获取图片
+                $.ajax({
+                    type: "get",
+                    url: "/fastDfs/select_img",
+                    data: productID,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.length>0) {
+                            console.log(response);
+                            layer.msg("查询成功", { icon: 6 });
+                            $('#showOff').show();
+                            $("#otherBtn").show();
+                            //添加图片
+                            picIdIndex.length = 0;
+                            $('.layui-carousel>[carousel-item]').html('');
+                            response.forEach(itme => {
+                                picIdIndex.push(itme.imgid);
+                                $('.layui-carousel>[carousel-item]').append('<img src="' + ip + itme.imgurl + '" alt="error">');
+                            });
+                            ins.reload({        //重载
+                                elem: '#picShow'
+                            });
+                        } else {
+                            layer.msg("商品暂无图片", { icon: 6 });
+                        }
+                    },
+                    error: function (res) {
+                        layer.msg("接口错误", { icon: 5 });
+                    }
+                });
+                layer.close(load);
+                return false;
+            });
+            // 删除图片
+            $('#delete').click(function () { 
+                if (!picIdIndex.length>0) {     //无图
+                    layer.msg('该商品暂无图片可删除', { icon: 0});
+                    return;
+                }
+                layer.prompt({
+                    formType: 0,
+                    value: productID.productid,
+                    title: '删除图片',
+                    maxlength: 10
+                }, function (value, index, elem) {
+                    console.log(elem); //得到value     
+                    imgID = $("#imgIndex").val(); 
+                    if (imgID <= 0 || imgID >= picIdIndex.length) {        //state輸入不合法
+                        layer.msg('图片位置序号输入不正确', { icon: 0 });
+                        return;
+                    }
+                    data = {"imgID": picIdIndex[imgID-1]};
+                    $.ajax({
+                        type: "post",
+                        url: "/fastDfs/delete_img",
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status) {
+                                layer.msg(response.msg, { icon: 6 });
+
+                                //刷新图片
+                                $.ajax({
+                                    type: "get",
+                                    url: "/fastDfs/select_img",
+                                    data: productID,
+                                    contentType: 'application/json',
+                                    dataType: 'json',
+                                    success: function (response) {
+                                        $('#showOff').show();
+                                        $("#otherBtn").show();
+                                        picIdIndex.length = 0;
+                                        $('.layui-carousel>[carousel-item]').html('');
+                                        $('#uploadInput')[0].files[0] = '';
+                                        response.forEach(itme => {
+                                            picIdIndex.push(itme.imgid);
+                                            $('.layui-carousel>[carousel-item]').append('<img src="' + ip + itme.imgurl + '" alt="error">');
+                                        });
+                                        ins.reload({        //重载
+                                            elem: '#picShow'
+                                        });
+                                    },
+                                    error: function (res) {
+                                        layer.msg("接口错误", { icon: 5 });
+                                    }
+                                });
+                            } else {
+                                layer.msg(response.msg, { icon: 5 });
+                            }
+
+                        }
+                    });
+                    layer.close(index);
+                });
+                $(".layui-layer-content").html('');
+                $(".layui-layer-content").append("<br/><input id='imgIndex' type=\"number\" class=\"layui-input\" placeholder=\"输入要删除图片的位置\"/><tip id='tips'></tip>");
+                $("#tips").text("图片位置1~" + picIdIndex.length);
+            });
+        });
+    </script>
+</body>
+
+</html>

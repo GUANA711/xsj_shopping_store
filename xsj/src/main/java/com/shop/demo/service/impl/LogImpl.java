@@ -6,6 +6,8 @@ import com.shop.demo.service.LogServive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * @author Alice
@@ -23,6 +25,16 @@ public class LogImpl implements LogServive {
     @Override
     public String selectnickname(String openid) {
         return logMapper.selectnickname(openid);
+    }
+
+    @Override
+    public List<Log> showLog() {
+        return logMapper.showLog();
+    }
+
+    @Override
+    public List<Log> searchLog(Log log) {
+        return logMapper.searchLog(log);
     }
 
 }

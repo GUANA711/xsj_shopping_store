@@ -10,4 +10,34 @@
     <select id="selectnickname" parameterType="String" resultType="String">
         select nickname from customer where openid=#{openid};
     </select>
+
+
+    <select id="showLog" resultType="com.shop.demo.pojo.Log">
+         select * from log
+    </select>
+
+    <select id="searchLog" parameterType="com.shop.demo.pojo.Log" resultType="com.shop.demo.pojo.Log">
+        select * from log
+        <where>
+            <if test="openid!=null" >
+                openid like CONCAT(CONCAT('%', #{openid}), '%')
+            </if>
+            <if test="nickname!=null" >
+                nickname like CONCAT(CONCAT('%', #{nickname}), '%')
+            </if>
+            <if test="Operation!=null">
+                Operation like CONCAT(CONCAT('%', #{Operation}), '%')
+            </if>
+            <if test="Method!=null">
+                Method like CONCAT(CONCAT('%', #{Method}), '%')
+            </if>
+            <if test="IP!=null">
+                IP  like CONCAT(CONCAT('%', #{IP}), '%')
+            </if>
+            <if test="Create_time!=null">
+                Create_time like CONCAT(CONCAT('%', #{Create_time}), '%')
+            </if>
+        </where>
+    </select>
+
 </mapper>
