@@ -90,55 +90,26 @@ public class OrderManageController {
      }
 
     /**
+
      * 查询订单
-     * @param json
+     * @param
      * @return
      */
      @GetMapping("/select")
-     public ResultInfoList select(@RequestBody JSONObject json, @PathParam("page") int page, @PathParam("limit") int limit){
-         String id=json.getString("id");
-         String openid=json.getString("openid");
-         String productid=json.getString("productid");
-         String productname=json.getString("productname");
-         String title=json.getString("title");
-         String price=json.getString("price");
-         String number=json.getString("number");
-         String totle=json.getString("totle");
-         String ispay=json.getString("ispay");
-         String invoice=json.getString("invoice");
-         String receive=json.getString("receive");
-         String state=json.getString("state");
-         String address=json.getString("address");
-         String addrid=json.getString("addrid");
-         Orders orders=new Orders();
+     public ResultInfoList select(@RequestParam(value="page",required=false) int page, @RequestParam(value="limit",required=false) int limit,@RequestParam("openid") String openid,@RequestParam("id") String id){
 
+         Orders orders=new Orders();
+         if(id.equals("")){
+             id=null;
+         }
+         if(openid.equals("")){
+             openid=null;
+         }
          orders.setId(id);
          orders.setOpenid(openid);
-         orders.setProductid(productid);
-         orders.setProductname(productname);
-         orders.setTitle(title);
-         orders.setInvoice(invoice);
-         orders.setAddress(address);
-         orders.setAddrid(addrid);
 
-         if(price!=null){
-             orders.setPrice(Double.parseDouble(price));
-         }
-         if(number!=null){
-             orders.setNumber(Integer.parseInt(number));
-         }
-         if(ispay!=null){
-             orders.setIspay(Integer.parseInt(ispay));
-         }
-         if(receive!=null){
-             orders.setReceive(Integer.parseInt(receive));
-         }
-         if(state!=null){
-             orders.setState(Integer.parseInt(state));
-         }
-         if(totle!=null){
-             orders.setTotle(Double.parseDouble(totle));
-         }
+
+
 
          try {
              ResultInfoList resultInfoList=new ResultInfoList();
@@ -163,7 +134,7 @@ public class OrderManageController {
      * @return
      */
      @GetMapping("/nopay_show")
-    public ResultInfoList nopay(@PathParam("page") int page,@PathParam("limit") int limit){
+    public ResultInfoList nopay(@RequestParam("page") int page,@RequestParam("limit") int limit){
          Orders orders=new Orders();
          orders.setIspay(0);
          orders.setState(1);
@@ -184,7 +155,7 @@ public class OrderManageController {
      * @return
      */
     @GetMapping("/noallcation_show")
-    public ResultInfoList noallocation(@PathParam("page") int page,@PathParam("limit") int limit){
+    public ResultInfoList noallocation(@RequestParam("page") int page,@RequestParam("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(1);
@@ -204,7 +175,7 @@ public class OrderManageController {
      * @return
      */
     @GetMapping("/norecive_show")
-    public ResultInfoList norecive(@PathParam("page") int page,@PathParam("limit") int limit){
+    public ResultInfoList norecive(@RequestParam("page") int page,@RequestParam("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(1);
@@ -223,7 +194,7 @@ public class OrderManageController {
      * @return
      */
     @GetMapping("/ok_show")
-    public ResultInfoList nok_show(@PathParam("page") int page,@PathParam("limit") int limit){
+    public ResultInfoList nok_show(@RequestParam("page") int page,@RequestParam("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(3);
@@ -242,7 +213,7 @@ public class OrderManageController {
      * @return
      */
     @GetMapping("/cancel_show")
-    public ResultInfoList cancel_show(@PathParam("page") int page,@PathParam("limit") int limit){
+    public ResultInfoList cancel_show(@RequestParam("page") int page,@RequestParam("limit") int limit){
         Orders orders=new Orders();
         orders.setState(2);
         ResultInfoList resultInfoList=new ResultInfoList();
