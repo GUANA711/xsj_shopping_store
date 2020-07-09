@@ -2,6 +2,7 @@ package com.shop.demo.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.shop.demo.dao.*;
 import com.shop.demo.dto.GoodsTypeProduct;
@@ -155,8 +156,8 @@ public class WXDataServiceImpl implements WXDataService {
 	 * 移除购物车
 	 */
 	@Override
-	public int deleteByPrimaryKey(int id){
-		return buycarMapper.deleteByPrimaryKey(id);
+	public int deleteone(Map<String,Object> map){
+		return buycarMapper.deleteone(map);
 	}
 
 	/**

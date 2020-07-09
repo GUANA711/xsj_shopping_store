@@ -1,6 +1,8 @@
 package com.shop.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shop.demo.dto.GoodsTypeProduct;
@@ -137,11 +139,16 @@ public class WXDataController {
 
 		//从前端获取数据
 		String id=json.getString("id");
+		String openid=json.getString("openid");
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("id",id);
+		map.put("openid",openid);
 
 		Status_Alice status_alice=new Status_Alice();
 
 		try {
-			int i=service.deleteByPrimaryKey(Integer.parseInt(id));
+			int i=service.deleteone(map);
 			if(i>0){
 				status_alice.setMsg("删除成功");
 				status_alice.setStatus(true);

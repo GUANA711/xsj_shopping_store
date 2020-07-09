@@ -5,11 +5,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
 public interface BuycarMapper {
-    int deleteByPrimaryKey(int id);
+    int deleteone(Map<String,Object> map);
 
     int insert(Buycar record);
 

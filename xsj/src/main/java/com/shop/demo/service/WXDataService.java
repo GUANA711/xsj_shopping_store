@@ -1,6 +1,7 @@
 package com.shop.demo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.shop.demo.dto.GoodsTypeProduct;
 import com.shop.demo.dto.ProductDetailDto;
@@ -76,7 +77,7 @@ public interface WXDataService {
 	/**
 	 * 移除购物车
 	 */
-	int deleteByPrimaryKey(int id);
+	int deleteone(Map<String,Object> map);
 
 
 	/**

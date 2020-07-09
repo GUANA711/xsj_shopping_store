@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestExecutionListeners;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @SpringBootTest
@@ -136,8 +138,12 @@ class DemoApplicationTests {
 
     @Test
     public void deleteBuyCar(){
+        Map<String, Object> map = new HashMap<String, Object>();
         String id="5";
-        wxDataService.deleteByPrimaryKey(Integer.parseInt(id));
+        String openid="obUGC4rrDf-HgmFt5TrvIzSkDHQo";
+        map.put("id",id);
+        map.put("openid",openid);
+        wxDataService.deleteone(map);
     }
 
 

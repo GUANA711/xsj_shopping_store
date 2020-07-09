@@ -22,9 +22,9 @@
     where pi.productid=p.id and p.id=b.productid and p.id=o.productid and b.openid = #{openid,jdbcType=VARCHAR}
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteone" parameterType="map">
     delete from buycar
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and openid = #{openid,jdbcType=VARCHAR}
   </delete>
 
   <delete id="deleteByopenid" parameterType="String">
