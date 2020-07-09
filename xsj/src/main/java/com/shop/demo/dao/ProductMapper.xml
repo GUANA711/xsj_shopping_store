@@ -20,7 +20,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, price, title, stock, number, description, publishtime, recommend, oldest,
-    hot,fields typeid, typename,pthoto
+    hot,fields,typeid, typename,pthoto
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
