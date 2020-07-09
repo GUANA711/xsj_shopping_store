@@ -230,7 +230,7 @@
     <where>
       p.id=o.productid
       <if test="id != null">
-        and id =#{id}
+        and o.id =#{id}
       </if>
       <if test="openid != null">
         and  openid like CONCAT(CONCAT('%', #{openid}), '%')
