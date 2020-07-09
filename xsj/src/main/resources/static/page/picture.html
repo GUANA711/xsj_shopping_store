@@ -189,7 +189,7 @@
                             <div carousel-item>
                             </div>
                         </div>
-                        <div style="margin-top: 20px;">
+                        <div style="margin-top: 20px;" id="showUp">
                             <div id="upload" style="padding:40px 0 0 120px">
                                 <input type="file" style="display: none;" id="uploadInput" name="file"
                                     accept="image/jpg,image/jpeg,image/png,image/gif">
@@ -300,6 +300,9 @@
                     dataType: "json",
                     success: function (response) {
                         if (response.status) {
+                            $('#picShow').show();
+                            $('#showUp').show();
+                            $('#showOff').show();
                             layer.msg(response.msg, { icon: 6 });    //6是成，5是 error
                             //刷新图片
                             $.ajax({
@@ -364,6 +367,9 @@
                                 elem: '#picShow'
                             });
                         } else {
+                            $('#picShow').hide();
+                            $('#showUp').show();
+                            $('#showOff').show();
                             layer.msg("商品暂无图片", { icon: 6 });
                         }
                     },
@@ -378,13 +384,15 @@
             $('#delete').click(function () { 
                 if (!picIdIndex.length>0) {     //无图
                     layer.msg('该商品暂无图片可删除', { icon: 0});
+                    $('#picShow').hide();
+                    $('#showUp').show();
+                    $('#showOff').show();
                     return;
                 }
                 layer.prompt({
                     formType: 0,
                     value: productID.productid,
                     title: '删除图片',
-                    maxlength: 10
                 }, function (value, index, elem) {
                     console.log(elem); //得到value     
                     imgID = $("#imgIndex").val(); 
