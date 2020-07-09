@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -93,8 +94,8 @@ public class OrderManageController {
      * @param json
      * @return
      */
-     @GetMapping("/select/{page}/{limit}")
-     public ResultInfoList select(@RequestBody JSONObject json,@PathVariable("page") int page,@PathVariable("limit") int limit){
+     @GetMapping("/select")
+     public ResultInfoList select(@RequestBody JSONObject json, @PathParam("page") int page, @PathParam("limit") int limit){
          String id=json.getString("id");
          String openid=json.getString("openid");
          String productid=json.getString("productid");
@@ -161,8 +162,8 @@ public class OrderManageController {
      * 待支付订单显示
      * @return
      */
-     @GetMapping("/nopay_show/{page}/{limit}")
-    public ResultInfoList nopay(@PathVariable("page") int page,@PathVariable("limit") int limit){
+     @GetMapping("/nopay_show")
+    public ResultInfoList nopay(@PathParam("page") int page,@PathParam("limit") int limit){
          Orders orders=new Orders();
          orders.setIspay(0);
          orders.setState(1);
@@ -182,8 +183,8 @@ public class OrderManageController {
      * 待发货显示
      * @return
      */
-    @GetMapping("/noallcation_show/{page}/{limit}")
-    public ResultInfoList noallocation(@PathVariable("page") int page,@PathVariable("limit") int limit){
+    @GetMapping("/noallcation_show")
+    public ResultInfoList noallocation(@PathParam("page") int page,@PathParam("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(1);
@@ -202,8 +203,8 @@ public class OrderManageController {
      * 待收货显示
      * @return
      */
-    @GetMapping("/norecive_show/{page}/{limit}")
-    public ResultInfoList norecive(@PathVariable("page") int page,@PathVariable("limit") int limit){
+    @GetMapping("/norecive_show")
+    public ResultInfoList norecive(@PathParam("page") int page,@PathParam("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(1);
@@ -221,8 +222,8 @@ public class OrderManageController {
      * 完成订单显示显示
      * @return
      */
-    @GetMapping("/ok_show/{page}/{limit}")
-    public ResultInfoList nok_show(@PathVariable("page") int page,@PathVariable("limit") int limit){
+    @GetMapping("/ok_show")
+    public ResultInfoList nok_show(@PathParam("page") int page,@PathParam("limit") int limit){
         Orders orders=new Orders();
         orders.setIspay(1);
         orders.setState(3);
@@ -240,8 +241,8 @@ public class OrderManageController {
      * 被取消订单显示显示
      * @return
      */
-    @GetMapping("/cancel_show/{page}/{limit}")
-    public ResultInfoList cancel_show(@PathVariable("page") int page,@PathVariable("limit") int limit){
+    @GetMapping("/cancel_show")
+    public ResultInfoList cancel_show(@PathParam("page") int page,@PathParam("limit") int limit){
         Orders orders=new Orders();
         orders.setState(2);
         ResultInfoList resultInfoList=new ResultInfoList();
