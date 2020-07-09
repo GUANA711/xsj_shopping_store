@@ -22,4 +22,6 @@ public interface BuycarMapper {
     int updateByPrimaryKey(Buycar record);
 
     List<Buycar> selectByopenid (String openid);
+
+    int deleteByopenid(String openid);
 }

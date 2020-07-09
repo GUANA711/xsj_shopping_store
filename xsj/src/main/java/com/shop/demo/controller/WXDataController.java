@@ -28,7 +28,7 @@ public class WXDataController {
 
 	@Autowired
 	private WXDataService service;
-	
+
 	/**
 	 * 显示首页商品列表
 	 * cmd=recommend:精选推荐
@@ -62,7 +62,7 @@ public class WXDataController {
 		return service.selectGoodsTypeProduct();
 	}
 
-	
+
 	/**
 	 * 	显示商品详情的service
 	 * 1、根据id查询商品的详细信息
@@ -150,6 +150,32 @@ public class WXDataController {
 		}catch (Exception e){
 			e.printStackTrace();
 			status_alice.setMsg("删除失败");
+		}
+		return status_alice;
+	}
+
+	/**
+	 * 清空购物车
+	 */
+	@RequestMapping("/clearBuyCar")
+	@ResponseBody
+	public Status_Alice clearBuyCar(@RequestBody JSONObject json){
+
+		String openid=json.getString("openid");
+
+		Status_Alice status_alice=new Status_Alice();
+
+		try {
+			int i=service.deleteByopenid(openid);
+			if(i>0){
+				status_alice.setMsg("清空成功");
+				status_alice.setStatus(true);
+			}else {
+				status_alice.setMsg("清空失败");
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+			status_alice.setMsg("购物车已为空，清空失败");
 		}
 		return status_alice;
 	}

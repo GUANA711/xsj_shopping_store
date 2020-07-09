@@ -78,6 +78,12 @@ public interface WXDataService {
 	 */
 	int deleteByPrimaryKey(int id);
 
+
+	/**
+	 * 清空购物车
+	 */
+	int deleteByopenid(String openid);
+
 	/**
 	 * 统计用户
 	 */

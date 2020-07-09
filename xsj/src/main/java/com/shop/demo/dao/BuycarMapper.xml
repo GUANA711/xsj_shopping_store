@@ -27,6 +27,12 @@
     delete from buycar
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <delete id="deleteByopenid" parameterType="String">
+    delete from buycar
+    where openid = #{openid,jdbcType=VARCHAR}
+  </delete>
+
   <insert id="insert" parameterType="com.shop.demo.pojo.Buycar">
     insert into buycar (id, productid, openid
       )
