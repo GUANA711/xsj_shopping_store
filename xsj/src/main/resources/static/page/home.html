@@ -33,7 +33,7 @@
                                 <h5>用户统计</h5>
                             </div>
                             <div class="panel-content">
-                                <h1 class="no-margins">312</h1>
+                                <h1 class="no-margins" id="users"></h1>
                                 <small>用户总记录数</small>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                 <h5>商品统计</h5>
                             </div>
                             <div class="panel-content">
-                                <h1 class="no-margins">total</h1>
+                                <h1 class="no-margins" id="products"></h1>
                                 <small>商品总记录数</small>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                 <h5>浏览统计</h5>
                             </div>
                             <div class="panel-content">
-                                <h1 class="no-margins">8431</h1>
+                                <h1 class="no-margins">431</h1>
                                 <small>浏览总记录数</small>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                                 <h5>订单统计</h5>
                             </div>
                             <div class="panel-content">
-                                <h1 class="no-margins">total</h1>
+                                <h1 class="no-margins" id="orders"></h1>
                                 <small>订单总记录数</small>
                             </div>
                         </div>
@@ -111,9 +111,51 @@
     echarts = layui.echarts;
 
     miniTab.listen();
-    /**
-    * 报表功能
-    */
+    $.ajax({
+        type: "get",
+        url: "/wx/selectAllCustomer",
+        data: "",
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (response) {
+            $('#users').text(response.total);
+        },
+        error: function () {
+            layer.msg("接口错误", { icon: 5 });
+        }
+
+    });
+    $.ajax({
+        type: "get",
+        url: "/wx/selectAllOrder",
+        data: "",
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (response) {
+            $('#orders').text(response.total);
+        },
+        error: function () {
+            layer.msg("接口错误", { icon: 5 });
+        }
+
+    });
+    $.ajax({
+        type: "get",
+        url: "/wx/selectAllProduct",
+        data: "",
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (response) {
+            $('#products').text(response.total);
+        },
+        error: function () {
+            layer.msg("接口错误", { icon: 5 });
+        }
+
+    });
+   /**
+     * 报表功能
+     */
     var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
     var optionRecords = {
     tooltip: {

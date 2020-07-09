@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <fieldset class="table-search-fieldset">
+                <legend>搜索</legend>
+                <div style="margin: 10px 10px 10px 10px">
+                    <form class="layui-form layui-form-pane">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">用户ID</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="id" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">订单号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="openid" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button type="submit" class="layui-btn layui-btn-primary" lay-submit
+                                    lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+
+            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+            <script type="text/html" id="currentTableBar">
+                <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">修改订单</a>
+            </script>
+
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script>
+        let ip = 'http://121.199.79.42/';
+        layui.use(['form', 'table'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                table = layui.table;
+            layer.load(2);
+            var page;
+            var limit;
+            //显示全部
+            table.render({
+                elem: '#currentTableId',
+                url: '/order/nopay_show',
+                id: 'currentTableFilter',
+                response: {
+                    // statusName: '', //规定数据状态的字段名称，默认：code
+                    statusCode: 1 //规定成功的状态码，默认：0
+                    // ,msgName: 'hint' //规定状态信息的字段名称，默认：msg
+                    , countName: 'total' //规定数据总数的字段名称，默认：count
+                    , dataName: 'selectList' //规定数据列表的字段名称，默认：data
+                },
+                limits: [5, 10, 15, 20],
+                limit: 10,
+                page: true,
+                skin: 'line',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [
+                    [
+                        // {checkbox : true}
+                        {
+                            field: 'id',
+                            minWidth: 120,
+                            title: '订单号',
+                            sort: true
+                        },
+                        {
+                            field: 'openid',
+                            width: 110,
+                            title: '用户id',
+                            sort: true
+                        },
+                        {
+                            field: 'productname',
+                            width: 120,
+                            title: '商品名'
+                        },
+                        {
+                            field: 'price',
+                            width: 80,
+                            title: '单价',
+                            sort: true
+                        },
+                        {
+                            field: 'number',
+                            width: 70,
+                            title: '数量',
+                        },
+                        {
+                            field: 'totle',
+                            width: 80,
+                            title: '总价',
+                            sort: true
+                        },
+                        {
+                            field: 'invoice',
+                            width: 80,
+                            title: '发票',
+                            templet: function (item) {
+                                if (item.invoice == 1) {   //fields:0-下架；1-上架 
+                                    return item.fields = '需要';
+                                }
+                                return item.fields = '不需要';
+                            }
+                        },
+                        {
+                            field: 'address',
+                            title: '收货地址',
+                            minWidth: 120,
+                        },
+                        /*{
+                            field: 'hot',
+                            width: 75,
+                            title: '热门',
+                            templet: function (item) {
+                                if (item.hot == 1) { //hot：是否热门（0-非热门 1-热门）
+                                    return item.hot = '热门';
+                                }
+                                return item.hot = '非热门';
+                            }
+                        }
+                        {
+                            field: 'recommend',
+                            width: 75,
+                            title: '推荐',
+                            templet: function (item) {
+                                if (item.recommend == 1) { //recommend：是否推荐（0-不推荐 1-推荐）
+                                    return item.recommend = '推荐';
+                                }
+                                return item.recommend = '不推荐';
+                            }
+                        },
+                        {
+                            field: 'oldest',
+                            width: 75,
+                            title: '新品',
+                            templet: function (item) {
+                                if (item.oldest == 1) { //oldest：是否为新品（0-非新品 1-新品）
+                                    return item.oldest = '新品';
+                                }
+                                return item.oldest = '非新品';
+                            }
+                        },
+                        {
+                            field: 'description',
+                            width: 110,
+                            title: '详情描述'
+                        },
+                        {
+                            field: 'pthoto',
+                            width: 100,
+                            title: '图片',
+                            templet: function (item) {
+                                // console.log(ip+item.pthoto);
+                                // console.log(item.pthoto);
+                                //{
+                                return '<img border="0" src="' + ip + item.pthoto +
+                                    '"alt="picture" width="80;" height="100">';
+                                //}
+                            }
+                        },*/
+                        {
+                            title: '操作',
+                            width: 100,
+                            toolbar: '#currentTableBar',
+                            align: "center"
+                        }
+                    ]
+                ]
+                , done: function () {
+                    limit = this.limit;
+                    page = this.page.index;
+                    console.log(page);
+                    layer.closeAll('loading');
+                }
+            });
+
+            // 监听搜索操作
+            form.on('submit(data-search-btn)', function (data) {
+                layer.load(1);
+                console.log(data.field);
+                //执行搜索重载
+                table.reload('currentTableFilter', {
+                    url: "/order/select",
+                    page: {
+                        curr: 1
+                    },
+                    where: {
+                        'openid': data.field.openid,
+                        'id': data.field.id
+                    }
+                });
+                layer.closeAll('loading');
+                return false;
+            });
+            //监听每行操作
+            table.on('tool(currentTableFilter)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'edit') {         //修改订单
+                    var index = layer.open({
+                        title: '修改订单',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['100%', '100%'],
+                        content: '../page/orderEdit.html',
+                        success: function (layero, index) {
+                            //获取当前打开的子页面id   
+                            var frameId = $(layero).find('iframe').attr("id");
+                            //找到子页面的document对象
+                            var document = window.frames[frameId].document;
+                            $(document).find("input[name='id']").val(data.id);
+                            $(document).find("input[name='openid']").val(data.openid);
+                            /* $(document).find("input[name='price']").val(data.price);
+                            $(document).find("input[name='number']").val(data.number);
+                            $(document).find("input[name='productname']").val(data.productname);
+                            $(document).find("input[name='totle']").val(data.totle);
+                            $(document).find("input[name='invoice']").val(data.invoice);
+                            $(document).find("input[name='address']").val(data.address); */
+                        }
+                    });
+                    return false;
+                }
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
