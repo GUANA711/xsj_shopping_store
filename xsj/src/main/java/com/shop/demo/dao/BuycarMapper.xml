@@ -16,11 +16,10 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectByopenid" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from buycar
-    where openid = #{openid,jdbcType=VARCHAR}
+  <select id="selectByopenid" parameterType="java.lang.String" resultType="map">
+    select b.id, b.productid, b.openid,p.name,p.price,p.stock,p.number,pi.imgurl
+    from product p,buycar b,productimgs pi
+    where pi.productid=p.id and p.id=b.productid and b.openid = #{openid,jdbcType=VARCHAR}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
